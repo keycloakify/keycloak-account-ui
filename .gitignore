@@ -45,3 +45,4 @@ jspm_packages
 
 /src/*
 !/src/KeycloakAccountUi.tsx
+!/src/global.d.ts
