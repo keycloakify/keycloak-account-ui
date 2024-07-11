@@ -9,26 +9,10 @@ For more details on integrating this package into your project, refer to the [Ke
 
 ## Installation
 
-> You are currently viewing the version of `@keycloakify/keycloak-account-ui` that mirrors `@keycloak/keycloak-account-ui` version **25.0.1**.
+> You are currently viewing the version of `@keycloakify/keycloak-account-ui` that mirrors `@keycloak/keycloak-account-ui` version **{{VERSION}}**.
 
 To install this package, you must also install all the required peer dependencies. It is important to copy and paste the version ranges exactly to avoid any compatibility issues. Add this to your `package.json`:
 
 ```json
-{
-  "dependencies": {
-    "@keycloakify/keycloak-account-ui": "25.0.1-rc.0",
-    "@patternfly/patternfly": "^5.3.1",
-    "@patternfly/react-core": "^5.3.3",
-    "@patternfly/react-icons": "^5.3.2",
-    "@patternfly/react-table": "^5.3.3",
-    "i18next": "^23.11.5",
-    "i18next-http-backend": "^2.5.2",
-    "lodash-es": "^4.17.21",
-    "react-hook-form": "^7.51.5",
-    "react-i18next": "^14.1.2",
-    "react-router-dom": "^6.23.1",
-    "keycloak-js": "25.0.1",
-    "@keycloak/keycloak-ui-shared": "25.0.1"
-  }
-}
+{{DEPENDENCIES}}
 ```

@@ -166,7 +166,7 @@
     url-join "^5.0.0"
     url-template "^3.1.1"
 
-"@keycloak/keycloak-ui-shared@^25.0.1":
+"@keycloak/keycloak-ui-shared@25.0.1":
   version "25.0.1"
   resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-25.0.1.tgz#bcde2b0650c6e508d8d0a66747391138969524e8"
   integrity sha512-2ofFv9HEynGjVISh77LugW8YX6iSob9J4glTKr8XsnDJC8UPmY8q2Yk6uo88kH9z4y2VHa5tUL1+tx5i48KREg==
@@ -238,7 +238,7 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-5.3.1.tgz#4bc42f98c48e117df5d956ee3f551d0f57ef1b35"
   integrity sha512-H6uBoFH3bJjD6PP75qZ4k+2TtF59vxf9sIVerPpwrGJcRgBZbvbMZCniSC3+S2LQ8DgXLnDvieq78jJzHz0hiA==
 
-"@patternfly/react-table@^5.3.4":
+"@patternfly/react-table@^5.3.3":
   version "5.3.4"
   resolved "https://registry.yarnpkg.com/@patternfly/react-table/-/react-table-5.3.4.tgz#f5e0ee5057cce7a54742ea9ca7f038aa9ca5e5ed"
   integrity sha512-jGaiuo02scaC1HdGNHuYVRjtQCOB+vtvfbgS7nl1Y8ZcJ08wyUGhGSrEpNHfGAQ1XDSSoELAxj0cjOQwAAQw1A==
@@ -500,7 +500,7 @@ chalk@^2.0.0:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -1138,7 +1138,7 @@ jwt-decode@^4.0.0:
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-4.0.0.tgz#2270352425fd413785b2faf11f6e755c5151bd4b"
   integrity sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==
 
-keycloak-js@25.0.1, keycloak-js@^25.0.1:
+keycloak-js@25.0.1:
   version "25.0.1"
   resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-25.0.1.tgz#6197e1184dd86ecc1b55f8b19df0f61c466a00c0"
   integrity sha512-ns5sKQ5Iz3UyVGIKq2XBBXNZTlTCg9bzybR+JB2Vn+fDHIo9EGgAY4kzrBWMwbeFuegY+qJwGs05N+W9jgY9tg==
@@ -1581,6 +1581,11 @@ react-hook-form@7.51.5:
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.51.5.tgz#4afbfb819312db9fea23e8237a3a0d097e128b43"
   integrity sha512-J2ILT5gWx1XUIJRETiA7M19iXHlG74+6O3KApzvqB/w8S5NQR7AbU8HVZrMALdmDgWpRPYiZJl0zx8Z4L2mP6Q==
 
+react-hook-form@^7.51.5:
+  version "7.52.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.52.1.tgz#ec2c96437b977f8b89ae2d541a70736c66284852"
+  integrity sha512-uNKIhaoICJ5KQALYZ4TOaOLElyM+xipord+Ha3crEFhTntdLvWZqVY49Wqd/0GiVCA/f9NjemLeiNPjG7Hpurg==
+
 react-i18next@^14.1.2:
   version "14.1.2"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-14.1.2.tgz#cd57a755f25a32a5fcc3dbe546cf3cc62b4f3ebd"
@@ -1594,7 +1599,7 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-router-dom@^6.24.1:
+react-router-dom@^6.23.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.24.1.tgz#b1a22f7d6c5a1bfce30732bd370713f991ab4de4"
   integrity sha512-U19KtXqooqw967Vw0Qcn5cOvrX5Ejo9ORmOtJMzYWtCT4/WOfFLIZGGsVLxcd9UkBO0mSTZtXqhZBsWlHr7+Sg==
