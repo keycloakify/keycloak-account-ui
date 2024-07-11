@@ -65,6 +65,7 @@
     "typescript": "^5.5.3",
     "yauzl": "^2.10.0",
     "chalk": "^4.1.2",
+    "evt": "^2.5.7",
     "react-dom": "^18.3.1",
     "@patternfly/patternfly": "^5.3.1",
     "@patternfly/react-core": "^5.3.3",
