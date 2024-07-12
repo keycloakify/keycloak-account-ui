@@ -247,21 +247,19 @@ const KEYCLOAK_VERSION = "25.0.1";
       .toString("utf8"),
   );
 
-  {
-    const thisVersion: string = thisParsedPackageJson["version"];
+  const thisVersion: string = thisParsedPackageJson["version"];
 
-    if (!thisVersion.startsWith(keycloakAccountUiVersion)) {
-      console.log(
-        chalk.red(
-          [
-            `Error: The version of this package should match the targeted @keycloak/keycloak-account-ui version.`,
-            `Expected ${keycloakAccountUiVersion} but got ${thisVersion}`,
-            `If you're not ready to release yet you can use ${keycloakAccountUiVersion}-rc.0 (1, 2, 3, ...)`,
-          ].join(" "),
-        ),
-      );
-      process.exit(1);
-    }
+  if (!thisVersion.startsWith(keycloakAccountUiVersion)) {
+    console.log(
+      chalk.red(
+        [
+          `Error: The version of this package should match the targeted @keycloak/keycloak-account-ui version.`,
+          `Expected ${keycloakAccountUiVersion} but got ${thisVersion}`,
+          `If you're not ready to release yet you can use ${keycloakAccountUiVersion}-rc.0 (1, 2, 3, ...)`,
+        ].join(" "),
+      ),
+    );
+    process.exit(1);
   }
 
   let devDependenciesToInstall: Record<string, string> | undefined = undefined;
@@ -331,14 +329,15 @@ const KEYCLOAK_VERSION = "25.0.1";
   const readme = fs
     .readFileSync(pathJoin(__dirname, "README-template.md"))
     .toString("utf8")
-    .replaceAll("{{VERSION}}", keycloakAccountUiVersion)
+    .replaceAll("{{ACCOUNT_UI_VERSION}}", keycloakAccountUiVersion)
     .replaceAll("{{KEYCLOAK_VERSION}}", KEYCLOAK_VERSION)
+    .replaceAll("{{THIS_VERSION}}", thisVersion)
     .replaceAll(
       "{{DEPENDENCIES}}",
       JSON.stringify(
         {
           dependencies: {
-            [thisParsedPackageJson["name"]]: thisParsedPackageJson["version"],
+            [thisParsedPackageJson["name"]]: thisVersion,
             ...thisParsedPackageJson["peerDependencies"],
           },
           devDependencies: devDependenciesToInstall,
