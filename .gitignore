@@ -44,5 +44,5 @@ jspm_packages
 /dist
 
 /src/*
-!/src/KeycloakAccountUi.tsx
+!/src/KcAccountUi.tsx
 !/src/global.d.ts
