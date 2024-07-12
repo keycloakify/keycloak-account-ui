@@ -1,6 +1,6 @@
 {
   "name": "@keycloakify/keycloak-account-ui",
-  "version": "25.0.1-rc.3",
+  "version": "25.0.1-rc.4",
   "description": "",
   "repository": {
     "type": "git",
@@ -14,8 +14,8 @@
     "format:check": "npm run _format -- --list-different",
     "link-in-starter": "tsx scripts/link-in-app.ts keycloakify-starter"
   },
-  "main": "dist/KeycloakAccountUi.js",
-  "types": "dist/KeycloakAccountUi.d.ts",
+  "main": "dist/KcAccountUi.js",
+  "types": "dist/KcAccountUi.d.ts",
   "lint-staged": {
     "*.{ts,tsx,json,md}": [
       "prettier --write"
