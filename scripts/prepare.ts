@@ -35,76 +35,173 @@ const KEYCLOAK_VERSION = "25.0.1";
     onArchiveFile: async ({ fileRelativePath, readFile, writeFile }) => {
       fileRelativePath = fileRelativePath.split(pathSep).slice(1).join(pathSep);
 
-      {
-        const dirPath = pathJoin("js", "apps", "account-ui");
+      if (/\.test\.[a-z0-9]{2,3}/.test(fileRelativePath)) {
+        return;
+      }
 
-        if (
-          !isInside({
-            filePath: fileRelativePath,
-            dirPath,
-          })
-        ) {
+      account_ui: {
+        {
+          const dirPath = pathJoin("js", "apps", "account-ui");
+
+          if (
+            !isInside({
+              filePath: fileRelativePath,
+              dirPath,
+            })
+          ) {
+            break account_ui;
+          }
+
+          fileRelativePath = pathRelative(dirPath, fileRelativePath);
+        }
+
+        if (fileRelativePath === "package.json") {
+          await writeFile({
+            fileRelativePath: pathJoin("account-ui", "package.json"),
+          });
+
           return;
         }
 
-        fileRelativePath = pathRelative(dirPath, fileRelativePath);
+        {
+          const dirPath = "src";
+
+          if (
+            !isInside({
+              filePath: fileRelativePath,
+              dirPath,
+            })
+          ) {
+            return;
+          }
+
+          fileRelativePath = pathRelative(dirPath, fileRelativePath);
+        }
+
+        if (fileRelativePath === "main.tsx") {
+          return;
+        }
+
+        if (fileRelativePath === "index.ts") {
+          return;
+        }
+
+        if (fileRelativePath === "vite-env.d.ts") {
+          return;
+        }
+
+        const sourceCode = (await readFile()).toString("utf8");
+
+        let modifiedSourceCode: string | undefined = undefined;
+
+        if (
+          fileRelativePath.endsWith(".ts") ||
+          fileRelativePath.endsWith(".tsx")
+        ) {
+          modifiedSourceCode = sourceCode
+            .replaceAll(
+              /((?:from )|(?:import\())"(\.[./]*\/)/g,
+              (_, p1, p2) =>
+                `${p1}"@keycloakify/keycloak-account-ui/${pathJoin(
+                  pathDirname(fileRelativePath),
+                  p2.replace("/", pathSep),
+                )
+                  .replaceAll(pathSep, "/")
+                  .replace(/^\.\//, "")}`,
+            )
+            .replaceAll(
+              `"@keycloak/keycloak-ui-shared"`,
+              `"@keycloakify/keycloak-account-ui/ui-shared"`,
+            );
+        }
+
+        await writeFile({
+          fileRelativePath: pathJoin("account-ui", fileRelativePath),
+          modifiedData:
+            modifiedSourceCode === undefined
+              ? undefined
+              : Buffer.from(modifiedSourceCode, "utf8"),
+        });
       }
 
-      if (fileRelativePath === "package.json") {
+      ui_shared: {
+        {
+          const dirPath = pathJoin("js", "libs", "ui-shared");
+
+          if (
+            !isInside({
+              filePath: fileRelativePath,
+              dirPath,
+            })
+          ) {
+            break ui_shared;
+          }
+
+          fileRelativePath = pathRelative(dirPath, fileRelativePath);
+        }
+
+        if (fileRelativePath === "package.json") {
+          await writeFile({
+            fileRelativePath: pathJoin("ui-shared", "package.json"),
+          });
+
+          return;
+        }
+
+        {
+          const dirPath = "src";
+
+          if (
+            !isInside({
+              filePath: fileRelativePath,
+              dirPath,
+            })
+          ) {
+            return;
+          }
+
+          fileRelativePath = pathRelative(dirPath, fileRelativePath);
+        }
+
+        if (fileRelativePath === "vite-env.d.ts") {
+          return;
+        }
+
+        const sourceCode = (await readFile()).toString("utf8");
+
+        const modifiedSourceCode = sourceCode.replaceAll(
+          /((?:from )|(?:import\())"(\.[./]*\/)/g,
+          (_, p1, p2) =>
+            `${p1}"@keycloakify/keycloak-account-ui/ui-shared/${pathJoin(
+              pathDirname(fileRelativePath),
+              p2.replace("/", pathSep),
+            )
+              .replaceAll(pathSep, "/")
+              .replace(/^\.\//, "")}`,
+        );
+
         await writeFile({
-          fileRelativePath,
+          fileRelativePath: pathJoin("ui-shared", fileRelativePath),
+          modifiedData: Buffer.from(modifiedSourceCode, "utf8"),
         });
 
-        return;
-      }
-
-      {
-        const dirPath = "src";
-
-        if (
-          !isInside({
-            filePath: fileRelativePath,
-            dirPath,
-          })
-        ) {
-          return;
+        if (fileRelativePath === "main.ts") {
+          await writeFile({
+            fileRelativePath: pathJoin("ui-shared", "index.ts"),
+            modifiedData: Buffer.from(
+              ["export * from './main';", ""].join("\n"),
+              "utf8",
+            ),
+          });
         }
-
-        fileRelativePath = pathRelative(dirPath, fileRelativePath);
       }
-
-      if (fileRelativePath === "main.tsx") {
-        return;
-      }
-
-      if (fileRelativePath === "index.tsx") {
-        return;
-      }
-
-      const sourceCode = (await readFile()).toString("utf8");
-
-      const modifiedSourceCode = sourceCode.replaceAll(
-        /((?:from )|(?:import\())"(\.[./]*\/)/g,
-        (_, p1, p2) =>
-          `${p1}"@keycloakify/keycloak-account-ui/${pathJoin(
-            pathDirname(fileRelativePath),
-            p2.replace("/", pathSep),
-          )
-            .replaceAll(pathSep, "/")
-            .replace(/^\.\//, "")}`,
-      );
-
-      await writeFile({
-        fileRelativePath,
-        modifiedData: Buffer.from(modifiedSourceCode, "utf8"),
-      });
     },
   });
 
   let keycloakAccountUiVersion: string | undefined;
 
   transformCodebase({
-    srcDirPath: extractedDirPath,
+    srcDirPath: pathJoin(extractedDirPath, "account-ui"),
     destDirPath: pathJoin(getThisCodebaseRootDirPath(), "src"),
     transformSourceCode: ({ fileRelativePath, sourceCode }) => {
       if (fileRelativePath === "package.json") {
@@ -119,9 +216,27 @@ const KEYCLOAK_VERSION = "25.0.1";
     },
   });
 
+  let keycloakUiSharedVersion: string | undefined;
+
+  transformCodebase({
+    srcDirPath: pathJoin(extractedDirPath, "ui-shared"),
+    destDirPath: pathJoin(getThisCodebaseRootDirPath(), "src", "ui-shared"),
+    transformSourceCode: ({ fileRelativePath, sourceCode }) => {
+      if (fileRelativePath === "package.json") {
+        keycloakUiSharedVersion = JSON.parse(sourceCode.toString("utf8"))[
+          "version"
+        ];
+
+        return;
+      }
+
+      return { modifiedSourceCode: sourceCode };
+    },
+  });
+
   assert(typeof keycloakAccountUiVersion === "string");
 
-  const parsedTargetPackageJson = await fetch(
+  const parsedAccountUiPackageJson = await fetch(
     `https://unpkg.com/@keycloak/keycloak-account-ui@${keycloakAccountUiVersion}/package.json`,
     fetchOptions,
   ).then((response) => response.json());
@@ -132,18 +247,16 @@ const KEYCLOAK_VERSION = "25.0.1";
       .toString("utf8"),
   );
 
-  const targetPackageVersion: string = parsedTargetPackageJson["version"];
-
   {
     const thisVersion: string = thisParsedPackageJson["version"];
 
-    if (!thisVersion.startsWith(targetPackageVersion)) {
+    if (!thisVersion.startsWith(keycloakAccountUiVersion)) {
       console.log(
         chalk.red(
           [
             `Error: The version of this package should match the targeted @keycloak/keycloak-account-ui version.`,
-            `Expected ${targetPackageVersion} but got ${thisVersion}`,
-            `If you're not ready to release yet you can use ${targetPackageVersion}-rc.0 (1, 2, 3, ...)`,
+            `Expected ${keycloakAccountUiVersion} but got ${thisVersion}`,
+            `If you're not ready to release yet you can use ${keycloakAccountUiVersion}-rc.0 (1, 2, 3, ...)`,
           ].join(" "),
         ),
       );
@@ -151,21 +264,53 @@ const KEYCLOAK_VERSION = "25.0.1";
     }
   }
 
-  for (const name of Object.keys(thisParsedPackageJson["peerDependencies"])) {
-    delete thisParsedPackageJson["devDependencies"][name];
-  }
+  let devDependenciesToInstall: Record<string, string> | undefined = undefined;
 
   {
-    const {
-      react,
-      "react-dom": _,
-      ...targetDependencies
-    } = parsedTargetPackageJson["dependencies"];
+    for (const name of Object.keys(thisParsedPackageJson["peerDependencies"])) {
+      delete thisParsedPackageJson["devDependencies"][name];
+    }
 
-    // TODO: Omit react
-    thisParsedPackageJson["peerDependencies"] = targetDependencies;
+    const parsedSharedUiPackageJson = await fetch(
+      `https://unpkg.com/@keycloak/keycloak-ui-shared@${keycloakUiSharedVersion}/package.json`,
+      fetchOptions,
+    ).then((response) => response.json());
 
-    Object.assign(thisParsedPackageJson["devDependencies"], targetDependencies);
+    thisParsedPackageJson["peerDependencies"] = Object.fromEntries(
+      Object.entries({
+        ...parsedAccountUiPackageJson["dependencies"],
+        ...parsedSharedUiPackageJson["dependencies"],
+      }).filter(
+        ([name]) =>
+          name !== "react" &&
+          name !== "react-dom" &&
+          name !== parsedSharedUiPackageJson["name"],
+      ),
+    );
+
+    devDependenciesToInstall = {};
+
+    for (const name of Object.keys(thisParsedPackageJson["peerDependencies"])) {
+      const typeName = name.startsWith("@")
+        ? `@types/${name.substring(1).replace("/", "__")}`
+        : `@types/${name}`;
+
+      const versionRange = {
+        ...parsedAccountUiPackageJson["devDependencies"],
+        ...parsedSharedUiPackageJson["devDependencies"],
+      }[typeName];
+
+      if (versionRange === undefined) {
+        continue;
+      }
+
+      devDependenciesToInstall[typeName] = versionRange;
+    }
+
+    Object.assign(thisParsedPackageJson["devDependencies"], {
+      ...thisParsedPackageJson["peerDependencies"],
+      ...devDependenciesToInstall,
+    });
   }
 
   fs.writeFileSync(
@@ -186,7 +331,8 @@ const KEYCLOAK_VERSION = "25.0.1";
   const readme = fs
     .readFileSync(pathJoin(__dirname, "README-template.md"))
     .toString("utf8")
-    .replaceAll("{{VERSION}}", targetPackageVersion)
+    .replaceAll("{{VERSION}}", keycloakAccountUiVersion)
+    .replaceAll("{{KEYCLOAK_VERSION}}", KEYCLOAK_VERSION)
     .replaceAll(
       "{{DEPENDENCIES}}",
       JSON.stringify(
@@ -195,6 +341,7 @@ const KEYCLOAK_VERSION = "25.0.1";
             [thisParsedPackageJson["name"]]: thisParsedPackageJson["version"],
             ...thisParsedPackageJson["peerDependencies"],
           },
+          devDependencies: devDependenciesToInstall,
         },
         undefined,
         2,

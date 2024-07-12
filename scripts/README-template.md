@@ -9,7 +9,8 @@ For more details on integrating this package into your project, refer to the [Ke
 
 ## Installation
 
-> You are currently viewing the version of `@keycloakify/keycloak-account-ui` that mirrors `@keycloak/keycloak-account-ui` version **{{VERSION}}**.
+> You are currently viewing the version of `@keycloakify/keycloak-account-ui` that mirrors `@keycloak/keycloak-account-ui` version **{{VERSION}}**.  
+> It is the version of the Account UI that ships with Keycloak **{{KEYCLOAK_VERSION}}**.
 
 To install this package, you must also install all the required peer dependencies. It is important to copy and paste the version ranges exactly to avoid any compatibility issues. Add this to your `package.json`:
 
