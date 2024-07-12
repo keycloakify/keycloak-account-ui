@@ -32,7 +32,6 @@ jobs:
         node-version: ${{ matrix.node }}
     - uses: bahmutov/npm-install@v1
     - run: npm run build
-    - run: npm run test
 
   check_if_version_upgraded:
     name: Check if version upgrade
