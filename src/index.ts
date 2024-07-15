@@ -1,1 +1,1 @@
-export * from "./KeycloakifyAccountUiContextProvider";
+export * from "./KeycloakifyAccountUiProvider";

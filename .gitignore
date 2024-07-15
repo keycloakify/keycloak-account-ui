@@ -46,5 +46,5 @@ jspm_packages
 /src/*
 !/src/KcAccountUi.tsx
 !/src/global.d.ts
-!/src/KeycloakifyAccountUiContextProvider.tsx
+!/src/KeycloakifyAccountUiProvider.tsx
 !/src/index.ts
