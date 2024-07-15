@@ -8,14 +8,14 @@
   },
   "scripts": {
     "prepare": "tsx scripts/prepare.ts",
-    "build": "tsc && tsc-alias && copyfiles -u 1 src/**/*.css dist",
+    "build": "tsc && tsc-alias && copyfiles -u 1 src/**/*.css src/**/*.svg dist",
     "_format": "prettier '**/*.{ts,tsx,json,md}'",
     "format": "npm run _format -- --write",
     "format:check": "npm run _format -- --list-different",
     "link-in-starter": "tsx scripts/link-in-app.ts keycloakify-starter"
   },
-  "main": "dist/KcAccountUi.js",
-  "types": "dist/KcAccountUi.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "lint-staged": {
     "*.{ts,tsx,json,md}": [
       "prettier --write"

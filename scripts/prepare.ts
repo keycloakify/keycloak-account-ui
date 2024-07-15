@@ -9,7 +9,7 @@ import { getThisCodebaseRootDirPath } from "./tools/getThisCodebaseRootDirPath";
 import { getProxyFetchOptions } from "./tools/fetchProxyOptions";
 import { transformCodebase } from "./tools/transformCodebase";
 import { isInside } from "./tools/isInside";
-import { assert } from "tsafe/assert";
+import { assert, type Equals } from "tsafe/assert";
 import fetch from "make-fetch-happen";
 import * as fs from "fs";
 import chalk from "chalk";
@@ -197,6 +197,51 @@ const KEYCLOAK_VERSION = "25.0.1";
       }
     },
   });
+
+  {
+    const publicDirPath = pathJoin(
+      getThisCodebaseRootDirPath(),
+      "src",
+      "public",
+    );
+
+    if (!fs.existsSync(publicDirPath)) {
+      fs.mkdirSync(publicDirPath);
+    }
+
+    (["logo.svg", "content.json"] as const).map(async (fileBasename) => {
+      const response = await fetch(
+        `https://raw.githubusercontent.com/keycloak/keycloak/${KEYCLOAK_VERSION}/js/apps/account-ui/public/${fileBasename}`,
+        fetchOptions,
+      );
+
+      const content = await response.text();
+
+      const { targetFileBasename, targetContent } = await (async () => {
+        switch (fileBasename) {
+          case "logo.svg":
+            return {
+              targetFileBasename: "logo.svg",
+              targetContent: content,
+            };
+          case "content.json":
+            return {
+              targetFileBasename: "content.ts",
+              targetContent: [
+                `const content = ${JSON.stringify(JSON.parse(content), null, 2)} as const;`,
+                "export default content;",
+              ].join("\n"),
+            };
+        }
+        assert<Equals<typeof fileBasename, never>>(false);
+      })();
+
+      fs.writeFileSync(
+        pathJoin(publicDirPath, targetFileBasename),
+        Buffer.from(targetContent, "utf8"),
+      );
+    });
+  }
 
   let keycloakAccountUiVersion: string | undefined;
 
