@@ -35,6 +35,7 @@ For more details on integrating this package into your project, refer to the [Ke
 
 ## Installation
 
+> **Note:** This README file is automatically generated at build so the information above are guaranteed to be up to date.  
 > You are currently viewing the README of [`@keycloakify/keycloak-account-ui@{{THIS_VERSION}}`](https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/{{THIS_VERSION}}) that
 > mirrors [`@keycloak/keycloak-account-ui@{{ACCOUNT_UI_VERSION}}`](https://www.npmjs.com/package/@keycloak/keycloak-account-ui/v/{{ACCOUNT_UI_VERSION}}).  
 > It is the version of the Account UI that ships with [**Keycloak {{KEYCLOAK_VERSION}}**](https://github.com/keycloak/keycloak/tree/{{KEYCLOAK_VERSION}}/js/apps/account-ui).

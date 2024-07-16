@@ -8,7 +8,7 @@
     <a href="https://github.com/keycloakify/keycloak-account-ui/actions">
       <img src="https://github.com/keycloakify/keycloak-account-ui/actions/workflows/ci.yaml/badge.svg?branch=main">
     </a>
-    <a href="https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.1-rc.6">
+    <a href="https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.1-rc.7">
       <img src="https://img.shields.io/npm/dm/@keycloakify/keycloak-account-ui">
     </a>
     <p align="center">
@@ -26,16 +26,17 @@ All credits goes to the keycloak team for the original work. Mainly [@jonkoops
 This re-packaged distribution exists to make it possible to take ownership of
 some specific part of the Account UI to create your own custom version of it.  
 In straight forward therms it make the Account UI ejectable, you can copy
-past [the source files](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.6/src/) that you want to modify into your codebase.
+past [the source files](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.7/src/) that you want to modify into your codebase.
 
 For more details on integrating this package into your project, refer to the [Keycloakify documentation](https://keycloakify.dev).
 
 > **Note:** This package's GitHub repository does not contain any code as it is automatically generated at build time by [scripts/prepare.ts](/scripts/prepare.ts).  
-> You can browse the sources includes int the NPM package [here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.6/src/).
+> You can browse the sources includes int the NPM package [here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.7/src/).
 
 ## Installation
 
-> You are currently viewing the README of [`@keycloakify/keycloak-account-ui@25.0.1-rc.6`](https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.1-rc.6) that
+> **Note:** This README file is automatically generated at build so the information above are guaranteed to be up to date.  
+> You are currently viewing the README of [`@keycloakify/keycloak-account-ui@25.0.1-rc.7`](https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.1-rc.7) that
 > mirrors [`@keycloak/keycloak-account-ui@25.0.1`](https://www.npmjs.com/package/@keycloak/keycloak-account-ui/v/25.0.1).  
 > It is the version of the Account UI that ships with [**Keycloak 25.0.1**](https://github.com/keycloak/keycloak/tree/25.0.1/js/apps/account-ui).
 
@@ -47,7 +48,7 @@ It's important to respect the exact version range listed here to avoid any compa
 ```json
 {
   "dependencies": {
-    "@keycloakify/keycloak-account-ui": "25.0.1-rc.6",
+    "@keycloakify/keycloak-account-ui": "25.0.1-rc.7",
     "@patternfly/patternfly": "^5.3.1",
     "@patternfly/react-core": "^5.3.3",
     "@patternfly/react-icons": "^5.3.2",
@@ -71,4 +72,4 @@ It's important to respect the exact version range listed here to avoid any compa
 ## Ejecting
 
 You can take partial ownership of some parts of the Account UI by copy pasting the sources files you want to modify into your codebase.  
-You can browse the sources files **[here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.6/src/)**.
+You can browse the sources files **[here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.1-rc.7/src/)**.
