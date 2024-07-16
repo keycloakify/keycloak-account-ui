@@ -1,11 +1,11 @@
 import { Suspense, useMemo, type LazyExoticComponent } from "react";
 import { assert } from "tsafe/assert";
 import { is } from "tsafe/is";
-import type { Environment } from "@keycloakify/keycloak-account-ui/environment";
-import type { MenuItem } from "@keycloakify/keycloak-account-ui/root/PageNav";
-import { joinPath } from "@keycloakify/keycloak-account-ui/utils/joinPath";
-import defaultContent from "@keycloakify/keycloak-account-ui/public/content";
-import defaultLogoSvgUrl from "@keycloakify/keycloak-account-ui/public/logo.svg";
+import type { Environment } from "./environment";
+import type { MenuItem } from "./root/PageNav";
+import { joinPath } from "./utils/joinPath";
+import defaultContent from "./public/content";
+import defaultLogoSvgUrl from "./public/logo.svg";
 
 export type KcContextLike = {
   serverBaseUrl: string;
@@ -159,7 +159,6 @@ function init(
     const [url] = args;
 
     if (url === joinPath(environment.resourceUrl, "/content.json")) {
-      window.fetch = realFetch;
       return {
         json: () => Promise.resolve(content),
       } as Response;

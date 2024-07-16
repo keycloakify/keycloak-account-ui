@@ -1,6 +1,6 @@
 {
   "name": "@keycloakify/keycloak-account-ui",
-  "version": "25.0.1-rc.5",
+  "version": "25.0.1-rc.6",
   "description": "",
   "repository": {
     "type": "git",
@@ -83,6 +83,9 @@
     "keycloak-js": "25.0.1",
     "@patternfly/react-styles": "^5.3.1",
     "@keycloak/keycloak-admin-client": "25.0.1"
+  },
+  "dependencies": {
+    "tsafe": "^1.7.2"
   },
   "publishConfig": {
     "access": "public"

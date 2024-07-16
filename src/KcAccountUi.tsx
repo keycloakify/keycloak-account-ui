@@ -14,18 +14,7 @@ export default function KeycloakAccountUi() {
   const [isI18nInitialized, setI18nInitialized] = useReducer(() => true, false);
 
   useEffect(() => {
-    let isActive = true;
-
-    prI18nInitialized.then(() => {
-      if (!isActive) {
-        return;
-      }
-      setI18nInitialized();
-    });
-
-    return () => {
-      isActive = false;
-    };
+    prI18nInitialized.then(() => setI18nInitialized());
   }, []);
 
   if (!isI18nInitialized) {

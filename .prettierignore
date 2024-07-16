@@ -4,7 +4,7 @@
 /.yarn_home
 
 /src/*
-!/src/KcAccountUi.tsx
-!/src/global.d.ts
-!/src/KeycloakifyAccountUiProvider.tsx
 !/src/index.ts
+!/src/global.d.ts
+!/src/KcAccountUi.tsx
+!/src/KcAccountUiLoader.tsx
