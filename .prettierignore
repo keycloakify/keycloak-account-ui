@@ -3,6 +3,7 @@
 /.eslintrc.js
 /.yarn_home
 
+/README.md
 /src/*
 !/src/index.ts
 !/src/global.d.ts
