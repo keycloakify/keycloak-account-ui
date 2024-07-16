@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prepare": "tsx scripts/prepare.ts",
-    "build": "tsc && tsc-alias && copyfiles -u 1 src/**/*.css src/**/*.svg dist",
+    "build": "tsc && tsc-alias && copyfiles -u 1 'src/**/*.css' 'src/**/*.svg' dist",
     "_format": "prettier '**/*.{ts,tsx,json,md}'",
     "format": "npm run _format -- --write",
     "format:check": "npm run _format -- --list-different",
