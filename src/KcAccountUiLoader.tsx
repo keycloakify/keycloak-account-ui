@@ -40,7 +40,7 @@ type LazyExoticComponentLike = {
   _result: unknown;
 };
 
-export type KeycloakifyAccountUiProviderProps = {
+export type KcAccountUiLoaderProps = {
   kcContext: KcContextLike;
   KcAccountUi: LazyExoticComponentLike;
   content?: MenuItem[];
@@ -48,9 +48,7 @@ export type KeycloakifyAccountUiProviderProps = {
   loadingFallback?: JSX.Element;
 };
 
-export function KeycloakifyAccountUiProvider(
-  props: KeycloakifyAccountUiProviderProps,
-) {
+export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
   const { KcAccountUi, loadingFallback, ...paramsOfInit } = props;
 
   assert(is<LazyExoticComponent<() => JSX.Element | null>>(KcAccountUi));
@@ -75,10 +73,7 @@ export function KeycloakifyAccountUiProvider(
 let previousRunParamsFingerprint: string | undefined = undefined;
 
 function init(
-  params: Pick<
-    KeycloakifyAccountUiProviderProps,
-    "kcContext" | "content" | "logoUrl"
-  >,
+  params: Pick<KcAccountUiLoaderProps, "kcContext" | "content" | "logoUrl">,
 ) {
   exit_condition: {
     const paramsFingerprint = JSON.stringify(params);
