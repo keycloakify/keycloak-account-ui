@@ -78,7 +78,7 @@ function init(
   exit_condition: {
     const paramsFingerprint = JSON.stringify(params);
 
-    if (paramsFingerprint === undefined) {
+    if (previousRunParamsFingerprint === undefined) {
       previousRunParamsFingerprint = paramsFingerprint;
       break exit_condition;
     }
@@ -91,12 +91,6 @@ function init(
     return;
   }
 
-  const {
-    content = defaultContent,
-    kcContext,
-    logoUrl = defaultLogoSvgUrl,
-  } = params;
-
   {
     const url = new URL(window.location.href);
 
@@ -106,14 +100,36 @@ function init(
     window.history.replaceState({}, "", url.toString());
   }
 
+  const { content = defaultContent, kcContext } = params;
+
+  const logoUrl = (() => {
+    const logoUrl_params = params.logoUrl ?? defaultLogoSvgUrl;
+
+    const url = new URL(
+      logoUrl_params.startsWith("http")
+        ? logoUrl_params
+        : joinPath(window.location.origin, logoUrl_params),
+    );
+
+    return url.href.substring(url.origin.length);
+  })();
+
+  const resourceUrl = kcContext.resourceUrl;
+
+  if (!logoUrl.startsWith(resourceUrl)) {
+    const error = new Error(`ERROR: The logo url can't be an external url.`);
+    alert(error.message);
+    throw error;
+  }
+
   const environment = {
     serverBaseUrl: kcContext.serverBaseUrl,
     authUrl: kcContext.authUrl,
     authServerUrl: kcContext.authServerUrl,
     realm: kcContext.realm.name,
     clientId: kcContext.clientId,
-    resourceUrl: kcContext.resourceUrl,
-    logo: "",
+    resourceUrl,
+    logo: logoUrl.substring(resourceUrl.length),
     logoUrl: logoUrl,
     baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
     locale: kcContext.locale,
