@@ -15,19 +15,23 @@ import * as fs from "fs";
 import chalk from "chalk";
 import * as child_process from "child_process";
 
-const KEYCLOAK_VERSION = "25.0.1";
-
 (async () => {
   child_process.execSync("git clean -Xfd .", {
     cwd: pathJoin(getThisCodebaseRootDirPath(), "src"),
   });
+
+  const keycloakVersion: string = JSON.parse(
+    fs
+      .readFileSync(pathJoin(getThisCodebaseRootDirPath(), "package.json"))
+      .toString("utf8"),
+  ).version.split("-")[0];
 
   const fetchOptions = getProxyFetchOptions({
     npmConfigGetCwd: getThisCodebaseRootDirPath(),
   });
 
   const { extractedDirPath } = await downloadAndExtractArchive({
-    url: `https://github.com/keycloak/keycloak/archive/refs/tags/${KEYCLOAK_VERSION}.zip`,
+    url: `https://github.com/keycloak/keycloak/archive/refs/tags/${keycloakVersion}.zip`,
     cacheDirPath: pathJoin(
       getThisCodebaseRootDirPath(),
       "node_modules",
@@ -215,7 +219,7 @@ const KEYCLOAK_VERSION = "25.0.1";
 
     (["logo.svg", "content.json"] as const).map(async (fileBasename) => {
       const response = await fetch(
-        `https://raw.githubusercontent.com/keycloak/keycloak/${KEYCLOAK_VERSION}/js/apps/account-ui/public/${fileBasename}`,
+        `https://raw.githubusercontent.com/keycloak/keycloak/${keycloakVersion}/js/apps/account-ui/public/${fileBasename}`,
         fetchOptions,
       );
 
@@ -394,7 +398,7 @@ const KEYCLOAK_VERSION = "25.0.1";
     .readFileSync(pathJoin(__dirname, "README-template.md"))
     .toString("utf8")
     .replaceAll("{{ACCOUNT_UI_VERSION}}", keycloakAccountUiVersion)
-    .replaceAll("{{KEYCLOAK_VERSION}}", KEYCLOAK_VERSION)
+    .replaceAll("{{KEYCLOAK_VERSION}}", keycloakVersion)
     .replaceAll("{{THIS_VERSION}}", thisVersion)
     .replaceAll(
       "{{DEPENDENCIES}}",
@@ -420,7 +424,7 @@ const KEYCLOAK_VERSION = "25.0.1";
 
   console.log(
     chalk.green(
-      `\n\nPulled @keycloak/keycloak-account-ui@${keycloakAccountUiVersion} from keycloak version ${KEYCLOAK_VERSION}`,
+      `\n\nPulled @keycloak/keycloak-account-ui@${keycloakAccountUiVersion} from keycloak version ${keycloakVersion}`,
     ),
   );
 })();
