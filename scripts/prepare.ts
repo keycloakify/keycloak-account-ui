@@ -18,6 +18,10 @@ import * as child_process from "child_process";
 const KEYCLOAK_VERSION = "25.0.1";
 
 (async () => {
+  child_process.execSync("git clean -Xfd .", {
+    cwd: pathJoin(getThisCodebaseRootDirPath(), "src"),
+  });
+
   const fetchOptions = getProxyFetchOptions({
     npmConfigGetCwd: getThisCodebaseRootDirPath(),
   });
@@ -371,6 +375,21 @@ const KEYCLOAK_VERSION = "25.0.1";
     stdio: "ignore",
   });
 
+  fs.writeFileSync(
+    pathJoin(getThisCodebaseRootDirPath(), "dependencies.gen.json"),
+    Buffer.from(
+      JSON.stringify(
+        {
+          dependencies: thisParsedPackageJson["peerDependencies"],
+          devDependencies: devDependenciesToInstall,
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    ),
+  );
+
   const readme = fs
     .readFileSync(pathJoin(__dirname, "README-template.md"))
     .toString("utf8")
@@ -387,7 +406,7 @@ const KEYCLOAK_VERSION = "25.0.1";
           },
           devDependencies: devDependenciesToInstall,
         },
-        undefined,
+        null,
         2,
       ),
     );
@@ -396,6 +415,8 @@ const KEYCLOAK_VERSION = "25.0.1";
     pathJoin(getThisCodebaseRootDirPath(), "README.md"),
     Buffer.from(readme, "utf8"),
   );
+
+  child_process.execSync("yarn format");
 
   console.log(
     chalk.green(
