@@ -20,11 +20,15 @@ import * as child_process from "child_process";
     cwd: pathJoin(getThisCodebaseRootDirPath(), "src"),
   });
 
-  const keycloakVersion: string = JSON.parse(
+  const thisParsedPackageJson = JSON.parse(
     fs
       .readFileSync(pathJoin(getThisCodebaseRootDirPath(), "package.json"))
       .toString("utf8"),
-  ).version.split("-")[0];
+  );
+
+  const thisVersion: string = thisParsedPackageJson["version"];
+
+  const keycloakVersion = thisVersion.split("-")[0];
 
   const fetchOptions = getProxyFetchOptions({
     npmConfigGetCwd: getThisCodebaseRootDirPath(),
@@ -293,27 +297,6 @@ import * as child_process from "child_process";
     `https://unpkg.com/@keycloak/keycloak-account-ui@${keycloakAccountUiVersion}/package.json`,
     fetchOptions,
   ).then((response) => response.json());
-
-  const thisParsedPackageJson = JSON.parse(
-    fs
-      .readFileSync(pathJoin(getThisCodebaseRootDirPath(), "package.json"))
-      .toString("utf8"),
-  );
-
-  const thisVersion: string = thisParsedPackageJson["version"];
-
-  if (!thisVersion.startsWith(keycloakAccountUiVersion)) {
-    console.log(
-      chalk.red(
-        [
-          `Error: The version of this package should match the targeted @keycloak/keycloak-account-ui version.`,
-          `Expected ${keycloakAccountUiVersion} but got ${thisVersion}`,
-          `If you're not ready to release yet you can use ${keycloakAccountUiVersion}-rc.0 (1, 2, 3, ...)`,
-        ].join(" "),
-      ),
-    );
-    process.exit(1);
-  }
 
   let devDependenciesToInstall: Record<string, string> | undefined = undefined;
 
