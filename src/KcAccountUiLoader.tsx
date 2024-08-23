@@ -26,8 +26,6 @@ export type KcContextLike = {
     scheme: string;
   };
   locale: string;
-  referrerName?: string;
-  referrer_uri?: string;
   isAuthorizationEnabled: boolean;
   deleteAccountAllowed: boolean;
   updateEmailFeatureEnabled: boolean;
@@ -91,15 +89,6 @@ function init(
     return;
   }
 
-  {
-    const url = new URL(window.location.href);
-
-    url.searchParams.delete("referrer");
-    url.searchParams.delete("referrer_uri");
-
-    window.history.replaceState({}, "", url.toString());
-  }
-
   const { content = defaultContent, kcContext } = params;
 
   const logoUrl = (() => {
@@ -133,8 +122,10 @@ function init(
     logoUrl: logoUrl,
     baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
     locale: kcContext.locale,
-    referrerName: kcContext.referrerName ?? "",
-    referrerUrl: kcContext.referrer_uri ?? "",
+    referrerName:
+      readQueryParamOrRestoreFromSessionStorage({ name: "referrer" }) ?? "",
+    referrerUrl:
+      readQueryParamOrRestoreFromSessionStorage({ name: "referrer_uri" }) ?? "",
     features: {
       isRegistrationEmailAsUsername:
         kcContext.realm.registrationEmailAsUsername,
@@ -177,4 +168,25 @@ function init(
 
     return realFetch(...args);
   };
+}
+
+function readQueryParamOrRestoreFromSessionStorage(params: {
+  name: string;
+}): string | undefined {
+  const { name } = params;
+
+  const url = new URL(window.location.href);
+
+  const value = url.searchParams.get(name);
+
+  const PREFIX = "keycloakify:";
+
+  if (value !== null) {
+    sessionStorage.setItem(`${PREFIX}${name}`, value);
+    url.searchParams.delete(name);
+    window.history.replaceState({}, "", url.toString());
+    return value;
+  }
+
+  return sessionStorage.getItem(`${PREFIX}${name}`) ?? undefined;
 }
