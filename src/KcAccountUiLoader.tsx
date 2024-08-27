@@ -92,6 +92,22 @@ function init(
   const { content = defaultContent, kcContext } = params;
 
   const logoUrl = (() => {
+    if (params.logoUrl?.startsWith("data:")) {
+      const error = new Error(
+        [
+          `ERROR: The logo url can't be a data url.`,
+          `Due to the fact your logo is very small it has been inlined in the bundle.`,
+          `The logoUrl you passed is: ${params.logoUrl.substring(0, 25)}...`,
+          `To fix this issue you can put the logo in the public directory and import it like:`,
+          `logoUrl={\`\${${["import", "meta", "env", "BASE_URL"].join(".")}}assets/logo.svg\`} if you are using Vite or`,
+          `logoUrl={\`\${process.env.PUBLIC_URL}/assets/logo.svg\`} if you are using Webpack (CRA).`,
+          `If it's an SVG you can also pad it's size with random \`<!-- xxx -->\` comments to make it bigger that it passes the threshold of 4KB.`,
+        ].join("\n"),
+      );
+      alert(error.message);
+      throw error;
+    }
+
     const logoUrl_params = params.logoUrl ?? defaultLogoSvgUrl;
 
     const url = new URL(
