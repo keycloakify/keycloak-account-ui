@@ -8,9 +8,6 @@ import defaultContent from "@keycloakify/keycloak-account-ui/public/content";
 import defaultLogoSvgUrl from "@keycloakify/keycloak-account-ui/public/logo.svg";
 
 export type KcContextLike = {
-  serverBaseUrl: string;
-  authUrl: string;
-  authServerUrl: string;
   realm: {
     name: string;
     registrationEmailAsUsername: boolean;
@@ -19,7 +16,6 @@ export type KcContextLike = {
     identityFederationEnabled: boolean;
     userManagedAccessAllowed: boolean;
   };
-  clientId: string;
   resourceUrl: string;
   baseUrl: {
     rawSchemeSpecificPart: string;
@@ -32,7 +28,30 @@ export type KcContextLike = {
   updateEmailActionEnabled: boolean;
   isViewGroupsEnabled: boolean;
   isOid4VciEnabled: boolean;
-};
+} & (
+  | {
+      // Keycloak 25
+      serverBaseUrl: string;
+      authUrl: string;
+      clientId: string;
+      authServerUrl: string;
+    }
+  | {
+      // Keycloak 20
+      authUrl: {
+        rawSchemeSpecificPart: string;
+        scheme: string;
+      };
+      authServerUrl: string;
+    }
+  | {
+      // Keycloak 21
+      authUrl: {
+        rawSchemeSpecificPart: string;
+        scheme: string;
+      };
+    }
+);
 
 type LazyExoticComponentLike = {
   _result: unknown;
@@ -127,12 +146,47 @@ function init(
     throw error;
   }
 
+  const serverBaseUrl = (() => {
+    if ("serverBaseUrl" in kcContext) {
+      return kcContext.serverBaseUrl;
+    }
+
+    const { authUrl } = kcContext;
+    return `${authUrl.scheme}:${authUrl.rawSchemeSpecificPart.replace(/\$/, "")}`;
+  })();
+
+  const authUrl = (() => {
+    const { authUrl } = kcContext;
+
+    if (typeof authUrl === "string") {
+      return authUrl;
+    }
+
+    return `${authUrl.scheme}:${authUrl.rawSchemeSpecificPart}`;
+  })();
+
+  const clientId = (() => {
+    if ("clientId" in kcContext) {
+      return kcContext.clientId;
+    }
+
+    return "account-console";
+  })();
+
+  const authServerUrl = (() => {
+    if ("authServerUrl" in kcContext) {
+      return kcContext.authServerUrl;
+    }
+
+    return authUrl;
+  })();
+
   const environment = {
-    serverBaseUrl: kcContext.serverBaseUrl,
-    authUrl: kcContext.authUrl,
-    authServerUrl: kcContext.authServerUrl,
+    serverBaseUrl,
+    authUrl,
+    authServerUrl,
     realm: kcContext.realm.name,
-    clientId: kcContext.clientId,
+    clientId,
     resourceUrl,
     logo: logoUrl.substring(resourceUrl.length),
     logoUrl: logoUrl,
