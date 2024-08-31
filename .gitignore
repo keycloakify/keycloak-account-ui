@@ -48,3 +48,4 @@ jspm_packages
 !/src/global.d.ts
 !/src/KcAccountUi.tsx
 !/src/KcAccountUiLoader.tsx
+!/src/zKcContextLike.ts

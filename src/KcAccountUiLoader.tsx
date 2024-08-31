@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { Suspense, useMemo, type LazyExoticComponent } from "react";
 import { assert } from "tsafe/assert";
 import { is } from "tsafe/is";
@@ -6,52 +8,73 @@ import type { MenuItem } from "@keycloakify/keycloak-account-ui/root/PageNav";
 import { joinPath } from "@keycloakify/keycloak-account-ui/utils/joinPath";
 import defaultContent from "@keycloakify/keycloak-account-ui/public/content";
 import defaultLogoSvgUrl from "@keycloakify/keycloak-account-ui/public/logo.svg";
+import { getI18n } from "react-i18next";
+//import { logValidationResult } from "./zKcContextLike";
 
-export type KcContextLike = {
-  realm: {
-    name: string;
-    registrationEmailAsUsername: boolean;
-    editUsernameAllowed: boolean;
-    isInternationalizationEnabled: boolean;
-    identityFederationEnabled: boolean;
-    userManagedAccessAllowed: boolean;
+export type KcContextLike =
+  | KcContextLike.Keycloak25AndUp
+  | KcContextLike.Keycloak20To24
+  | KcContextLike.Keycloak19;
+
+export namespace KcContextLike {
+  export type Common = {
+    realm: {
+      name: string;
+      registrationEmailAsUsername: boolean;
+      editUsernameAllowed: boolean;
+      isInternationalizationEnabled: boolean;
+      identityFederationEnabled: boolean;
+      userManagedAccessAllowed: boolean;
+    };
+    resourceUrl: string;
+    baseUrl: {
+      rawSchemeSpecificPart: string;
+      scheme: string;
+    };
+    locale: string;
+    isAuthorizationEnabled: boolean;
+    deleteAccountAllowed: boolean;
+    updateEmailFeatureEnabled: boolean;
+    updateEmailActionEnabled: boolean;
   };
-  resourceUrl: string;
-  baseUrl: {
-    rawSchemeSpecificPart: string;
-    scheme: string;
+
+  export type I18nApi = {
+    msgJSON: string;
+    supportedLocales: Record<string, string>;
   };
-  locale: string;
-  isAuthorizationEnabled: boolean;
-  deleteAccountAllowed: boolean;
-  updateEmailFeatureEnabled: boolean;
-  updateEmailActionEnabled: boolean;
-  isViewGroupsEnabled: boolean;
-  isOid4VciEnabled: boolean;
-} & (
-  | {
-      // Keycloak 25
-      serverBaseUrl: string;
-      authUrl: string;
-      clientId: string;
-      authServerUrl: string;
-    }
-  | {
-      // Keycloak 20
+
+  export type Keycloak25AndUp = Common & {
+    serverBaseUrl: string;
+    authUrl: string;
+    clientId: string;
+    authServerUrl: string;
+    isOid4VciEnabled: boolean;
+    isViewGroupsEnabled: boolean;
+  };
+
+  export type Keycloak20To24 = Common &
+    I18nApi & {
       authUrl: {
         rawSchemeSpecificPart: string;
         scheme: string;
       };
-      authServerUrl: string;
-    }
-  | {
-      // Keycloak 21
+      isViewGroupsEnabled: boolean;
+    };
+
+  export type Keycloak19 = Common &
+    I18nApi & {
       authUrl: {
         rawSchemeSpecificPart: string;
         scheme: string;
       };
-    }
-);
+    };
+}
+
+function getIsKeycloak25AndUp(
+  kcContext: KcContextLike,
+): kcContext is KcContextLike.Keycloak25AndUp {
+  return "serverBaseUrl" in kcContext;
+}
 
 type LazyExoticComponentLike = {
   _result: unknown;
@@ -109,6 +132,8 @@ function init(
   }
 
   const { content = defaultContent, kcContext } = params;
+
+  //logValidationResult(kcContext);
 
   const logoUrl = (() => {
     if (params.logoUrl?.startsWith("data:")) {
@@ -209,8 +234,13 @@ function init(
       deleteAccountAllowed: kcContext.deleteAccountAllowed,
       updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
       updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
-      isViewGroupsEnabled: kcContext.isViewGroupsEnabled,
-      isOid4VciEnabled: kcContext.isOid4VciEnabled,
+      isViewGroupsEnabled:
+        "isViewGroupsEnabled" in kcContext
+          ? kcContext.isViewGroupsEnabled
+          : false,
+      isOid4VciEnabled: getIsKeycloak25AndUp(kcContext)
+        ? kcContext.isOid4VciEnabled
+        : false,
     },
   };
 
@@ -225,19 +255,186 @@ function init(
     document.body.appendChild(script);
   }
 
-  const realFetch = window.fetch;
+  {
+    const realFetch = window.fetch;
 
-  window.fetch = async function fetch(...args) {
-    const [url] = args;
-
-    if (url === joinPath(environment.resourceUrl, "/content.json")) {
-      return {
-        json: () => Promise.resolve(content),
+    const buildJsonResponse = (json: unknown): Response => {
+      const response = {
+        headers: new Headers({ "Content-Type": "application/json" }),
+        ok: true,
+        json: () => Promise.resolve(json),
+        text: () => Promise.resolve(JSON.stringify(json)),
+        status: 200,
       } as Response;
-    }
 
-    return realFetch(...args);
-  };
+      /*
+      return new Proxy(response, {
+        get(target, prop, receiver) {
+          console.log(`GET ${String(prop)}`);
+          return Reflect.get(target, prop, receiver);
+        },
+      });
+      */
+      return response;
+    };
+
+    let isLanguageChangeEventListened = false;
+    let wasLocaleAttributeManuallyAdded = false;
+
+    window.fetch = async function fetch(...args) {
+      const [url, fetchOptions] = args;
+
+      polyfill_i18n_api: {
+        if (getIsKeycloak25AndUp(kcContext)) {
+          break polyfill_i18n_api;
+        }
+        //assert(is<KcContextLike.Keycloak20To24>(kcContext));
+
+        const langs = Object.keys(kcContext.supportedLocales);
+
+        if (`${url}`.endsWith("/supportedLocales")) {
+          return buildJsonResponse(langs);
+        }
+
+        for (const lang of langs) {
+          if (!`${url}`.endsWith(`/${lang}`)) {
+            continue;
+          }
+
+          const data = Object.entries(
+            JSON.parse(kcContext.msgJSON) as Record<string, string>,
+          ).map(([key, value]) => {
+            try {
+              value = decodeURIComponent(escape(value));
+            } catch {
+              // ignore
+            }
+
+            return { key, value };
+          });
+
+          track_language_change: {
+            if (isLanguageChangeEventListened) {
+              break track_language_change;
+            }
+            isLanguageChangeEventListened = true;
+
+            getI18n().on("languageChanged", (lang) => {
+              if (lang !== kcContext.locale) {
+                window.location.reload();
+              }
+            });
+          }
+
+          return buildJsonResponse(data);
+        }
+
+        const urlObj = new URL(
+          (() => {
+            const urlStr = `${url}`;
+
+            return urlStr.startsWith("/")
+              ? `${window.location.origin}${urlStr}`
+              : urlStr;
+          })(),
+        );
+
+        add_locale_attribute: {
+          if (!environment.features.isInternationalizationEnabled) {
+            break add_locale_attribute;
+          }
+
+          if ((fetchOptions?.method?.toLocaleLowerCase() ?? "get") !== "get") {
+            break add_locale_attribute;
+          }
+
+          if (!urlObj.pathname.replace(/\/$/, "").endsWith("/account")) {
+            break add_locale_attribute;
+          }
+
+          if (urlObj.searchParams.get("userProfileMetadata") !== "true") {
+            break add_locale_attribute;
+          }
+
+          const response = await realFetch(...args);
+
+          if (!response.ok) {
+            return response;
+          }
+
+          const data = await response.json();
+
+          data.attributes ??= {};
+
+          data.attributes.locale = [kcContext.locale];
+
+          data.userProfileMetadata ??= {};
+          data.userProfileMetadata.attributes ??= [];
+
+          if (!data.userProfileMetadata.attributes.includes("locale")) {
+            wasLocaleAttributeManuallyAdded = true;
+            data.userProfileMetadata.attributes.unshift({
+              name: "locale",
+              displayName: "locale",
+              required: false,
+              readOnly: false,
+              validators: {},
+              multivalued: false,
+            });
+          }
+
+          return buildJsonResponse(data);
+        }
+
+        remove_locale_attribute_from_req: {
+          if (!wasLocaleAttributeManuallyAdded) {
+            break remove_locale_attribute_from_req;
+          }
+
+          if ((fetchOptions?.method?.toLocaleLowerCase() ?? "get") !== "post") {
+            break remove_locale_attribute_from_req;
+          }
+
+          if (!urlObj.pathname.replace(/\/$/, "").endsWith("/account")) {
+            break remove_locale_attribute_from_req;
+          }
+
+          if (fetchOptions?.body === undefined) {
+            break remove_locale_attribute_from_req;
+          }
+
+          let reqPayload: any;
+
+          try {
+            reqPayload = JSON.parse(fetchOptions.body as string);
+          } catch {
+            break remove_locale_attribute_from_req;
+          }
+
+          if (reqPayload.userProfileMetadata === undefined) {
+            break remove_locale_attribute_from_req;
+          }
+
+          reqPayload.userProfileMetadata.attributes =
+            reqPayload.userProfileMetadata.attributes.filter(
+              (attr: any) => attr.name !== "locale",
+            );
+
+          fetchOptions.body = JSON.stringify(reqPayload);
+
+          args[1] = fetchOptions;
+
+          return realFetch(...args);
+        }
+      }
+
+      if (url === joinPath(environment.resourceUrl, "/content.json")) {
+        return buildJsonResponse(content);
+      }
+
+      return realFetch(...args);
+    };
+  }
 }
 
 function readQueryParamOrRestoreFromSessionStorage(params: {
