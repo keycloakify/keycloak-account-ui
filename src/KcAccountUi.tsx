@@ -4,11 +4,11 @@ import "@patternfly/patternfly/patternfly-addons.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { i18n } from "@keycloakify/keycloak-account-ui/i18n";
+import { initI18n } from "@keycloakify/keycloak-account-ui/i18n";
 import { routes } from "@keycloakify/keycloak-account-ui/routes";
 
 const router = createBrowserRouter(routes);
-const prI18nInitialized = i18n.init();
+const prI18nInitialized = initI18n();
 
 export default function KeycloakAccountUi() {
   const [isI18nInitialized, setI18nInitialized] = useReducer(() => true, false);

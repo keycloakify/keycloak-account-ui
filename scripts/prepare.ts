@@ -125,6 +125,58 @@ import * as child_process from "child_process";
               `"@keycloak/keycloak-ui-shared"`,
               `"@keycloakify/keycloak-account-ui/ui-shared"`,
             );
+
+          if (fileRelativePath === "i18n.ts") {
+            const modifiedSourceCode_before = modifiedSourceCode;
+            modifiedSourceCode = modifiedSourceCode.replaceAll(
+              "export const i18n",
+              [
+                `export function initI18n() { return i18n.init(); }`,
+                "",
+                "const i18n",
+              ].join("\n"),
+            );
+            assert(modifiedSourceCode !== modifiedSourceCode_before);
+          } else {
+            const modifiedSourceCode_before = modifiedSourceCode;
+
+            modifiedSourceCode = modifiedSourceCode.replaceAll(
+              "i18n.",
+              "getI18n().",
+            );
+
+            if (modifiedSourceCode_before !== modifiedSourceCode) {
+              const modifiedSourceCode_before = modifiedSourceCode;
+
+              modifiedSourceCode = modifiedSourceCode
+                .split("\n")
+                .map((line) => {
+                  if (
+                    !line.includes(
+                      `from "@keycloakify/keycloak-account-ui/i18n";`,
+                    )
+                  ) {
+                    return line;
+                  }
+
+                  const tokens = line
+                    .split("{")[1]
+                    .split("}")[0]
+                    .split(",")
+                    .map((token) => token.trim());
+
+                  return `import { ${tokens.filter((t) => t !== "i18n")} } from "@keycloakify/keycloak-account-ui/i18n";`;
+                })
+                .join("\n");
+
+              assert(modifiedSourceCode_before !== modifiedSourceCode);
+
+              modifiedSourceCode = [
+                `import { getI18n } from "react-i18next";`,
+                modifiedSourceCode,
+              ].join("\n");
+            }
+          }
         }
 
         await writeFile({
