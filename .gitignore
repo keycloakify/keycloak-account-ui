@@ -43,6 +43,8 @@ jspm_packages
 /.yarn_home
 /dist
 
+/messages
+
 /src/*
 !/src/index.ts
 !/src/global.d.ts

@@ -31,7 +31,8 @@
   "files": [
     "src/",
     "dist/",
-    "!dist/tsconfig.tsbuildinfo"
+    "!dist/tsconfig.tsbuildinfo",
+    "messages/"
   ],
   "keywords": [],
   "homepage": "https://github.com/keycloakify/keycloak-account-ui",

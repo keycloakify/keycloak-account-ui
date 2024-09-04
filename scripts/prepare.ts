@@ -4,6 +4,7 @@ import {
   relative as pathRelative,
   sep as pathSep,
   dirname as pathDirname,
+  basename as pathBasename,
 } from "path";
 import { getThisCodebaseRootDirPath } from "./tools/getThisCodebaseRootDirPath";
 import { getProxyFetchOptions } from "./tools/fetchProxyOptions";
@@ -34,14 +35,16 @@ import * as child_process from "child_process";
     npmConfigGetCwd: getThisCodebaseRootDirPath(),
   });
 
+  const cacheDirPath = pathJoin(
+    getThisCodebaseRootDirPath(),
+    "node_modules",
+    ".cache",
+    "scripts",
+  );
+
   const { extractedDirPath } = await downloadAndExtractArchive({
     url: `https://github.com/keycloak/keycloak/archive/refs/tags/${keycloakVersion}.zip`,
-    cacheDirPath: pathJoin(
-      getThisCodebaseRootDirPath(),
-      "node_modules",
-      ".cache",
-      "scripts",
-    ),
+    cacheDirPath,
     fetchOptions,
     uniqueIdOfOnArchiveFile: "download_keycloak-account-ui-sources",
     onArchiveFile: async ({ fileRelativePath, readFile, writeFile }) => {
@@ -349,6 +352,32 @@ import * as child_process from "child_process";
     `https://unpkg.com/@keycloak/keycloak-account-ui@${keycloakAccountUiVersion}/package.json`,
     fetchOptions,
   ).then((response) => response.json());
+
+  {
+    const { extractedDirPath } = await downloadAndExtractArchive({
+      url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${keycloakUiSharedVersion}.jar`,
+      cacheDirPath,
+      fetchOptions,
+      uniqueIdOfOnArchiveFile: "bring_in_account_v3_i18n_messages",
+      onArchiveFile: async ({ fileRelativePath, writeFile }) => {
+        if (
+          !fileRelativePath.startsWith(
+            pathJoin("theme", "keycloak.v3", "account", "messages"),
+          )
+        ) {
+          return;
+        }
+        await writeFile({
+          fileRelativePath: pathBasename(fileRelativePath),
+        });
+      },
+    });
+
+    transformCodebase({
+      srcDirPath: extractedDirPath,
+      destDirPath: pathJoin(getThisCodebaseRootDirPath(), "messages"),
+    });
+  }
 
   let devDependenciesToInstall: Record<string, string> | undefined = undefined;
 
