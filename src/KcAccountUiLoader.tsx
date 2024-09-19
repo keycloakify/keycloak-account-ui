@@ -177,6 +177,11 @@ function init(
     }
 
     const { authUrl } = kcContext;
+    
+    if (typeof authUrl === "string") {
+      return authUrl;
+    }
+    
     return `${authUrl.scheme}:${authUrl.rawSchemeSpecificPart.replace(/\$/, "")}`;
   })();
 
