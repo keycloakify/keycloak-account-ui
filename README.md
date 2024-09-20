@@ -31,12 +31,13 @@ This re-packaged distribution serves two key purposes:
 2. **Enabling partial customization of the Account UI**:  
    You can take ownership of specific parts of the Account UI by simply copying and modifying [source files](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.4-rc.6/src/) as needed. The rest of the UI can remain in the original module, so your codebase will only include the files you've customized.
 
-For more details on integrating this package into your project, refer to the [Keycloakify documentation](https://keycloakify.dev).
 
 > **Note:** This package's GitHub repository does not contain any code as it is automatically generated at build time by [scripts/prepare.ts](/scripts/prepare.ts).  
 > You can browse the sources includes int the NPM package [here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.4-rc.6/src/).
 
-## Installation
+## Installation  
+
+This package is meant to be used via Keycloakify. Learn how to use this module on [the Keycloakify documentation website](https://keycloakify.dev).  
 
 > **Note:** This README file is automatically generated at build so the information above are guaranteed to be up to date.  
 > You are currently viewing the README of [`@keycloakify/keycloak-account-ui@25.0.4-rc.6`](https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.6) that
@@ -71,8 +72,3 @@ It's important to respect the exact version range listed here to avoid any compa
   }
 }
 ```
-
-## Ejecting
-
-You can take partial ownership of some parts of the Account UI by copy pasting the sources files you want to modify into your codebase.  
-You can browse the sources files **[here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@25.0.4-rc.6/src/)**.
