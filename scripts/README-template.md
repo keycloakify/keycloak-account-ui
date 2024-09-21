@@ -23,17 +23,20 @@ This project re-packages [`@keycloak/keycloak-account-ui`](https://www.npmjs.com
 All credits goes to the keycloak team for the original work. Mainly [@jonkoops
 ](https://github.com/jonkoops) and [@edewit](https://github.com/edewit).
 
-This re-packaged distribution exists to make it possible to take ownership of
-some specific part of the Account UI to create your own custom version of it.  
-In straight forward therms it make the Account UI ejectable, you can copy
-past [the source files](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@{{THIS_VERSION}}/src/) that you want to modify into your codebase.
+This re-packaged distribution serves two key purposes:
 
-For more details on integrating this package into your project, refer to the [Keycloakify documentation](https://keycloakify.dev).
+1. **Ensuring retro-compatibility with Keycloak**:  
+   It allows the Account UI to work seamlessly with older versions of Keycloak (down to version 19) and future major versions. This enables you to create a custom Account UI with minimal maintenance, without worrying about which Keycloak version it will be deployed on.
+
+2. **Enabling partial customization of the Account UI**:  
+   You can take ownership of specific parts of the Account UI by simply copying and modifying [source files](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@{{THIS_VERSION}}/src/) as needed. The rest of the UI can remain in the original module, so your codebase will only include the files you've customized.
 
 > **Note:** This package's GitHub repository does not contain any code as it is automatically generated at build time by [scripts/prepare.ts](/scripts/prepare.ts).  
 > You can browse the sources includes int the NPM package [here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@{{THIS_VERSION}}/src/).
 
 ## Installation
+
+This package is meant to be used via Keycloakify. Learn how to use this module on [the Keycloakify documentation website](https://keycloakify.dev).
 
 > **Note:** This README file is automatically generated at build so the information above are guaranteed to be up to date.  
 > You are currently viewing the README of [`@keycloakify/keycloak-account-ui@{{THIS_VERSION}}`](https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/{{THIS_VERSION}}) that
@@ -48,8 +51,3 @@ It's important to respect the exact version range listed here to avoid any compa
 ```json
 {{DEPENDENCIES}}
 ```
-
-## Ejecting
-
-You can take partial ownership of some parts of the Account UI by copy pasting the sources files you want to modify into your codebase.  
-You can browse the sources files **[here](https://unpkg.com/browse/@keycloakify/keycloak-account-ui@{{THIS_VERSION}}/src/)**.
