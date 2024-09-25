@@ -40,7 +40,7 @@ export namespace KcContextLike {
 
   export type I18nApi = {
     msgJSON: string;
-    supportedLocales: Record<string, string>;
+    supportedLocales?: Record<string, string>;
   };
 
   export type Keycloak25AndUp = Common & {
@@ -295,7 +295,10 @@ function init(
         }
         //assert(is<KcContextLike.Keycloak20To24>(kcContext));
 
-        const langs = Object.keys(kcContext.supportedLocales);
+        const langs =
+          kcContext.supportedLocales === undefined
+            ? ["en"]
+            : Object.keys(kcContext.supportedLocales);
 
         if (`${url}`.endsWith("/supportedLocales")) {
           return buildJsonResponse(langs);
