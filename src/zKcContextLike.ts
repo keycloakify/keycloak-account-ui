@@ -42,7 +42,7 @@ const zI18nApi = (() => {
 
     const zTargetType = z.object({
         msgJSON: z.string(),
-        supportedLocales: z.record(z.string())
+        supportedLocales: z.record(z.string()).optional(),
     });
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
