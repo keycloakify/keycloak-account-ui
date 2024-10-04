@@ -36,6 +36,7 @@ export namespace KcContextLike {
     deleteAccountAllowed: boolean;
     updateEmailFeatureEnabled: boolean;
     updateEmailActionEnabled: boolean;
+    isViewOrganizationsEnabled?: boolean;
   };
 
   export type I18nApi = {
@@ -246,6 +247,7 @@ function init(
       isOid4VciEnabled: getIsKeycloak25AndUp(kcContext)
         ? kcContext.isOid4VciEnabled
         : false,
+      isViewOrganizationsEnabled: kcContext.isViewOrganizationsEnabled ?? false,
     },
   };
 

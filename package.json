@@ -2,6 +2,7 @@
   "name": "@keycloakify/keycloak-account-ui",
   "version": "26.0.0-rc.0",
   "description": "Repackaged Keycloak Account UI",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git://github.com/keycloakify/keycloak-account-ui.git"

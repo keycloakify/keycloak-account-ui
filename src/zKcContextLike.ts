@@ -28,6 +28,7 @@ const zKcContextLikeCommon = (() => {
         deleteAccountAllowed: z.boolean(),
         updateEmailFeatureEnabled: z.boolean(),
         updateEmailActionEnabled: z.boolean(),
+        isViewOrganizationsEnabled: z.boolean().optional(),
     });
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
