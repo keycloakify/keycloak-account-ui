@@ -9,6 +9,9 @@
       <img src="https://github.com/keycloakify/keycloak-account-ui/actions/workflows/ci.yaml/badge.svg?branch=main">
     </a>
     <a href="https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/{{THIS_VERSION}}">
+    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
+    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
+    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
       <img src="https://img.shields.io/npm/dm/@keycloakify/keycloak-account-ui">
     </a>
     <p align="center">

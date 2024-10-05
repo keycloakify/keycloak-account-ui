@@ -212,6 +212,10 @@ function init(
     return authUrl;
   })();
 
+  const referrerUrl = readQueryParamOrRestoreFromSessionStorage({
+    name: "referrer_uri",
+  });
+
   const environment = {
     serverBaseUrl,
     authUrl,
@@ -220,13 +224,13 @@ function init(
     clientId,
     resourceUrl,
     logo: logoUrl.substring(resourceUrl.length),
-    logoUrl: logoUrl,
+    logoUrl:
+      referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
     baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
     locale: kcContext.locale,
     referrerName:
       readQueryParamOrRestoreFromSessionStorage({ name: "referrer" }) ?? "",
-    referrerUrl:
-      readQueryParamOrRestoreFromSessionStorage({ name: "referrer_uri" }) ?? "",
+    referrerUrl: referrerUrl ?? "",
     features: {
       isRegistrationEmailAsUsername:
         kcContext.realm.registrationEmailAsUsername,
