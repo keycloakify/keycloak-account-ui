@@ -381,7 +381,11 @@ function init(
           data.userProfileMetadata ??= {};
           data.userProfileMetadata.attributes ??= [];
 
-          if (!data.userProfileMetadata.attributes.includes("locale")) {
+          if (
+            !data.userProfileMetadata.attributes.find(
+              (attribute: any) => attribute.name === "locale",
+            )
+          ) {
             wasLocaleAttributeManuallyAdded = true;
             data.userProfileMetadata.attributes.unshift({
               name: "locale",
@@ -392,7 +396,6 @@ function init(
               multivalued: false,
             });
           }
-
           return buildJsonResponse(data);
         }
 
