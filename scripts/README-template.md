@@ -9,9 +9,6 @@
       <img src="https://github.com/keycloakify/keycloak-account-ui/actions/workflows/ci.yaml/badge.svg?branch=main">
     </a>
     <a href="https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/{{THIS_VERSION}}">
-    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
-    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
-    https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/25.0.4-rc.8
       <img src="https://img.shields.io/npm/dm/@keycloakify/keycloak-account-ui">
     </a>
     <p align="center">
@@ -23,8 +20,7 @@
 </p>
 
 This project re-packages [`@keycloak/keycloak-account-ui`](https://www.npmjs.com/package/@keycloak/keycloak-account-ui).  
-All credits goes to the keycloak team for the original work. Mainly [@jonkoops
-](https://github.com/jonkoops) and [@edewit](https://github.com/edewit).
+All credits goes to the keycloak team for the original work. Mainly [@jonkoops](https://github.com/jonkoops) and [@edewit](https://github.com/edewit).
 
 This re-packaged distribution serves two key purposes:
 
