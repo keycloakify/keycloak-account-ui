@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Suspense, useMemo, type LazyExoticComponent } from "react";
-import { assert } from "tsafe/assert";
-import { is } from "tsafe/is";
+import { assert, is } from "tsafe/assert";
 import type { Environment } from "@keycloakify/keycloak-account-ui/environment";
 import type { MenuItem } from "@keycloakify/keycloak-account-ui/root/PageNav";
 import { joinPath } from "@keycloakify/keycloak-account-ui/utils/joinPath";
@@ -136,41 +135,9 @@ function init(
 
   //logValidationResult(kcContext);
 
-  const logoUrl = (() => {
-    if (params.logoUrl?.startsWith("data:")) {
-      const error = new Error(
-        [
-          `ERROR: The logo url can't be a data url.`,
-          `Due to the fact your logo is very small it has been inlined in the bundle.`,
-          `The logoUrl you passed is: ${params.logoUrl.substring(0, 25)}...`,
-          `To fix this issue you can put the logo in the public directory and import it like:`,
-          `logoUrl={\`\${${["import", "meta", "env", "BASE_URL"].join(".")}}assets/logo.svg\`} if you are using Vite or`,
-          `logoUrl={\`\${process.env.PUBLIC_URL}/assets/logo.svg\`} if you are using Webpack (CRA).`,
-          `If it's an SVG you can also pad it's size with random \`<!-- xxx -->\` comments to make it bigger that it passes the threshold of 4KB.`,
-        ].join("\n"),
-      );
-      alert(error.message);
-      throw error;
-    }
-
-    const logoUrl_params = params.logoUrl ?? defaultLogoSvgUrl;
-
-    const url = new URL(
-      logoUrl_params.startsWith("http")
-        ? logoUrl_params
-        : joinPath(window.location.origin, logoUrl_params),
-    );
-
-    return url.href.substring(url.origin.length);
-  })();
+  const logoUrl = params.logoUrl ?? defaultLogoSvgUrl;
 
   const resourceUrl = kcContext.resourceUrl;
-
-  if (!logoUrl.startsWith(resourceUrl)) {
-    const error = new Error(`ERROR: The logo url can't be an external url.`);
-    alert(error.message);
-    throw error;
-  }
 
   const serverBaseUrl = (() => {
     if ("serverBaseUrl" in kcContext) {
@@ -223,7 +190,7 @@ function init(
     realm: kcContext.realm.name,
     clientId,
     resourceUrl,
-    logo: logoUrl.substring(resourceUrl.length),
+    logo: logoUrl,
     logoUrl:
       referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
     baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,

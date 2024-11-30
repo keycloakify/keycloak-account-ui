@@ -180,6 +180,19 @@ import * as child_process from "child_process";
               ].join("\n");
             }
           }
+
+          if (fileRelativePath === pathJoin("root", "Header.tsx")) {
+            const sourceCode_before = modifiedSourceCode;
+
+            const sourceCode_after = sourceCode_before.replace(
+              "joinPath(environment.resourceUrl, brandImage)",
+              `/https?:/.test(brandImage) || brandImage.startsWith("data:") || brandImage.startsWith("/") ? brandImage : joinPath(environment.resourceUrl, brandImage)`,
+            );
+
+            assert(sourceCode_before !== sourceCode_after);
+
+            modifiedSourceCode = sourceCode_after;
+          }
         }
 
         await writeFile({

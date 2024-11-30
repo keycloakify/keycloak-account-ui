@@ -61,7 +61,6 @@
     "lint-staged": "^11.1.1",
     "make-fetch-happen": "^11.0.3",
     "prettier": "^3.3.2",
-    "tsafe": "^1.7.2",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
@@ -87,7 +86,7 @@
     "@keycloak/keycloak-admin-client": "26.0.0"
   },
   "dependencies": {
-    "tsafe": "^1.7.2"
+    "tsafe": "^1.8.5"
   },
   "publishConfig": {
     "access": "public"
