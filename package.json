@@ -1,6 +1,6 @@
 {
   "name": "@keycloakify/keycloak-account-ui",
-  "version": "26.0.0-rc.3",
+  "version": "26.0.6-rc.1",
   "description": "Repackaged Keycloak Account UI",
   "repository": {
     "type": "git",
@@ -47,9 +47,9 @@
     "react-hook-form": "7.53.0",
     "react-i18next": "^15.0.2",
     "react-router-dom": "^6.26.2",
-    "keycloak-js": "26.0.0",
+    "keycloak-js": "26.0.6",
     "@patternfly/react-styles": "^5.4.0",
-    "@keycloak/keycloak-admin-client": "26.0.0"
+    "@keycloak/keycloak-admin-client": "26.0.6"
   },
   "devDependencies": {
     "react": "^18.3.1",
@@ -81,9 +81,9 @@
     "react-hook-form": "7.53.0",
     "react-i18next": "^15.0.2",
     "react-router-dom": "^6.26.2",
-    "keycloak-js": "26.0.0",
+    "keycloak-js": "26.0.6",
     "@patternfly/react-styles": "^5.4.0",
-    "@keycloak/keycloak-admin-client": "26.0.0"
+    "@keycloak/keycloak-admin-client": "26.0.6"
   },
   "dependencies": {
     "tsafe": "^1.8.5"

@@ -10,9 +10,9 @@
     "react-hook-form": "7.53.0",
     "react-i18next": "^15.0.2",
     "react-router-dom": "^6.26.2",
-    "keycloak-js": "26.0.0",
+    "keycloak-js": "26.0.6",
     "@patternfly/react-styles": "^5.4.0",
-    "@keycloak/keycloak-admin-client": "26.0.0"
+    "@keycloak/keycloak-admin-client": "26.0.6"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12"

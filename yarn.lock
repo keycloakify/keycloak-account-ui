@@ -166,10 +166,10 @@
     wrap-ansi "^8.1.0"
     wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
-"@keycloak/keycloak-admin-client@26.0.0":
-  version "26.0.0"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.0.0.tgz#ff6b5e192e3f812f12af537b11430186069ad70f"
-  integrity sha512-fKWJ71hQKPG/vyT1YSLxjZBJ0c1CvXIQh3mssciG8uuavApbmxBMF+zZLx3gZ9VZPS24YqU/uzj/Im+AnbXStw==
+"@keycloak/keycloak-admin-client@26.0.6":
+  version "26.0.6"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.0.6.tgz#b2ac56de7f4251c8a6a938745843e98000498646"
+  integrity sha512-pZmaSAyg+LwQ3qnZF+01ZkURpcoEdLAloUK5KOZjE9jyNd86EHdx98/XmTYaJIuQ6ydMXxTWWc5Grq18H+PvJQ==
   dependencies:
     camelize-ts "^3.0.0"
     url-join "^5.0.0"
@@ -1189,10 +1189,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.yarnpkg.com/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-keycloak-js@26.0.0:
-  version "26.0.0"
-  resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-26.0.0.tgz#2c14fdd2e86a6b4bdb1cbff43b6e0e6a5ae4d715"
-  integrity sha512-uUvoc6luDuAOQ74i4/wKm1tGduYcJ/2jSh29Krekkt+ytn1mLL+mHug27FfpwgxcTb6yx+uL0OcehXwl3WIRMQ==
+keycloak-js@26.0.6:
+  version "26.0.6"
+  resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-26.0.6.tgz#3c33bc6960d646c60f464ed0eaf6fcaff9305aaa"
+  integrity sha512-HHRuMOm5w4vAkhWyqs7VPQqYUCSyPagTdQcUIi7xF6XU9GoSZgh2jRtry5P4t6XxhyuMiCwWg7JN8W9cDyqRfQ==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
