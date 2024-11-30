@@ -355,7 +355,7 @@ import * as child_process from "child_process";
 
   {
     const { extractedDirPath } = await downloadAndExtractArchive({
-      url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${keycloakUiSharedVersion}.jar`,
+      url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${keycloakAccountUiVersion}.jar`,
       cacheDirPath,
       fetchOptions,
       uniqueIdOfOnArchiveFile: "bring_in_account_v3_i18n_messages",
