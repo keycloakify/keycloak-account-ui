@@ -3,8 +3,7 @@
 import type { KcContextLike } from "./KcAccountUiLoader";
 import { z } from "zod";
 import { id } from "tsafe/id";
-import { assert, type Equals } from "tsafe/assert";
-import { is } from "tsafe/is";
+import { assert, is, type Equals } from "tsafe/assert";
 
 const zKcContextLikeCommon = (() => {
     type TargetType = KcContextLike.Common;
