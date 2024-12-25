@@ -1,15 +1,15 @@
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/a6aaebbd-8f59-474d-9827-c282f4527aca">  
+    <img src="https://github.com/user-attachments/assets/e31c4910-7205-441c-9a35-e134b806b3a8">  
 </p>
 <p align="center">
-    <i>Repackaged Keycloak Admin UI</i>
+    <i>Repackaged Keycloak Account UI</i>
     <br>
     <br>
-    <a href="https://github.com/keycloakify/keycloak-admin-ui/actions">
-      <img src="https://github.com/keycloakify/keycloak-admin-ui/actions/workflows/ci.yaml/badge.svg?branch=main">
+    <a href="https://github.com/keycloakify/keycloak-account-ui/actions">
+      <img src="https://github.com/keycloakify/keycloak-account-ui/actions/workflows/ci.yaml/badge.svg?branch=main">
     </a>
-    <a href="https://www.npmjs.com/package/@keycloakify/keycloak-admin-ui">
-      <img src="https://img.shields.io/npm/dm/@keycloakify/keycloak-admin-ui">
+    <a href="https://www.npmjs.com/package/@keycloakify/keycloak-account-ui/v/26.0.6-rc.1">
+      <img src="https://img.shields.io/npm/dm/@keycloakify/keycloak-account-ui">
     </a>
     <p align="center">
       Check out our discord server!<br/>
@@ -19,5 +19,5 @@
     </p>
 </p>
 
-This project re-packages [`@keycloak/keycloak-admin-ui`](https://www.npmjs.com/package/@keycloak/keycloak-admin-ui).  
+This project re-packages [`@keycloak/keycloak-account-ui`](https://www.npmjs.com/package/@keycloak/keycloak-account-ui).  
 All credits goes to the keycloak team for the original work. Mainly [@jonkoops](https://github.com/jonkoops) and [@edewit](https://github.com/edewit).

@@ -1,2 +1,2 @@
-export * from "./KcAdminUiLoader";
+export * from "./KcAccountUiLoader";
 //# sourceMappingURL=index.js.map

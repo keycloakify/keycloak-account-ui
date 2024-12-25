@@ -39,9 +39,13 @@ const { parsedPackageJson } = (() => {
     return { parsedPackageJson };
 })();
 
-const keycloakVersion = parsedPackageJson.version.slice(0, -3);
+const keycloakVersion = (() => {
+    const major = parsedPackageJson.version.split(".")[0];
 
-const moduleName = "@keycloak/keycloak-admin-ui";
+    return `${parseInt(major[0] + major[1])}.${parseInt(major[2] + major[3])}.${parseInt(major[4] + major[5])}`;
+})();
+
+const moduleName = "@keycloak/keycloak-account-ui";
 
 assert(
     parsedPackageJson.devDependencies[moduleName] === keycloakVersion,

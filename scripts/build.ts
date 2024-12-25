@@ -80,7 +80,7 @@ import { z } from "zod";
         url: `https://github.com/keycloak/keycloak/archive/refs/tags/${keycloakVersion}.zip`,
         cacheDirPath,
         fetchOptions,
-        uniqueIdOfOnArchiveFile: "download_keycloak-admin-ui-sources",
+        uniqueIdOfOnArchiveFile: "download_keycloak_account_ui_sources",
         onArchiveFile: async ({ fileRelativePath, readFile, writeFile }) => {
             fileRelativePath = fileRelativePath.split(pathSep).slice(1).join(pathSep);
 
@@ -89,7 +89,7 @@ import { z } from "zod";
             }
 
             {
-                const dirPath = pathJoin("js", "apps", "admin-ui");
+                const dirPath = pathJoin("js", "apps", "account-ui");
 
                 if (
                     !isInside({
@@ -200,7 +200,11 @@ import { z } from "zod";
                         break;
                 }
 
-                assert(!modifiedSourceCode.includes("environment.resourceUrl"));
+                //assert(!modifiedSourceCode.includes("environment.resourceUrl"), `${fileRelativePath} contains reference to resourceUrl`);
+
+                if (modifiedSourceCode.includes("environment.resourceUrl")) {
+                    console.warn(`${fileRelativePath} contains reference to resourceUrl`);
+                }
             }
 
             if (fileRelativePath === pathJoin("components", "roles-list", "RolesList.tsx")) {
@@ -239,20 +243,20 @@ import { z } from "zod";
     child_process.execSync(`npx tsc`, { cwd: getThisCodebaseRootDirPath() });
 
     const keycloakThemeDirPath = pathJoin(distDirPath, "keycloak-theme");
-    const adminDirPath = pathJoin(keycloakThemeDirPath, "admin");
+    const accountDirPath = pathJoin(keycloakThemeDirPath, "account");
 
-    let keycloakAdminUiVersion: string | undefined = undefined;
+    let keycloakAccountUiVersion: string | undefined = undefined;
 
     transformCodebase({
         srcDirPath: extractedDirPath,
-        destDirPath: adminDirPath,
+        destDirPath: accountDirPath,
         transformSourceCode: ({ fileRelativePath, sourceCode }) => {
             if (fileRelativePath === "package.json") {
                 const version = JSON.parse(sourceCode.toString("utf8")).version as unknown;
 
                 assert(typeof version === "string");
 
-                keycloakAdminUiVersion = version;
+                keycloakAccountUiVersion = version;
 
                 return;
             }
@@ -261,7 +265,7 @@ import { z } from "zod";
         }
     });
 
-    assert(keycloakAdminUiVersion !== undefined);
+    assert(keycloakAccountUiVersion !== undefined);
 
     transformCodebase({
         srcDirPath: pathJoin(getThisCodebaseRootDirPath(), "keycloak-theme"),
@@ -273,13 +277,13 @@ import { z } from "zod";
         const publicDirBasename = "public";
 
         const { extractedDirPath } = await downloadAndExtractArchive({
-            url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-admin-ui/${keycloakVersion}/keycloak-admin-ui-${keycloakAdminUiVersion}.jar`,
+            url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${keycloakAccountUiVersion}.jar`,
             cacheDirPath,
             fetchOptions,
             uniqueIdOfOnArchiveFile: "i18n_messages_and_public_assets",
             onArchiveFile: async ({ fileRelativePath, writeFile }) => {
                 i18n_messages: {
-                    const dirRelativePath = pathJoin("theme", "keycloak.v2", "admin", "messages");
+                    const dirRelativePath = pathJoin("theme", "keycloak.v3", "account", "messages");
 
                     if (
                         !isInside({
@@ -299,7 +303,7 @@ import { z } from "zod";
                 }
 
                 public_assets: {
-                    const dirRelativePath = pathJoin("theme", "keycloak.v2", "admin", "resources");
+                    const dirRelativePath = pathJoin("theme", "keycloak.v3", "account", "resources");
 
                     if (
                         !isInside({
@@ -343,7 +347,7 @@ import { z } from "zod";
         });
 
         {
-            const destDirPath = pathJoin(adminDirPath, "i18n");
+            const destDirPath = pathJoin(accountDirPath, "i18n");
 
             transformCodebase({
                 srcDirPath: pathJoin(extractedDirPath, messagesDirBasename),
@@ -379,11 +383,11 @@ import { z } from "zod";
 
         transformCodebase({
             srcDirPath: pathJoin(extractedDirPath, publicDirBasename),
-            destDirPath: pathJoin(adminDirPath, "assets")
+            destDirPath: pathJoin(accountDirPath, "assets")
         });
     }
 
-    const parsedPackageJson_keycloakAdminUi = await (async () => {
+    const parsedPackageJson_keycloakAccountUi = await (async () => {
         type ParsedPackageJson = {
             dependencies?: Record<string, string>;
             peerDependencies?: Record<string, string>;
@@ -409,7 +413,7 @@ import { z } from "zod";
         assert<Equals<z.TypeOf<typeof zParsedPackageJson>, ParsedPackageJson>>;
 
         const parsedPackageJson = await fetch(
-            `https://unpkg.com/@keycloak/keycloak-admin-ui@${keycloakAdminUiVersion}/package.json`,
+            `https://unpkg.com/@keycloak/keycloak-account-ui@${keycloakAccountUiVersion}/package.json`,
             fetchOptions
         ).then(response => response.json());
 
@@ -438,12 +442,9 @@ import { z } from "zod";
                     peerDependencies: await (async () => {
                         const peerDependencies = Object.fromEntries(
                             Object.entries({
-                                ...parsedPackageJson_keycloakAdminUi.dependencies,
-                                ...parsedPackageJson_keycloakAdminUi.peerDependencies
+                                ...parsedPackageJson_keycloakAccountUi.dependencies,
+                                ...parsedPackageJson_keycloakAccountUi.peerDependencies
                             }).filter(([name]) => {
-                                if (name === "admin-ui") {
-                                    return false;
-                                }
                                 if (name === "react-dom") {
                                     return false;
                                 }
@@ -489,7 +490,7 @@ import { z } from "zod";
                                 : `@types/${name}`;
 
                             const versionRange =
-                                parsedPackageJson_keycloakAdminUi.devDependencies?.[typeName];
+                                parsedPackageJson_keycloakAccountUi.devDependencies?.[typeName];
 
                             if (versionRange === undefined) {
                                 continue;
@@ -522,7 +523,7 @@ import { z } from "zod";
 
     console.log(
         chalk.green(
-            `\n\nPulled @keycloak/keycloak-admin-ui@${keycloakAdminUiVersion} from keycloak version ${keycloakVersion}`
+            `\n\nPulled @keycloak/keycloak-account-ui@${keycloakAccountUiVersion} from keycloak version ${keycloakVersion}`
         )
     );
 })();

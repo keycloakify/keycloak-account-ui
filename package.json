@@ -1,12 +1,13 @@
 {
-    "name": "@keycloakify/keycloak-admin-ui",
-    "version": "260007.0.2",
-    "description": "Repackaged Keycloak Admin UI",
+    "name": "@keycloakify/keycloak-account-ui",
+    "version": "260007.0.0",
+    "description": "Repackaged Keycloak Account UI",
     "repository": {
         "type": "git",
-        "url": "git://github.com/keycloakify/keycloak-admin-ui.git"
+        "url": "git://github.com/keycloakify/keycloak-account-ui.git"
     },
     "scripts": {
+        "postinstall": "tsx scripts/postinstall.ts",
         "build": "tsx scripts/build.ts",
         "_format": "prettier '**/*.{ts,tsx,json,md}'",
         "format": "npm run _format -- --write",
@@ -28,9 +29,9 @@
     "keywords": [
         "keycloak",
         "keycloakify",
-        "keycloak-admin-ui"
+        "keycloak-account-ui"
     ],
-    "homepage": "https://github.com/keycloakify/keycloak-admin-ui",
+    "homepage": "https://github.com/keycloakify/keycloak-account-ui",
     "devDependencies": {
         "@types/make-fetch-happen": "^10.0.4",
         "@types/node": "^20.2.1",
@@ -44,7 +45,9 @@
         "yauzl": "^3.2.0",
         "evt": "^2.5.8",
         "react": "^18.3.1",
-        "@types/react": "^18.3.12"
+        "@types/react": "^18.3.12",
+        "@keycloak/keycloak-account-ui": "26.0.7",
+        "i18next": "^23.15.1"
     },
     "dependencies": {
         "tsafe": "^1.8.5"
