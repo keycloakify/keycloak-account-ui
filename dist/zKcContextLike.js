@@ -22,7 +22,7 @@ const zKcContextLikeCommon = (() => {
         deleteAccountAllowed: z.boolean(),
         updateEmailFeatureEnabled: z.boolean(),
         updateEmailActionEnabled: z.boolean(),
-        isViewOrganizationsEnabled: z.boolean().optional(),
+        isViewOrganizationsEnabled: z.boolean().optional()
     });
     assert();
     return id(zTargetType);
@@ -30,7 +30,7 @@ const zKcContextLikeCommon = (() => {
 const zI18nApi = (() => {
     const zTargetType = z.object({
         msgJSON: z.string(),
-        supportedLocales: z.record(z.string()).optional(),
+        supportedLocales: z.record(z.string()).optional()
     });
     assert();
     return id(zTargetType);
@@ -42,7 +42,7 @@ export const zKcContextLikeKeycloak25AndUp = (() => {
         clientId: z.string(),
         authServerUrl: z.string(),
         isOid4VciEnabled: z.boolean(),
-        isViewGroupsEnabled: z.boolean(),
+        isViewGroupsEnabled: z.boolean()
     }));
     assert();
     return id(zTargetType);
@@ -51,9 +51,9 @@ export const zKcContextLikeKeycloak20To24 = (() => {
     const zTargetType = z.intersection(z.intersection(zKcContextLikeCommon, zI18nApi), z.object({
         authUrl: z.object({
             rawSchemeSpecificPart: z.string(),
-            scheme: z.string(),
+            scheme: z.string()
         }),
-        isViewGroupsEnabled: z.boolean(),
+        isViewGroupsEnabled: z.boolean()
     }));
     assert();
     return id(zTargetType);
@@ -62,8 +62,8 @@ export const zKcContextLikeKeycloak19 = (() => {
     const zTargetType = z.intersection(z.intersection(zKcContextLikeCommon, zI18nApi), z.object({
         authUrl: z.object({
             rawSchemeSpecificPart: z.string(),
-            scheme: z.string(),
-        }),
+            scheme: z.string()
+        })
     }));
     assert();
     return id(zTargetType);

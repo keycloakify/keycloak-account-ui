@@ -207,29 +207,23 @@ import { z } from "zod";
                 }
             }
 
-            if (fileRelativePath === pathJoin("components", "roles-list", "RolesList.tsx")) {
-                for (const [search, replace] of [
-                    ["useTranslation(messageBundle)", `useTranslation()`]
-                ] as const) {
-                    const sourceCode_before = modifiedSourceCode;
+            const withSpecialComments = (sourceCode: string) =>
+                ["/* eslint-disable */", "", "// @ts-nocheck", "", sourceCode].join("\n");
 
-                    const sourceCode_after: string =
-                        search === undefined
-                            ? [replace, modifiedSourceCode].join("\n")
-                            : modifiedSourceCode.replace(search, replace);
+            if (fileRelativePath === "i18n.ts") {
+                await writeFile({
+                    fileRelativePath: pathJoin("i18n", "index.ts"),
+                    modifiedData: Buffer.from(withSpecialComments(`export * from "./i18n";`), "utf8")
+                });
 
-                    assert(sourceCode_before !== sourceCode_after);
+                fileRelativePath = pathJoin("i18n", "i18n.ts");
 
-                    modifiedSourceCode = sourceCode_after;
-                }
+                modifiedSourceCode = modifiedSourceCode.replaceAll(` from "./`, ` from "../`);
             }
 
             await writeFile({
                 fileRelativePath,
-                modifiedData: Buffer.from(
-                    ["/* eslint-disable */", "", "// @ts-nocheck", "", modifiedSourceCode].join("\n"),
-                    "utf8"
-                )
+                modifiedData: Buffer.from(withSpecialComments(modifiedSourceCode), "utf8")
             });
         }
     });

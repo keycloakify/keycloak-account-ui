@@ -35,101 +35,99 @@ type Environment = {
 assert<Equals<Environment, Environment_target>>;
 
 export type KcContextLike =
-  | KcContextLike.Keycloak25AndUp
-  | KcContextLike.Keycloak20To24
-  | KcContextLike.Keycloak19;
+    | KcContextLike.Keycloak25AndUp
+    | KcContextLike.Keycloak20To24
+    | KcContextLike.Keycloak19;
 
 export namespace KcContextLike {
-  export type Common = {
-    realm: {
-      name: string;
-      registrationEmailAsUsername: boolean;
-      editUsernameAllowed: boolean;
-      isInternationalizationEnabled: boolean;
-      identityFederationEnabled: boolean;
-      userManagedAccessAllowed: boolean;
-    };
-    resourceUrl: string;
-    baseUrl: {
-      rawSchemeSpecificPart: string;
-      scheme: string;
-    };
-    locale: string;
-    isAuthorizationEnabled: boolean;
-    deleteAccountAllowed: boolean;
-    updateEmailFeatureEnabled: boolean;
-    updateEmailActionEnabled: boolean;
-    isViewOrganizationsEnabled?: boolean;
-  };
-
-  export type I18nApi = {
-    msgJSON: string;
-    supportedLocales?: Record<string, string>;
-  };
-
-  export type Keycloak25AndUp = Common & {
-    serverBaseUrl: string;
-    authUrl: string;
-    clientId: string;
-    authServerUrl: string;
-    isOid4VciEnabled: boolean;
-    isViewGroupsEnabled: boolean;
-  };
-
-  export type Keycloak20To24 = Common &
-    I18nApi & {
-      authUrl: {
-        rawSchemeSpecificPart: string;
-        scheme: string;
-      };
-      isViewGroupsEnabled: boolean;
+    export type Common = {
+        realm: {
+            name: string;
+            registrationEmailAsUsername: boolean;
+            editUsernameAllowed: boolean;
+            isInternationalizationEnabled: boolean;
+            identityFederationEnabled: boolean;
+            userManagedAccessAllowed: boolean;
+        };
+        resourceUrl: string;
+        baseUrl: {
+            rawSchemeSpecificPart: string;
+            scheme: string;
+        };
+        locale: string;
+        isAuthorizationEnabled: boolean;
+        deleteAccountAllowed: boolean;
+        updateEmailFeatureEnabled: boolean;
+        updateEmailActionEnabled: boolean;
+        isViewOrganizationsEnabled?: boolean;
     };
 
-  export type Keycloak19 = Common &
-    I18nApi & {
-      authUrl: {
-        rawSchemeSpecificPart: string;
-        scheme: string;
-      };
+    export type I18nApi = {
+        msgJSON: string;
+        supportedLocales?: Record<string, string>;
     };
+
+    export type Keycloak25AndUp = Common & {
+        serverBaseUrl: string;
+        authUrl: string;
+        clientId: string;
+        authServerUrl: string;
+        isOid4VciEnabled: boolean;
+        isViewGroupsEnabled: boolean;
+    };
+
+    export type Keycloak20To24 = Common &
+        I18nApi & {
+            authUrl: {
+                rawSchemeSpecificPart: string;
+                scheme: string;
+            };
+            isViewGroupsEnabled: boolean;
+        };
+
+    export type Keycloak19 = Common &
+        I18nApi & {
+            authUrl: {
+                rawSchemeSpecificPart: string;
+                scheme: string;
+            };
+        };
 }
 
-function getIsKeycloak25AndUp(
-  kcContext: KcContextLike,
-): kcContext is KcContextLike.Keycloak25AndUp {
-  return "serverBaseUrl" in kcContext;
+function getIsKeycloak25AndUp(kcContext: KcContextLike): kcContext is KcContextLike.Keycloak25AndUp {
+    return "serverBaseUrl" in kcContext;
 }
 
 type LazyExoticComponentLike = {
-  _result: unknown;
+    _result: unknown;
 };
 
 export type KcAccountUiLoaderProps = {
-  kcContext: KcContextLike;
-  KcAccountUi: LazyExoticComponentLike;
-  loadingFallback?: ReactElement<any, any>;
+    kcContext: KcContextLike;
+    KcAccountUi: LazyExoticComponentLike;
+    loadingFallback?: ReactElement<any, any>;
 };
 
 export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
-  const { KcAccountUi, loadingFallback, ...paramsOfInit } = props;
+    const { KcAccountUi, loadingFallback, ...paramsOfInit } = props;
 
-  assert(is<LazyExoticComponent<() => ReactElement<any, any> | null>>(KcAccountUi));
+    assert(is<LazyExoticComponent<() => ReactElement<any, any> | null>>(KcAccountUi));
 
-  useMemo(() => init(paramsOfInit), []);
+    useMemo(() => init(paramsOfInit), []);
 
-  return (
-    <Suspense fallback={loadingFallback}>
-      {(() => {
-        const node = <KcAccountUi />;
+    return (
+        <Suspense fallback={loadingFallback}>
+            {(() => {
+                const node = <KcAccountUi />;
 
-        if (node === null) {
-          return loadingFallback;
-        }
+                if (node === null) {
+                    return loadingFallback;
+                }
 
-        return node;
-      })()}
-    </Suspense>
-  );
+                return node;
+            })()}
+        </Suspense>
+    );
 }
 
 let previousRunParamsFingerprint: string | undefined = undefined;
@@ -235,7 +233,7 @@ function init(params: { kcContext: KcContextLike }) {
 
     {
         const undefinedKeys = Object.entries(environment)
-            .filter(([key])=> key !== "features")
+            .filter(([key]) => key !== "features")
             .filter(([, value]) => value === undefined)
             .map(([key]) => key);
 

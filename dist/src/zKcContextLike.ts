@@ -27,28 +27,25 @@ const zKcContextLikeCommon = (() => {
         deleteAccountAllowed: z.boolean(),
         updateEmailFeatureEnabled: z.boolean(),
         updateEmailActionEnabled: z.boolean(),
-        isViewOrganizationsEnabled: z.boolean().optional(),
+        isViewOrganizationsEnabled: z.boolean().optional()
     });
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
 
     return id<z.ZodType<TargetType>>(zTargetType);
-
 })();
 
 const zI18nApi = (() => {
-
     type TargetType = KcContextLike.I18nApi;
 
     const zTargetType = z.object({
         msgJSON: z.string(),
-        supportedLocales: z.record(z.string()).optional(),
+        supportedLocales: z.record(z.string()).optional()
     });
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
 
     return id<z.ZodType<TargetType>>(zTargetType);
-
 })();
 
 export const zKcContextLikeKeycloak25AndUp = (() => {
@@ -62,62 +59,53 @@ export const zKcContextLikeKeycloak25AndUp = (() => {
             clientId: z.string(),
             authServerUrl: z.string(),
             isOid4VciEnabled: z.boolean(),
-            isViewGroupsEnabled: z.boolean(),
-        }));
+            isViewGroupsEnabled: z.boolean()
+        })
+    );
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
 
     return id<z.ZodType<TargetType>>(zTargetType);
-
 })();
 
 export const zKcContextLikeKeycloak20To24 = (() => {
     type TargetType = KcContextLike.Keycloak20To24;
 
     const zTargetType = z.intersection(
-        z.intersection(
-            zKcContextLikeCommon,
-            zI18nApi
-        ),
+        z.intersection(zKcContextLikeCommon, zI18nApi),
         z.object({
             authUrl: z.object({
                 rawSchemeSpecificPart: z.string(),
-                scheme: z.string(),
+                scheme: z.string()
             }),
-            isViewGroupsEnabled: z.boolean(),
-        }));
+            isViewGroupsEnabled: z.boolean()
+        })
+    );
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
 
     return id<z.ZodType<TargetType>>(zTargetType);
-
 })();
 
 export const zKcContextLikeKeycloak19 = (() => {
     type TargetType = KcContextLike.Keycloak19;
 
     const zTargetType = z.intersection(
-        z.intersection(
-            zKcContextLikeCommon,
-            zI18nApi
-        ),
+        z.intersection(zKcContextLikeCommon, zI18nApi),
         z.object({
             authUrl: z.object({
                 rawSchemeSpecificPart: z.string(),
-                scheme: z.string(),
-            }),
-        }));
+                scheme: z.string()
+            })
+        })
+    );
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();
 
     return id<z.ZodType<TargetType>>(zTargetType);
-
 })();
 
-
-
-export const zKcContextLike = (()=>{
-
+export const zKcContextLike = (() => {
     const zTargetType = z.union([
         zKcContextLikeKeycloak25AndUp,
         zKcContextLikeKeycloak20To24,
@@ -127,97 +115,67 @@ export const zKcContextLike = (()=>{
     assert<Equals<z.infer<typeof zTargetType>, KcContextLike>>();
 
     return id<z.ZodType<KcContextLike>>(zTargetType);
-
 })();
 
 export function logValidationResult(kcContext: any) {
-
-    const errorCommon = (()=>{
-        try{
-
+    const errorCommon = (() => {
+        try {
             zKcContextLikeCommon.parse(kcContext);
-
-        }catch(error){
-
+        } catch (error) {
             assert(is<z.ZodError>(error));
 
             return JSON.parse(error.message);
-
         }
 
         return undefined;
-
     })();
 
-    const error = (()=>{
-
-        try{
-
+    const error = (() => {
+        try {
             zKcContextLike.parse(kcContext);
-
-        }catch(error){
-
+        } catch (error) {
             assert(is<z.ZodError>(error));
 
             return JSON.parse(error.message);
-
         }
 
         return undefined;
-
     })();
 
-    const error19 = (()=>{
-
-        try{
-
+    const error19 = (() => {
+        try {
             zKcContextLikeKeycloak19.parse(kcContext);
-
-        }catch(error){
-
+        } catch (error) {
             assert(is<z.ZodError>(error));
 
             return JSON.parse(error.message);
-
         }
 
         return undefined;
-
     })();
 
-    const error20to24 = (()=>{
-
-        try{
-
+    const error20to24 = (() => {
+        try {
             zKcContextLikeKeycloak20To24.parse(kcContext);
-
-        }catch(error){
-
+        } catch (error) {
             assert(is<z.ZodError>(error));
 
             return JSON.parse(error.message);
-
         }
 
         return undefined;
-
     })();
 
-    const error25andUp = (()=>{
-        try{
-
+    const error25andUp = (() => {
+        try {
             zKcContextLikeKeycloak25AndUp.parse(kcContext);
-
-        }catch(error){
-
+        } catch (error) {
             assert(is<z.ZodError>(error));
 
             return JSON.parse(error.message);
-
         }
 
         return undefined;
-
     })();
 
     console.log({
@@ -227,5 +185,4 @@ export function logValidationResult(kcContext: any) {
         error20to24,
         error25andUp
     });
-
 }
