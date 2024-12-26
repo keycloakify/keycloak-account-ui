@@ -2,6 +2,7 @@
 
 // @ts-nocheck
 
+import logoSvgUrl from "../assets/logo.svg";
 import {
   KeycloakMasthead,
   label,
@@ -41,7 +42,7 @@ export const Header = () => {
   const { environment, keycloak } = useEnvironment();
   const { t } = useTranslation();
 
-  const brandImage = environment.logo || "logo.svg";
+  
   const logoUrl = environment.logoUrl ? environment.logoUrl : "/";
   const internalLogoHref = useHref(logoUrl);
 
@@ -55,7 +56,7 @@ export const Header = () => {
       features={{ hasManageAccount: false }}
       brand={{
         href: indexHref,
-        src: joinPath(environment.resourceUrl, brandImage),
+        src={logoSvgUrl},
         alt: t("logo"),
         className: style.brand,
       }}

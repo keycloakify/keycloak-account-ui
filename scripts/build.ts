@@ -16,6 +16,7 @@ import chalk from "chalk";
 import child_process from "child_process";
 import { id } from "tsafe/id";
 import { z } from "zod";
+import { getHash } from "./tools/getHash";
 
 (async () => {
     const { parsedPackageJson } = (() => {
@@ -145,6 +146,11 @@ import { z } from "zod";
             }
 
             if (fileRelativePath === "main.tsx") {
+                assert(
+                    getHash(await readFile()) ===
+                        "8fd7ba3c35cf88c902687e7bac408082f069485ba61e4d2cd41f05ffd96d84a6",
+                    "KcAccountUi.tsx should be modified"
+                );
                 return;
             }
 
@@ -157,13 +163,11 @@ import { z } from "zod";
 
             if (modifiedSourceCode.includes("environment.resourceUrl")) {
                 switch (fileRelativePath) {
-                    case "PageHeader.tsx":
+                    case pathJoin("root", "Header.tsx"):
                         for (const [search, replace] of [
-                            [undefined, `import logoSvgUrl from "./assets/logo.svg";`],
-                            [`const logo = environment.logo ? environment.logo : "/logo.svg";`, ""],
-                            [`src={environment.resourceUrl + logo}`, `src={logoSvgUrl}`],
-                            [undefined, `import imgAvatarSvgUrl from "./assets/img_avatar.svg";`],
-                            ['environment.resourceUrl + "/img_avatar.svg"', "imgAvatarSvgUrl"]
+                            [undefined, `import logoSvgUrl from "../assets/logo.svg";`],
+                            [`const brandImage = environment.logo || "logo.svg";`, ""],
+                            [`src: joinPath(environment.resourceUrl, brandImage)`, `src={logoSvgUrl}`]
                         ] as const) {
                             const sourceCode_before = modifiedSourceCode;
 
@@ -177,26 +181,24 @@ import { z } from "zod";
                             modifiedSourceCode = sourceCode_after;
                         }
                         break;
-                    case pathJoin("dashboard", "Dashboard.tsx"):
-                        for (const [search, replace] of [
-                            [undefined, `import iconSvgUrl from "../assets/icon.svg";`],
-                            [
-                                `const brandImage = environment.logo ? environment.logo : "/icon.svg";`,
-                                ""
-                            ],
-                            [`src={environment.resourceUrl + brandImage}`, `src={iconSvgUrl}`]
-                        ] as const) {
-                            const sourceCode_before = modifiedSourceCode;
+                    case pathJoin("content", "fetchContent.ts"):
+                        assert(
+                            getHash(modifiedSourceCode) ===
+                                "3382e093d23c6c68e0dd1e7e05d3c306e56813dc360cf4bd4e325f1f4d6b5b41",
+                            "fetchContent has changed, make sure to update the code"
+                        );
 
-                            const sourceCode_after: string =
-                                search === undefined
-                                    ? [replace, modifiedSourceCode].join("\n")
-                                    : modifiedSourceCode.replace(search, replace);
-
-                            assert(sourceCode_before !== sourceCode_after);
-
-                            modifiedSourceCode = sourceCode_after;
-                        }
+                        modifiedSourceCode = [
+                            `import type { CallOptions } from "../api/methods";`,
+                            `import type { MenuItem } from "../root/PageNav";`,
+                            ``,
+                            `export default async function fetchContentJson(`,
+                            `  opts: CallOptions,`,
+                            `): Promise<MenuItem[]> {`,
+                            `  const { content } = await import("../assets/content");`,
+                            `  return content;`,
+                            `}`
+                        ].join("\n");
                         break;
                 }
 
@@ -206,9 +208,6 @@ import { z } from "zod";
                     console.warn(`${fileRelativePath} contains reference to resourceUrl`);
                 }
             }
-
-            const withSpecialComments = (sourceCode: string) =>
-                ["/* eslint-disable */", "", "// @ts-nocheck", "", sourceCode].join("\n");
 
             if (fileRelativePath === "i18n.ts") {
                 await writeFile({
@@ -275,7 +274,7 @@ import { z } from "zod";
             cacheDirPath,
             fetchOptions,
             uniqueIdOfOnArchiveFile: "i18n_messages_and_public_assets",
-            onArchiveFile: async ({ fileRelativePath, writeFile }) => {
+            onArchiveFile: async ({ fileRelativePath, writeFile, readFile }) => {
                 i18n_messages: {
                     const dirRelativePath = pathJoin("theme", "keycloak.v3", "account", "messages");
 
@@ -326,11 +325,28 @@ import { z } from "zod";
                         return;
                     }
 
-                    if (pathBasename(fileRelativePath) === "robots.txt") {
+                    if (fileRelativePath === pathJoin(dirRelativePath, "robots.txt")) {
                         return;
                     }
 
+                    let modifiedData: undefined | Buffer = undefined;
+
+                    if (fileRelativePath === pathJoin(dirRelativePath, "content.json")) {
+                        modifiedData = Buffer.from(
+                            withSpecialComments(
+                                [
+                                    `import type { MenuItem } from "../root/PageNav";`,
+                                    ``,
+                                    `export const content: MenuItem[] = ${(await readFile()).toString("utf8")};`
+                                ].join("\n")
+                            ),
+                            "utf8"
+                        );
+                        fileRelativePath = fileRelativePath.replace(/\.json$/, ".ts");
+                    }
+
                     await writeFile({
+                        modifiedData,
                         fileRelativePath: pathJoin(
                             publicDirBasename,
                             pathRelative(dirRelativePath, fileRelativePath)
@@ -521,3 +537,7 @@ import { z } from "zod";
         )
     );
 })();
+
+function withSpecialComments(sourceCode: string) {
+    return ["/* eslint-disable */", "", "// @ts-nocheck", "", sourceCode].join("\n");
+}

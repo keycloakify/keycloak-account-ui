@@ -1,19 +1,19 @@
-import "@patternfly/patternfly/patternfly-addons.css";
 import "@patternfly/react-core/dist/styles/base.css";
+import "@patternfly/patternfly/patternfly-addons.css";
+
 import { useEffect, useReducer } from "react";
 import { initializeDarkMode } from "../shared/keycloak-ui-shared";
-import { createHashRouter, RouterProvider } from "react-router-dom";
-import { i18n } from "./i18n/i18n";
-import { RootRoute } from "./routes";
-
-import "./index.css";
-
-const router = createHashRouter([RootRoute]);
-const prI18nInitialized = i18n.init();
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { i18n } from "./i18n";
+import { routes } from "./routes";
 
 initializeDarkMode();
 
-export default function KcAdminUi() {
+const prI18nInitialized = i18n.init();
+
+const router = createBrowserRouter(routes);
+
+export default function KcAccountUi() {
     const [isI18nInitialized, setI18nInitialized] = useReducer(() => true, false);
 
     useEffect(() => {

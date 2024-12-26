@@ -1,4 +1,10 @@
-[
+/* eslint-disable */
+
+// @ts-nocheck
+
+import type { MenuItem } from "../root/PageNav";
+
+export const content: MenuItem[] = [
   { "label": "personalInfo", "path": "" },
   {
     "label": "accountSecurity",
@@ -34,3 +40,4 @@
     "isVisible":"isOid4VciEnabled"
   }
 ]
+;
