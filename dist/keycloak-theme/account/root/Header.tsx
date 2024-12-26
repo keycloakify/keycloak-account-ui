@@ -56,7 +56,7 @@ export const Header = () => {
       features={{ hasManageAccount: false }}
       brand={{
         href: indexHref,
-        src={logoSvgUrl},
+        src: logoSvgUrl,,
         alt: t("logo"),
         className: style.brand,
       }}
