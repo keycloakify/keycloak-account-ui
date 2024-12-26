@@ -167,7 +167,7 @@ import { getHash } from "./tools/getHash";
                         for (const [search, replace] of [
                             [undefined, `import logoSvgUrl from "../assets/logo.svg";`],
                             [`const brandImage = environment.logo || "logo.svg";`, ""],
-                            [`src: joinPath(environment.resourceUrl, brandImage)`, `src={logoSvgUrl}`]
+                            [`src: joinPath(environment.resourceUrl, brandImage)`, `src: logoSvgUrl,`]
                         ] as const) {
                             const sourceCode_before = modifiedSourceCode;
 
