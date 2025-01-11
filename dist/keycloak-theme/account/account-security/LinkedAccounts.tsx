@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import { useEnvironment } from "../../shared/keycloak-ui-shared";
-import { DataList, Stack, StackItem, Title } from "@patternfly/react-core";
+import { DataList, Stack, StackItem, Title } from "../../shared/@patternfly/react-core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getLinkedAccounts, LinkedAccountQueryParams } from "../api/methods";

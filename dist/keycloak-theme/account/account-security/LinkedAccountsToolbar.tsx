@@ -11,7 +11,7 @@ import {
   Toolbar,
   ToolbarContent,
   ToolbarItem,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 
 type LinkedAccountsToolbarProps = {
   onFilter: (nameFilter: string) => void;

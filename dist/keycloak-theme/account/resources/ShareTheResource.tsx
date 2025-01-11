@@ -18,7 +18,7 @@ import {
   Modal,
   TextInput,
   ValidatedOptions,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import { useEffect } from "react";
 import {
   FormProvider,

@@ -23,12 +23,12 @@ import {
   Grid,
   GridItem,
   Spinner,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import {
   CheckIcon,
   ExternalLinkAltIcon,
   InfoAltIcon,
-} from "@patternfly/react-icons";
+} from "../../shared/@patternfly/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

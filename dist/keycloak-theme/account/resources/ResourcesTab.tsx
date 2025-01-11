@@ -21,14 +21,14 @@ import {
   OverflowMenuGroup,
   OverflowMenuItem,
   Spinner,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import {
   EditAltIcon,
   EllipsisVIcon,
   ExternalLinkAltIcon,
   Remove2Icon,
   ShareAltIcon,
-} from "@patternfly/react-icons";
+} from "../../shared/@patternfly/react-icons";
 import {
   ExpandableRowContent,
   Table,
@@ -37,7 +37,7 @@ import {
   Th,
   Thead,
   Tr,
-} from "@patternfly/react-table";
+} from "../../shared/@patternfly/react-table";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

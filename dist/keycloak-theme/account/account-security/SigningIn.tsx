@@ -18,8 +18,8 @@ import {
   Split,
   SplitItem,
   Title,
-} from "@patternfly/react-core";
-import { EllipsisVIcon } from "@patternfly/react-icons";
+} from "../../shared/@patternfly/react-core";
+import { EllipsisVIcon } from "../../shared/@patternfly/react-icons";
 import { CSSProperties, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useEnvironment } from "../../shared/keycloak-ui-shared";

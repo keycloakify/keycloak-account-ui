@@ -17,8 +17,8 @@ import {
   ExpandableSection,
   Form,
   Spinner,
-} from "@patternfly/react-core";
-import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons";
+} from "../../shared/@patternfly/react-core";
+import { ExternalLinkSquareAltIcon } from "../../shared/@patternfly/react-icons";
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { ErrorOption, useForm } from "react-hook-form";

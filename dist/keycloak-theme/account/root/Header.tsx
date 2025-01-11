@@ -8,8 +8,8 @@ import {
   label,
   useEnvironment,
 } from "../../shared/keycloak-ui-shared";
-import { Button } from "@patternfly/react-core";
-import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons";
+import { Button } from "../../shared/@patternfly/react-core";
+import { ExternalLinkSquareAltIcon } from "../../shared/@patternfly/react-icons";
 import { useTranslation } from "react-i18next";
 import { useHref } from "react-router-dom";
 

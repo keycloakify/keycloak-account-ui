@@ -11,7 +11,7 @@ import {
   PageSidebar,
   PageSidebarBody,
   Spinner,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import {
   PropsWithChildren,
   MouseEvent as ReactMouseEvent,

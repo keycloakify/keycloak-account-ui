@@ -7,7 +7,7 @@ import {
   DataListItemRow,
   DataListItemCells,
   DataListCell,
-} from "@patternfly/react-core";
+} from "../../../shared/@patternfly/react-core";
 
 type EmptyRowProps = {
   message: string;

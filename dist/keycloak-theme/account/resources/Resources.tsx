@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Tab, Tabs, TabTitleText } from "@patternfly/react-core";
+import { Tab, Tabs, TabTitleText } from "../../shared/@patternfly/react-core";
 
 import { ResourcesTab } from "./ResourcesTab";
 import { Page } from "../components/page/Page";

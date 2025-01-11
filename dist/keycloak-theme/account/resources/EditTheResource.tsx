@@ -7,7 +7,7 @@ import {
   TextControl,
   useEnvironment,
 } from "../../shared/keycloak-ui-shared";
-import { Button, Form, Modal } from "@patternfly/react-core";
+import { Button, Form, Modal } from "../../shared/@patternfly/react-core";
 import { Fragment, useEffect } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";

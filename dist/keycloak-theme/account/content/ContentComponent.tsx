@@ -2,7 +2,7 @@
 
 // @ts-nocheck
 
-import { Spinner } from "@patternfly/react-core";
+import { Spinner } from "../../shared/@patternfly/react-core";
 import { Suspense, lazy, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEnvironment } from "../../shared/keycloak-ui-shared";

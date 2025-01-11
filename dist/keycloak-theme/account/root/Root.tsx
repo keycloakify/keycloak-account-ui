@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import { KeycloakProvider } from "../../shared/keycloak-ui-shared";
-import { Page, Spinner } from "@patternfly/react-core";
+import { Page, Spinner } from "../../shared/@patternfly/react-core";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 

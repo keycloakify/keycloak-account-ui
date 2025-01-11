@@ -11,9 +11,9 @@ import {
   Modal,
   ModalVariant,
   Text,
-} from "@patternfly/react-core";
-import { UserCheckIcon } from "@patternfly/react-icons";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
+} from "../../shared/@patternfly/react-core";
+import { UserCheckIcon } from "../../shared/@patternfly/react-icons";
+import { Table, Tbody, Td, Th, Thead, Tr } from "../../shared/@patternfly/react-table";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

@@ -9,7 +9,7 @@ import {
   DataListItem,
   DataListItemCells,
   DataListItemRow,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useEnvironment } from "../../shared/keycloak-ui-shared";

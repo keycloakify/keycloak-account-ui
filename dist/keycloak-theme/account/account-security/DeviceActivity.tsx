@@ -24,12 +24,12 @@ import {
   Split,
   SplitItem,
   Title,
-} from "@patternfly/react-core";
+} from "../../shared/@patternfly/react-core";
 import {
   DesktopIcon,
   MobileAltIcon,
   SyncAltIcon,
-} from "@patternfly/react-icons";
+} from "../../shared/@patternfly/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

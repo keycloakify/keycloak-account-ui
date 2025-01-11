@@ -2,7 +2,7 @@
 
 // @ts-nocheck
 
-import { PageSection, Text, TextContent, Title } from "@patternfly/react-core";
+import { PageSection, Text, TextContent, Title } from "../../../shared/@patternfly/react-core";
 import { PropsWithChildren } from "react";
 
 type PageProps = {

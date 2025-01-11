@@ -161,6 +161,13 @@ import { getHash } from "./tools/getHash";
                 `"${new Array(fileRelativePath.split(pathSep).length).fill("..").join("/") || ".."}/shared/keycloak-ui-shared"`
             );
 
+            for (const name of ["react-core", "react-icons", "react-styles", "react-table"]) {
+                modifiedSourceCode = modifiedSourceCode.replaceAll(
+                    `"@patternfly/${name}"`,
+                    `"${new Array(fileRelativePath.split(pathSep).length).fill("..").join("/") || ".."}/shared/@patternfly/${name}"`
+                );
+            }
+
             if (modifiedSourceCode.includes("environment.resourceUrl")) {
                 switch (fileRelativePath) {
                     case pathJoin("root", "Header.tsx"):
