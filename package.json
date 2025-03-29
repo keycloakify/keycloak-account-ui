@@ -1,6 +1,6 @@
 {
     "name": "@keycloakify/keycloak-account-ui",
-    "version": "260007.0.3",
+    "version": "260103.0.0",
     "description": "Repackaged Keycloak Account UI",
     "repository": {
         "type": "git",
@@ -46,7 +46,7 @@
         "evt": "^2.5.8",
         "react": "^18.3.1",
         "@types/react": "^18.3.12",
-        "@keycloak/keycloak-account-ui": "26.0.7",
+        "@keycloak/keycloak-account-ui": "26.1.3",
         "i18next": "^23.15.1"
     },
     "dependencies": {

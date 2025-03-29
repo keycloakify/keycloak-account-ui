@@ -23,6 +23,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.26.10":
+  version "7.27.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.0.tgz#fbee7cf97c709518ecc1f590984481d5460d4762"
+  integrity sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@esbuild/aix-ppc64@0.23.1":
   version "0.23.1"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.23.1.tgz#51299374de171dbd80bb7d838e1cfce9af36f353"
@@ -162,52 +169,52 @@
   dependencies:
     minipass "^7.0.4"
 
-"@keycloak/keycloak-account-ui@26.0.7":
-  version "26.0.7"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.0.7.tgz#fc3b301ccec16a7d058eaf056ee88abbfb8205c0"
-  integrity sha512-uueV9qdY1oWYnFpU+7K+B82SX5pR+p8GrO//34VqcbOyRQ+wEsX1A8mu4qCOEgZG5L1gwUNDxz99UQfJvh2hKg==
+"@keycloak/keycloak-account-ui@26.1.3":
+  version "26.1.3"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.1.3.tgz#9a30730eb61930096f218f355408c071c6dc9d78"
+  integrity sha512-P4wNPX19drL4H5wlZuLHp1Tb0RNMBKAFCjoqr35x5bH5iF3QgP86GfSkxuzoL69zUyFTJbdI13BGgFBnqu8mTw==
   dependencies:
-    "@keycloak/keycloak-ui-shared" "26.0.7"
-    "@patternfly/patternfly" "^5.4.0"
-    "@patternfly/react-core" "^5.4.1"
-    "@patternfly/react-icons" "^5.4.0"
-    "@patternfly/react-table" "^5.4.1"
-    i18next "^23.15.1"
-    i18next-http-backend "^2.6.1"
-    keycloak-js "26.0.7"
+    "@keycloak/keycloak-ui-shared" "26.1.3"
+    "@patternfly/patternfly" "^5.4.2"
+    "@patternfly/react-core" "^5.4.10"
+    "@patternfly/react-icons" "^5.4.2"
+    "@patternfly/react-table" "^5.4.13"
+    i18next "^24.2.1"
+    i18next-http-backend "^3.0.1"
+    keycloak-js "26.1.3"
     lodash-es "^4.17.21"
     react "^18.3.1"
     react-dom "^18.3.1"
-    react-hook-form "^7.53.0"
-    react-i18next "^15.0.2"
-    react-router-dom "^6.26.2"
+    react-hook-form "^7.54.2"
+    react-i18next "^15.4.0"
+    react-router-dom "^6.28.1"
 
-"@keycloak/keycloak-admin-client@26.0.7":
-  version "26.0.7"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.0.7.tgz#240bd33da4599bc49e29f7780287c4b2212cc002"
-  integrity sha512-2vdx04sxnTQavnE7zuztyfmf1l5opG1Bi76hh3Wj02m6vR+aSiHFxlTXJFHVZtE9Emko+qgU7a5kEFC+Il+EwQ==
+"@keycloak/keycloak-admin-client@26.1.3":
+  version "26.1.3"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.1.3.tgz#2b54f8cade81ee12c8b2263a72eecb60281d5a45"
+  integrity sha512-VFIfCEq050hs3ufj0apkvIDTdVn0LvcLsZEZA8eOyr6QOuSkKIzYOsW6Kf4uV2g6CVERJUPLZ9OF+bhEDSaV5g==
   dependencies:
     camelize-ts "^3.0.0"
     url-join "^5.0.0"
     url-template "^3.1.1"
 
-"@keycloak/keycloak-ui-shared@26.0.7":
-  version "26.0.7"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.0.7.tgz#68149f69b0092909ed3f602f8759eb00fd6e8b84"
-  integrity sha512-FAwEwlJJORiMk2BbP8UR2B4Xwn7UNbpPGBhQSZIxhtUr77sOx0v2Xnar0KX4UErTW7+T2W3i1wbCg3ovxcMW/A==
+"@keycloak/keycloak-ui-shared@26.1.3":
+  version "26.1.3"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.1.3.tgz#b1e22f939be9fe625b5d12636c0925303b468e06"
+  integrity sha512-mZxPEAzGA4NEhqdQjzi1e6FfZk1/mZvkfTyijWzMRLz29kptCxsZace8ITloFhwrAuPb0isfESMjLgdCngW4Sw==
   dependencies:
-    "@keycloak/keycloak-admin-client" "26.0.7"
-    "@patternfly/react-core" "^5.4.1"
-    "@patternfly/react-icons" "^5.4.0"
-    "@patternfly/react-styles" "^5.4.0"
-    "@patternfly/react-table" "^5.4.1"
-    i18next "^23.15.1"
-    keycloak-js "26.0.7"
+    "@keycloak/keycloak-admin-client" "26.1.3"
+    "@patternfly/react-core" "^5.4.10"
+    "@patternfly/react-icons" "^5.4.2"
+    "@patternfly/react-styles" "^5.4.1"
+    "@patternfly/react-table" "^5.4.13"
+    i18next "^24.2.1"
+    keycloak-js "26.1.3"
     lodash-es "^4.17.21"
     react "^18.3.1"
     react-dom "^18.3.1"
-    react-hook-form "7.53.0"
-    react-i18next "^15.0.2"
+    react-hook-form "7.54.2"
+    react-i18next "^15.4.0"
 
 "@npmcli/agent@^3.0.0":
   version "3.0.0"
@@ -227,15 +234,15 @@
   dependencies:
     semver "^7.3.5"
 
-"@patternfly/patternfly@^5.4.0":
+"@patternfly/patternfly@^5.4.2":
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/@patternfly/patternfly/-/patternfly-5.4.2.tgz#4a87d6a5fb2ffd526b4b9597b651f13ecf8ddd4f"
   integrity sha512-+BaokNR8/AmTYMESxby9UtQXPGACg449BXQd0KejAvW/uGxlgO6mY1X1205DeBEHoK3e/vXkYXjvZPpv/tcxSA==
 
-"@patternfly/react-core@^5.4.1", "@patternfly/react-core@^5.4.12":
-  version "5.4.12"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-5.4.12.tgz#8531a5c15e49e87d6d88782d9dffbb8b4c27da69"
-  integrity sha512-RI1xS1JGJdE/FvpkMzawaE21oeTc/e+WbxvFXqZfLhTz60P8RzVG1nYWXDL747Onkz3SYtY79PhQ8nsLeO5sJQ==
+"@patternfly/react-core@^5.4.10", "@patternfly/react-core@^5.4.14":
+  version "5.4.14"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-5.4.14.tgz#d41d28c81884f6a45dc3c364dc5ae2c933c72e89"
+  integrity sha512-oXVMzLs9Pa+xmdc39L2u05zbXfY3mWuOFi4GDv44GPdDexZUFy5W69+Nv5P8cwfMim55Nf5kKYpcqmatD2bBXw==
   dependencies:
     "@patternfly/react-icons" "^5.4.2"
     "@patternfly/react-styles" "^5.4.1"
@@ -244,22 +251,22 @@
     react-dropzone "^14.2.3"
     tslib "^2.7.0"
 
-"@patternfly/react-icons@^5.4.0", "@patternfly/react-icons@^5.4.2":
+"@patternfly/react-icons@^5.4.2":
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-5.4.2.tgz#8937a7167a0b3abdc3c179524f456b4cbd8f0c39"
   integrity sha512-CMQ5oHYzW6TPVTs2jpNJmP2vGCAKR/YeTPwHGO9dLkAUej1IcIxtCCWK2Fdo2UJsnBjuZihasyw2b6ehvbUm9Q==
 
-"@patternfly/react-styles@^5.4.0", "@patternfly/react-styles@^5.4.1":
+"@patternfly/react-styles@^5.4.1":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-5.4.1.tgz#c101419917bcf309dfa7469820cd7320dd0c5120"
   integrity sha512-XA8PXksD8uiA3RTwxdUwJXOCf+V6sVd+2HKapWAdRLvtSV+Sdk7NgCvalb4IAQncsddLopjPQD8gAHA298+N8w==
 
-"@patternfly/react-table@^5.4.1":
-  version "5.4.13"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-table/-/react-table-5.4.13.tgz#f1930b92b7b9c12e8fe968ce21006fee5e52b646"
-  integrity sha512-cYw+pgpZXKGg3dZxudteUURqmj5O0ec7aNE80NLqFTcnI0MAOnfrFzCNApXJErn+MjD0VolMcC+H48eaRkT8TA==
+"@patternfly/react-table@^5.4.13":
+  version "5.4.16"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-table/-/react-table-5.4.16.tgz#3197db7cf7cc3a2f721bbb8adb0fb7ca9182f5fc"
+  integrity sha512-K/xNdTvFKFyD6WhuBU/GCq/3LTrSaObdXSTmzefWWcPcN0gcf/J3ouiuapj951JIsP13CMmwJBNtEa3aHR8igg==
   dependencies:
-    "@patternfly/react-core" "^5.4.12"
+    "@patternfly/react-core" "^5.4.14"
     "@patternfly/react-icons" "^5.4.2"
     "@patternfly/react-styles" "^5.4.1"
     "@patternfly/react-tokens" "^5.4.1"
@@ -276,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@remix-run/router@1.21.0":
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.21.0.tgz#c65ae4262bdcfe415dbd4f64ec87676e4a56e2b5"
-  integrity sha512-xfSkCAchbdG5PnbrKqFWwia4Bi61nH+wm8wLEqfHDyp7Y3dZzgqS2itV8i4gAq9pC2HsTpwyBC6Ds8VHZ96JlA==
+"@remix-run/router@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.0.tgz#35390d0e7779626c026b11376da6789eb8389242"
+  integrity sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA==
 
 "@types/make-fetch-happen@^10.0.4":
   version "10.0.4"
@@ -821,10 +828,10 @@ husky@^4.3.8:
     slash "^3.0.0"
     which-pm-runs "^1.0.0"
 
-i18next-http-backend@^2.6.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-2.7.1.tgz#c754e51c242e8029445263d4351096c67feea102"
-  integrity sha512-vPksHIckysGgykCD8JwCr2YsJEml9Cyw+Yu2wtb4fQ7xIn9RH/hkUDh5UkwnIzb0kSL4SJ30Ab/sCInhQxbCgg==
+i18next-http-backend@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-3.0.2.tgz#7c8daa31aa69679e155ec1f96a37846225bdf907"
+  integrity sha512-PdlvPnvIp4E1sYi46Ik4tBYh/v/NbYfFFgTjkwFl0is8A18s7/bx9aXqsrOax9WUbeNS6mD2oix7Z0yGGf6m5g==
   dependencies:
     cross-fetch "4.0.0"
 
@@ -834,6 +841,13 @@ i18next@^23.15.1:
   integrity sha512-06r/TitrM88Mg5FdUXAKL96dJMzgqLE5dv3ryBAra4KCwD9mJ4ndOTS95ZuymIGoE+2hzfdaMak2X11/es7ZWg==
   dependencies:
     "@babel/runtime" "^7.23.2"
+
+i18next@^24.2.1:
+  version "24.2.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.2.3.tgz#3a05f72615cbd7c00d7e348667e2aabef1df753b"
+  integrity sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==
+  dependencies:
+    "@babel/runtime" "^7.26.10"
 
 iconv-lite@^0.6.2:
   version "0.6.3"
@@ -927,10 +941,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.yarnpkg.com/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-keycloak-js@26.0.7:
-  version "26.0.7"
-  resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-26.0.7.tgz#2025256f7c519df654240648052ea06344e2377e"
-  integrity sha512-vKCk1ISMiouYRLjMzi5fKp58RnYxKEBS29BoDgVfYwVW94IXchj9jLqBvIet31VD1v79l3WaWT+WMX7fH8O4wA==
+keycloak-js@26.1.3:
+  version "26.1.3"
+  resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-26.1.3.tgz#2067035cb7481a8488cd585a114f87ed7d04d9e8"
+  integrity sha512-H2NUTg4snjThwB1ZTjNXivOqriJcC5PqZw1nKjJmglw6rYNjV5A6rgQaNAuVPyLqs2582WTawsRHGJn/cDhWjQ==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -1323,20 +1337,20 @@ react-dropzone@^14.2.3:
     file-selector "^2.1.0"
     prop-types "^15.8.1"
 
-react-hook-form@7.53.0:
-  version "7.53.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.53.0.tgz#3cf70951bf41fa95207b34486203ebefbd3a05ab"
-  integrity sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==
-
-react-hook-form@^7.53.0:
+react-hook-form@7.54.2:
   version "7.54.2"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.54.2.tgz#8c26ed54c71628dff57ccd3c074b1dd377cfb211"
   integrity sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==
 
-react-i18next@^15.0.2:
-  version "15.2.0"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.2.0.tgz#6b51650e1e93eb4d235a4d533fcf61b3bbf4ea10"
-  integrity sha512-iJNc8111EaDtVTVMKigvBtPHyrJV+KblWG73cUxqp+WmJCcwkzhWNFXmkAD5pwP2Z4woeDj/oXDdbjDsb3Gutg==
+react-hook-form@^7.54.2:
+  version "7.55.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.55.0.tgz#df3c80a20a68f6811f49bec3406defaefb6dce80"
+  integrity sha512-XRnjsH3GVMQz1moZTW53MxfoWN7aDpUg/GpVNc4A3eXRVNdGXfbzJ4vM4aLQ8g6XCUh1nIbx70aaNCl7kxnjog==
+
+react-i18next@^15.4.0:
+  version "15.4.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.4.1.tgz#33f3e89c2f6c68e2bfcbf9aa59986ad42fe78758"
+  integrity sha512-ahGab+IaSgZmNPYXdV1n+OYky95TGpFwnKRflX/16dY04DsYYKHtVLjeny7sBSCREEcoMbAgSkFiGLF5g5Oofw==
   dependencies:
     "@babel/runtime" "^7.25.0"
     html-parse-stringify "^3.0.1"
@@ -1346,20 +1360,20 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-router-dom@^6.26.2:
-  version "6.28.1"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.28.1.tgz#b78fe452d2cd31919b80e57047a896bfa1509f8c"
-  integrity sha512-YraE27C/RdjcZwl5UCqF/ffXnZDxpJdk9Q6jw38SZHjXs7NNdpViq2l2c7fO7+4uWaEfcwfGCv3RSg4e1By/fQ==
+react-router-dom@^6.28.1:
+  version "6.30.0"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.0.tgz#a64774104508bff56b1affc2796daa3f7e76b7df"
+  integrity sha512-x30B78HV5tFk8ex0ITwzC9TTZMua4jGyA9IUlH1JLQYQTFyxr/ZxwOJq7evg1JX1qGVUcvhsmQSKdPncQrjTgA==
   dependencies:
-    "@remix-run/router" "1.21.0"
-    react-router "6.28.1"
+    "@remix-run/router" "1.23.0"
+    react-router "6.30.0"
 
-react-router@6.28.1:
-  version "6.28.1"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.28.1.tgz#f82317ab24eee67d7beb7b304c0378b2b48fa178"
-  integrity sha512-2omQTA3rkMljmrvvo6WtewGdVh45SpL9hGiCI9uUrwGGfNFDIvGK4gYJsKlJoNVi6AQZcopSCballL+QGOm7fA==
+react-router@6.30.0:
+  version "6.30.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.0.tgz#9789d775e63bc0df60f39ced77c8c41f1e01ff90"
+  integrity sha512-D3X8FyH9nBcTSHGdEKurK7r8OYE1kKFn3d/CF+CoxbSHkxU7o37+Uh7eAHRXr6k2tSExXYO++07PeXJtA/dEhQ==
   dependencies:
-    "@remix-run/router" "1.21.0"
+    "@remix-run/router" "1.23.0"
 
 react@^18.3.1:
   version "18.3.1"
