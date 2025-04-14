@@ -38,10 +38,15 @@ export interface ConsentScopeRepresentation {
   displayTest: string;
 }
 
+export interface CredentialMetadataRepresentationMessage {
+  key: string;
+  parameters?: string[];
+}
+
 export interface CredentialMetadataRepresentation {
-  infoMessage: string;
-  warningMessageTitle: string;
-  warningMessageDescription: string;
+  infoMessage: CredentialMetadataRepresentationMessage;
+  warningMessageTitle: CredentialMetadataRepresentationMessage;
+  warningMessageDescription: CredentialMetadataRepresentationMessage;
   credential: CredentialRepresentation;
 }
 

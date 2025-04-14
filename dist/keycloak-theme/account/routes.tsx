@@ -4,11 +4,8 @@
 
 import { lazy } from "react";
 import type { IndexRouteObject, RouteObject } from "react-router-dom";
-
 import { environment } from "./environment";
 import { Organizations } from "./organizations/Organizations";
-import { ErrorPage } from "./root/ErrorPage";
-import { Root } from "./root/Root";
 
 const DeviceActivity = lazy(() => import("./account-security/DeviceActivity"));
 const LinkedAccounts = lazy(() => import("./account-security/LinkedAccounts"));
@@ -62,6 +59,7 @@ export const ContentRoute: RouteObject = {
 export const PersonalInfoRoute: IndexRouteObject = {
   index: true,
   element: <PersonalInfo />,
+  path: "",
 };
 
 export const OrganizationsRoute: RouteObject = {
@@ -74,23 +72,16 @@ export const Oid4VciRoute: RouteObject = {
   element: <Oid4Vci />,
 };
 
-export const RootRoute: RouteObject = {
-  path: decodeURIComponent(new URL(environment.baseUrl).pathname),
-  element: <Root />,
-  errorElement: <ErrorPage />,
-  children: [
-    PersonalInfoRoute,
-    DeviceActivityRoute,
-    LinkedAccountsRoute,
-    SigningInRoute,
-    ApplicationsRoute,
-    GroupsRoute,
-    OrganizationsRoute,
-    PersonalInfoRoute,
-    ResourcesRoute,
-    ContentRoute,
-    Oid4VciRoute,
-  ],
-};
-
-export const routes: RouteObject[] = [RootRoute];
+export const routes: RouteObject[] = [
+  PersonalInfoRoute,
+  DeviceActivityRoute,
+  LinkedAccountsRoute,
+  SigningInRoute,
+  ApplicationsRoute,
+  GroupsRoute,
+  OrganizationsRoute,
+  PersonalInfoRoute,
+  ResourcesRoute,
+  ContentRoute,
+  ...(environment.features.isOid4VciEnabled ? [Oid4VciRoute] : []),
+];

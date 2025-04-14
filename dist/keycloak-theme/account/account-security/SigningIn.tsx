@@ -19,7 +19,11 @@ import {
   SplitItem,
   Title,
 } from "../../shared/@patternfly/react-core";
-import { EllipsisVIcon } from "../../shared/@patternfly/react-icons";
+import {
+  EllipsisVIcon,
+  ExclamationTriangleIcon,
+  InfoAltIcon,
+} from "../../shared/@patternfly/react-icons";
 import { CSSProperties, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useEnvironment } from "../../shared/keycloak-ui-shared";
@@ -122,6 +126,57 @@ export const SigningIn = () => {
         </DataListCell>,
       );
     }
+    if (
+      credMetadata.infoMessage ||
+      (credMetadata.warningMessageTitle &&
+        credMetadata.warningMessageDescription)
+    ) {
+      items.push(
+        <DataListCell
+          key={"warning-message" + credential.id}
+          data-testrole="warning-message"
+        >
+          <>
+            {credMetadata.infoMessage && (
+              <p>
+                <InfoAltIcon />{" "}
+                {t(
+                  credMetadata.infoMessage.key,
+                  credMetadata.infoMessage.parameters?.reduce(
+                    (acc, val, idx) => ({ ...acc, [idx]: val }),
+                    {},
+                  ),
+                )}
+              </p>
+            )}
+            {credMetadata.warningMessageTitle &&
+              credMetadata.warningMessageDescription && (
+                <>
+                  <p>
+                    <ExclamationTriangleIcon />{" "}
+                    {t(
+                      credMetadata.warningMessageTitle.key,
+                      credMetadata.warningMessageTitle.parameters?.reduce(
+                        (acc, val, idx) => ({ ...acc, [idx]: val }),
+                        {},
+                      ),
+                    )}
+                  </p>
+                  <p>
+                    {t(
+                      credMetadata.warningMessageDescription.key,
+                      credMetadata.warningMessageDescription.parameters?.reduce(
+                        (acc, val, idx) => ({ ...acc, [idx]: val }),
+                        {},
+                      ),
+                    )}
+                  </p>
+                </>
+              )}
+          </>
+        </DataListCell>,
+      );
+    }
     return items;
   };
 
@@ -211,7 +266,7 @@ export const SigningIn = () => {
                               aria-label={t("updateCredAriaLabel")}
                               aria-labelledby={`cred-${meta.credential.id}`}
                             >
-                              {container.removeable ? (
+                              {container.removeable && (
                                 <Button
                                   variant="danger"
                                   data-testrole="remove"
@@ -225,12 +280,12 @@ export const SigningIn = () => {
                                 >
                                   {t("delete")}
                                 </Button>
-                              ) : (
+                              )}
+                              {container.updateAction && (
                                 <Button
                                   variant="secondary"
                                   onClick={() => {
-                                    if (container.updateAction)
-                                      login({ action: container.updateAction });
+                                    login({ action: container.updateAction });
                                   }}
                                   data-testrole="update"
                                 >

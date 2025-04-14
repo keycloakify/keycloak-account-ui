@@ -8,16 +8,37 @@ import { getI18n } from "react-i18next";
 import type { AccountEnvironment as Environment_target } from "@keycloak/keycloak-account-ui";
 
 type Environment = {
+    /**
+     * The URL to the root of the Keycloak server, including the path if present, this is **NOT** always equivalent to the URL of the Admin Console.
+     * For example, the Keycloak server could be hosted on `auth.example.com` and Admin Console may be hosted on `admin.example.com/some/path`.
+     *
+     * Note that this URL is normalized not to include a trailing slash, so take this into account when constructing URLs.
+     *
+     * @see {@link https://www.keycloak.org/server/hostname#_administration_console}
+     */
     serverBaseUrl: string;
+    /** The identifier of the realm used to authenticate the user. */
     realm: string;
+    /** The identifier of the client used to authenticate the user. */
     clientId: string;
+    /** The base URL of the resources. */
     resourceUrl: string;
+    /** The source URL for the the logo image. */
     logo: string;
+    /** The URL to be followed when the logo is clicked. */
     logoUrl: string;
+    /** The scopes to be requested when sending authorization requests*/
+    scope?: string;
+
+    /** The URL to the root of the account console. */
     baseUrl: string;
+    /** The locale of the user */
     locale: string;
+    /** Name of the referrer application in the back link */
     referrerName?: string;
+    /** UR to the referrer application in the back link */
     referrerUrl?: string;
+    /** Feature flags */
     features: {
         isRegistrationEmailAsUsername: boolean;
         isEditUserNameAllowed: boolean;
