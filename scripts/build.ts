@@ -148,7 +148,7 @@ import { getHash } from "./tools/getHash";
             if (fileRelativePath === "main.tsx") {
                 assert(
                     getHash(await readFile()) ===
-                        "8fd7ba3c35cf88c902687e7bac408082f069485ba61e4d2cd41f05ffd96d84a6",
+                        "4b7b6abcac128bf25872e0fd04f079bb4d0d33e04692960abec8036941a3bcda",
                     "KcAccountUi.tsx should be modified"
                 );
                 return;

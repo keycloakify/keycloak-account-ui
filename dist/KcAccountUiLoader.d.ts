@@ -55,6 +55,7 @@ export type KcAccountUiLoaderProps = {
     kcContext: KcContextLike;
     KcAccountUi: LazyExoticComponentLike;
     loadingFallback?: ReactElement<any, any>;
+    enableDarkModeIfPreferred?: boolean;
 };
 export declare function KcAccountUiLoader(props: KcAccountUiLoaderProps): import("react/jsx-runtime").JSX.Element;
 export {};
