@@ -1,6 +1,6 @@
 {
     "name": "@keycloakify/keycloak-account-ui",
-    "version": "260200.0.0-rc.0",
+    "version": "260200.0.0-rc.1",
     "description": "Repackaged Keycloak Account UI",
     "repository": {
         "type": "git",
