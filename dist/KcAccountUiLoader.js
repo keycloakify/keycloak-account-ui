@@ -35,7 +35,22 @@ function init(params) {
         }
         return;
     }
-    const { kcContext } = params;
+    const { kcContext, enableDarkModeIfPreferred = true } = params;
+    if (enableDarkModeIfPreferred) {
+        const DARK_MODE_CLASS = "pf-v5-theme-dark";
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        updateDarkMode(mediaQuery.matches);
+        mediaQuery.addEventListener("change", event => updateDarkMode(event.matches));
+        function updateDarkMode(isEnabled) {
+            const { classList } = document.documentElement;
+            if (isEnabled) {
+                classList.add(DARK_MODE_CLASS);
+            }
+            else {
+                classList.remove(DARK_MODE_CLASS);
+            }
+        }
+    }
     //logValidationResult(kcContext);
     const resourceUrl = kcContext.resourceUrl;
     const serverBaseUrl = (() => {
