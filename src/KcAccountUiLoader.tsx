@@ -74,6 +74,7 @@ export namespace KcContextLike {
         baseUrl: {
             rawSchemeSpecificPart: string;
             scheme: string;
+            authority: string;
         };
         locale: string;
         isAuthorizationEnabled: boolean;
@@ -81,6 +82,7 @@ export namespace KcContextLike {
         updateEmailFeatureEnabled: boolean;
         updateEmailActionEnabled: boolean;
         isViewOrganizationsEnabled?: boolean;
+        properties: Record<string, string | undefined>;
     };
 
     export type I18nApi = {
@@ -269,7 +271,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
         }
     };
 
-    assert<typeof environment extends Environment ? true : false>;
+    assert<typeof environment extends Environment ? true : false>();
 
     {
         const undefinedKeys = Object.entries(environment)
@@ -481,6 +483,26 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
 
             return realFetch(...args);
         };
+    }
+
+    {
+        const { styles } = kcContext.properties;
+
+        if (!styles) {
+            return;
+        }
+
+        for (const relativeUrl of styles.split(" ")) {
+            const url = `${kcContext.baseUrl.scheme}://${kcContext.baseUrl.authority}${kcContext.resourceUrl}/${relativeUrl}`;
+
+            console.log(url);
+
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = url;
+
+            document.head.appendChild(link);
+        }
     }
 }
 
