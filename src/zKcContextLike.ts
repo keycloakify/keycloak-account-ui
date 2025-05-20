@@ -20,14 +20,16 @@ const zKcContextLikeCommon = (() => {
         resourceUrl: z.string(),
         baseUrl: z.object({
             rawSchemeSpecificPart: z.string(),
-            scheme: z.string()
+            scheme: z.string(),
+            authority: z.string()
         }),
         locale: z.string(),
         isAuthorizationEnabled: z.boolean(),
         deleteAccountAllowed: z.boolean(),
         updateEmailFeatureEnabled: z.boolean(),
         updateEmailActionEnabled: z.boolean(),
-        isViewOrganizationsEnabled: z.boolean().optional()
+        isViewOrganizationsEnabled: z.boolean().optional(),
+        properties: z.record(z.string(), z.union([z.string(), z.undefined()]))
     });
 
     assert<Equals<z.infer<typeof zTargetType>, TargetType>>();

@@ -14,6 +14,7 @@ export declare namespace KcContextLike {
         baseUrl: {
             rawSchemeSpecificPart: string;
             scheme: string;
+            authority: string;
         };
         locale: string;
         isAuthorizationEnabled: boolean;
@@ -21,6 +22,7 @@ export declare namespace KcContextLike {
         updateEmailFeatureEnabled: boolean;
         updateEmailActionEnabled: boolean;
         isViewOrganizationsEnabled?: boolean;
+        properties: Record<string, string | undefined>;
     };
     type I18nApi = {
         msgJSON: string;

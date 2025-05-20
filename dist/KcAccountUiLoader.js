@@ -103,16 +103,21 @@ function init(params) {
             isEditUserNameAllowed: kcContext.realm.editUsernameAllowed,
             isInternationalizationEnabled: kcContext.realm.isInternationalizationEnabled,
             isLinkedAccountsEnabled: kcContext.realm.identityFederationEnabled,
-            isMyResourcesEnabled: kcContext.realm.userManagedAccessAllowed && kcContext.isAuthorizationEnabled,
+            isMyResourcesEnabled: kcContext.realm.userManagedAccessAllowed &&
+                kcContext.isAuthorizationEnabled,
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
-            isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
-            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
+            isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext
+                ? kcContext.isViewGroupsEnabled
+                : false,
+            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext)
+                ? kcContext.isOid4VciEnabled
+                : false,
             isViewOrganizationsEnabled: (_b = kcContext.isViewOrganizationsEnabled) !== null && _b !== void 0 ? _b : false
         }
     };
-    assert;
+    assert();
     {
         const undefinedKeys = Object.entries(environment)
             .filter(([key]) => key !== "features")
@@ -202,7 +207,9 @@ function init(params) {
                 }
                 const urlObj = new URL((() => {
                     const urlStr = `${url}`;
-                    return urlStr.startsWith("/") ? `${window.location.origin}${urlStr}` : urlStr;
+                    return urlStr.startsWith("/")
+                        ? `${window.location.origin}${urlStr}`
+                        : urlStr;
                 })());
                 add_locale_attribute: {
                     if (!environment.features.isInternationalizationEnabled) {
@@ -271,6 +278,20 @@ function init(params) {
             }
             return realFetch(...args);
         };
+    }
+    {
+        const { styles } = kcContext.properties;
+        if (!styles) {
+            return;
+        }
+        for (const relativeUrl of styles.split(" ")) {
+            const url = `${kcContext.baseUrl.scheme}://${kcContext.baseUrl.authority}${kcContext.resourceUrl}/${relativeUrl}`;
+            console.log(url);
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = url;
+            document.head.appendChild(link);
+        }
     }
 }
 function readQueryParamOrRestoreFromSessionStorage(params) {
