@@ -252,8 +252,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
         logoUrl: referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
         baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
         locale: kcContext.locale,
-        referrerName:
-            readQueryParamOrRestoreFromSessionStorage({ name: "referrer" }) ?? "",
+        referrerName: readQueryParamOrRestoreFromSessionStorage({ name: "referrer" }) ?? "",
         referrerUrl: referrerUrl ?? "",
         features: {
             isRegistrationEmailAsUsername: kcContext.realm.registrationEmailAsUsername,
@@ -261,18 +260,13 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
             isInternationalizationEnabled: kcContext.realm.isInternationalizationEnabled,
             isLinkedAccountsEnabled: kcContext.realm.identityFederationEnabled,
             isMyResourcesEnabled:
-                kcContext.realm.userManagedAccessAllowed &&
-                kcContext.isAuthorizationEnabled,
+                kcContext.realm.userManagedAccessAllowed && kcContext.isAuthorizationEnabled,
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
             isViewGroupsEnabled:
-                "isViewGroupsEnabled" in kcContext
-                    ? kcContext.isViewGroupsEnabled
-                    : false,
-            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext)
-                ? kcContext.isOid4VciEnabled
-                : false,
+                "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
+            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
             isViewOrganizationsEnabled: kcContext.isViewOrganizationsEnabled ?? false
         }
     };
@@ -296,10 +290,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
             .map(([key]) => key);
 
         if (undefinedKeys.length > 0) {
-            console.error(
-                "Need KcContext polyfill for features",
-                undefinedKeys.join(", ")
-            );
+            console.error("Need KcContext polyfill for features", undefinedKeys.join(", "));
         }
     }
 
@@ -394,9 +385,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
                     (() => {
                         const urlStr = `${url}`;
 
-                        return urlStr.startsWith("/")
-                            ? `${window.location.origin}${urlStr}`
-                            : urlStr;
+                        return urlStr.startsWith("/") ? `${window.location.origin}${urlStr}` : urlStr;
                     })()
                 );
 
@@ -517,9 +506,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
     }
 }
 
-function readQueryParamOrRestoreFromSessionStorage(params: {
-    name: string;
-}): string | undefined {
+function readQueryParamOrRestoreFromSessionStorage(params: { name: string }): string | undefined {
     const { name } = params;
 
     const url = new URL(window.location.href);

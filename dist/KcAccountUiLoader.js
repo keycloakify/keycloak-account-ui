@@ -103,17 +103,12 @@ function init(params) {
             isEditUserNameAllowed: kcContext.realm.editUsernameAllowed,
             isInternationalizationEnabled: kcContext.realm.isInternationalizationEnabled,
             isLinkedAccountsEnabled: kcContext.realm.identityFederationEnabled,
-            isMyResourcesEnabled: kcContext.realm.userManagedAccessAllowed &&
-                kcContext.isAuthorizationEnabled,
+            isMyResourcesEnabled: kcContext.realm.userManagedAccessAllowed && kcContext.isAuthorizationEnabled,
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
-            isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext
-                ? kcContext.isViewGroupsEnabled
-                : false,
-            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext)
-                ? kcContext.isOid4VciEnabled
-                : false,
+            isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
+            isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
             isViewOrganizationsEnabled: (_b = kcContext.isViewOrganizationsEnabled) !== null && _b !== void 0 ? _b : false
         }
     };
@@ -207,9 +202,7 @@ function init(params) {
                 }
                 const urlObj = new URL((() => {
                     const urlStr = `${url}`;
-                    return urlStr.startsWith("/")
-                        ? `${window.location.origin}${urlStr}`
-                        : urlStr;
+                    return urlStr.startsWith("/") ? `${window.location.origin}${urlStr}` : urlStr;
                 })());
                 add_locale_attribute: {
                     if (!environment.features.isInternationalizationEnabled) {
