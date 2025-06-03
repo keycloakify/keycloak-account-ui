@@ -9,9 +9,9 @@ function getIsKeycloak25AndUp(kcContext) {
     return "serverBaseUrl" in kcContext;
 }
 export function KcAccountUiLoader(props) {
-    const { KcAccountUi, loadingFallback, ...paramsOfInit } = props;
+    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred = true } = props;
     assert(is(KcAccountUi));
-    useMemo(() => init(paramsOfInit), []);
+    useMemo(() => init({ kcContext, enableDarkModeIfPreferred }), []);
     return (_jsx(Suspense, { fallback: loadingFallback, children: (() => {
             const node = _jsx(KcAccountUi, {});
             if (node === null) {
@@ -35,7 +35,7 @@ function init(params) {
         }
         return;
     }
-    const { kcContext, enableDarkModeIfPreferred = true } = params;
+    const { kcContext, enableDarkModeIfPreferred } = params;
     if (enableDarkModeIfPreferred) {
         const DARK_MODE_CLASS = "pf-v5-theme-dark";
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
