@@ -485,24 +485,79 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
         };
     }
 
-    {
+    custom_styles: {
         const { styles } = kcContext.properties;
 
         if (!styles) {
-            return;
+            break custom_styles;
         }
 
-        for (const relativeUrl of styles.split(" ")) {
-            const url = `${kcContext.baseUrl.scheme}://${kcContext.baseUrl.authority}${kcContext.resourceUrl}/${relativeUrl}`;
+        const relativeUrls = styles.split(" ").map(s => s.trim());
 
-            console.log(url);
-
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = url;
-
-            document.head.appendChild(link);
+        if (relativeUrls.length === 0) {
+            break custom_styles;
         }
+
+        const { appendLinksToHead, removeLinksFromHead } = (() => {
+            const CUSTOM_ATTRIBUTE_NAME = "data-properties-styles";
+
+            const links = relativeUrls.map(relativeUrl => {
+                const url = `${kcContext.baseUrl.scheme}://${kcContext.baseUrl.authority}${kcContext.resourceUrl}/${relativeUrl}`;
+
+                const link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = url;
+                link.setAttribute(CUSTOM_ATTRIBUTE_NAME, "true");
+
+                return link;
+            });
+
+            function appendLinksToHead() {
+                links.forEach(link => {
+                    document.head.appendChild(link);
+                });
+            }
+
+            function removeLinksFromHead() {
+                document.querySelectorAll(`link[${CUSTOM_ATTRIBUTE_NAME}="true"]`).forEach(link => {
+                    link.remove();
+                });
+            }
+
+            return { appendLinksToHead, removeLinksFromHead };
+        })();
+
+        appendLinksToHead();
+
+        (function callee() {
+            const observer = new MutationObserver(mutations => {
+                const hasAddedNodes = (() => {
+                    for (const mutation of mutations) {
+                        if (mutation.addedNodes.length !== 0) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })();
+
+                if (!hasAddedNodes) {
+                    return;
+                }
+
+                observer.disconnect();
+
+                removeLinksFromHead();
+                appendLinksToHead();
+
+                callee();
+            });
+
+            observer.observe(document.head, {
+                childList: true,
+                subtree: false
+            });
+        })();
     }
 }
 
