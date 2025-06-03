@@ -133,11 +133,11 @@ export type KcAccountUiLoaderProps = {
 };
 
 export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
-    const { KcAccountUi, loadingFallback, ...paramsOfInit } = props;
+    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred = true } = props;
 
     assert(is<LazyExoticComponent<() => ReactElement<any, any> | null>>(KcAccountUi));
 
-    useMemo(() => init(paramsOfInit), []);
+    useMemo(() => init({ kcContext, enableDarkModeIfPreferred }), []);
 
     return (
         <Suspense fallback={loadingFallback}>
@@ -156,7 +156,7 @@ export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
 
 let previousRunParamsFingerprint: string | undefined = undefined;
 
-function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: boolean }) {
+function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred: boolean }) {
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
 
@@ -173,7 +173,7 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred?: bo
         return;
     }
 
-    const { kcContext, enableDarkModeIfPreferred = true } = params;
+    const { kcContext, enableDarkModeIfPreferred } = params;
 
     if (enableDarkModeIfPreferred) {
         const DARK_MODE_CLASS = "pf-v5-theme-dark";
