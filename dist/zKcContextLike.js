@@ -24,7 +24,8 @@ const zKcContextLikeCommon = (() => {
         updateEmailFeatureEnabled: z.boolean(),
         updateEmailActionEnabled: z.boolean(),
         isViewOrganizationsEnabled: z.boolean().optional(),
-        properties: z.record(z.string(), z.union([z.string(), z.undefined()]))
+        properties: z.record(z.string(), z.union([z.string(), z.undefined()])),
+        darkMode: z.boolean().optional()
     });
     assert();
     return id(zTargetType);

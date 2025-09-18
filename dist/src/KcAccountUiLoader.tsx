@@ -83,6 +83,16 @@ export namespace KcContextLike {
         updateEmailActionEnabled: boolean;
         isViewOrganizationsEnabled?: boolean;
         properties: Record<string, string | undefined>;
+        /**
+         * Misleading name: this value does not indicate whether the app should render in dark or light mode.
+         *
+         * - If `darkMode === false`, the theme is NOT ALLOWED to render in dark mode under any circumstances.
+         *   (Configured in the Admin Console.)
+         * - If `darkMode === true`, dark mode is permitted.
+         * - If `darkMode === undefined` (older Keycloak versions), assume `true`
+         *   — meaning dark mode is allowed, since the restriction option didn’t exist yet.
+         */
+        darkMode?: boolean;
     };
 
     export type I18nApi = {
@@ -129,15 +139,59 @@ export type KcAccountUiLoaderProps = {
     kcContext: KcContextLike;
     KcAccountUi: LazyExoticComponentLike;
     loadingFallback?: ReactElement<any, any>;
+    /** @deprecated: Use darkModePolicy instead*/
     enableDarkModeIfPreferred?: boolean;
+    /**
+     * Dark mode rendering policy:
+     * - "auto": Follow system preference, unless the Admin Console disables dark mode (then force light mode).
+     * - "never dark mode": Always render in light mode.
+     *
+     * Default: "auto"
+     *
+     * Implementation detail:
+     * Dark mode is enabled by adding the CSS class `"pf-v5-theme-dark"` to the root <html> element.
+     * If the class is absent, the app renders in light mode.
+     *
+     * Custom management:
+     * To control dark/light mode yourself, set `darkModePolicy: "never dark mode"`.
+     * This makes the loader a no-op (it won’t add/remove any class).
+     * You must then handle toggling `"pf-v5-theme-dark"` on <html class="..."> manually.
+     *
+     * Important: Always respect `kcContext.darkMode`.
+     * - If `kcContext.darkMode === false`, dark mode is forbidden by the server (cannot be enabled).
+     * - If `kcContext.darkMode === undefined` (older Keycloak), treat it as `true`
+     *   — meaning dark mode is allowed.
+     */
+    darkModePolicy?: "auto" | "never dark mode";
 };
 
 export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
-    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred = true } = props;
+    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred, darkModePolicy } = props;
 
     assert(is<LazyExoticComponent<() => ReactElement<any, any> | null>>(KcAccountUi));
 
-    useMemo(() => init({ kcContext, enableDarkModeIfPreferred }), []);
+    useMemo(
+        () =>
+            init({
+                kcContext,
+                darkModePolicy: (() => {
+                    if (darkModePolicy !== undefined) {
+                        assert(
+                            enableDarkModeIfPreferred === undefined,
+                            `Can't use both enableDarkModeIfPreferred and darkModePolicy, enableDarkModeIfPreferred is deprecated.`
+                        );
+                        return darkModePolicy;
+                    }
+
+                    if (enableDarkModeIfPreferred !== undefined) {
+                        return enableDarkModeIfPreferred ? "auto" : "never dark mode";
+                    }
+
+                    return "auto";
+                })()
+            }),
+        []
+    );
 
     return (
         <Suspense fallback={loadingFallback}>
@@ -156,7 +210,10 @@ export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
 
 let previousRunParamsFingerprint: string | undefined = undefined;
 
-function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred: boolean }) {
+function init(params: {
+    kcContext: KcContextLike;
+    darkModePolicy: NonNullable<KcAccountUiLoaderProps["darkModePolicy"]>;
+}) {
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
 
@@ -173,24 +230,42 @@ function init(params: { kcContext: KcContextLike; enableDarkModeIfPreferred: boo
         return;
     }
 
-    const { kcContext, enableDarkModeIfPreferred } = params;
+    const { kcContext, darkModePolicy } = params;
 
-    if (enableDarkModeIfPreferred) {
-        const DARK_MODE_CLASS = "pf-v5-theme-dark";
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    light_dark_mode_management: {
+        if (darkModePolicy === "never dark mode") {
+            break light_dark_mode_management;
+        }
 
-        updateDarkMode(mediaQuery.matches);
-        mediaQuery.addEventListener("change", event => updateDarkMode(event.matches));
+        assert<Equals<typeof darkModePolicy, "auto">>;
 
-        function updateDarkMode(isEnabled: boolean) {
+        if (kcContext.darkMode === false) {
+            break light_dark_mode_management;
+        }
+
+        const setIsDarkModeEnabled = (params: { isDarkModeEnabled: boolean }) => {
+            const { isDarkModeEnabled } = params;
+
             const { classList } = document.documentElement;
 
-            if (isEnabled) {
+            const DARK_MODE_CLASS = "pf-v5-theme-dark";
+
+            if (isDarkModeEnabled) {
                 classList.add(DARK_MODE_CLASS);
             } else {
                 classList.remove(DARK_MODE_CLASS);
             }
+        };
+
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        if (mediaQuery.matches) {
+            setIsDarkModeEnabled({ isDarkModeEnabled: true });
         }
+
+        mediaQuery.addEventListener("change", event =>
+            setIsDarkModeEnabled({ isDarkModeEnabled: event.matches })
+        );
     }
 
     //logValidationResult(kcContext);

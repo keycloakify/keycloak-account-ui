@@ -9,9 +9,21 @@ function getIsKeycloak25AndUp(kcContext) {
     return "serverBaseUrl" in kcContext;
 }
 export function KcAccountUiLoader(props) {
-    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred = true } = props;
+    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred, darkModePolicy } = props;
     assert(is(KcAccountUi));
-    useMemo(() => init({ kcContext, enableDarkModeIfPreferred }), []);
+    useMemo(() => init({
+        kcContext,
+        darkModePolicy: (() => {
+            if (darkModePolicy !== undefined) {
+                assert(enableDarkModeIfPreferred === undefined, `Can't use both enableDarkModeIfPreferred and darkModePolicy, enableDarkModeIfPreferred is deprecated.`);
+                return darkModePolicy;
+            }
+            if (enableDarkModeIfPreferred !== undefined) {
+                return enableDarkModeIfPreferred ? "auto" : "never dark mode";
+            }
+            return "auto";
+        })()
+    }), []);
     return (_jsx(Suspense, { fallback: loadingFallback, children: (() => {
             const node = _jsx(KcAccountUi, {});
             if (node === null) {
@@ -35,21 +47,31 @@ function init(params) {
         }
         return;
     }
-    const { kcContext, enableDarkModeIfPreferred } = params;
-    if (enableDarkModeIfPreferred) {
-        const DARK_MODE_CLASS = "pf-v5-theme-dark";
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-        updateDarkMode(mediaQuery.matches);
-        mediaQuery.addEventListener("change", event => updateDarkMode(event.matches));
-        function updateDarkMode(isEnabled) {
+    const { kcContext, darkModePolicy } = params;
+    light_dark_mode_management: {
+        if (darkModePolicy === "never dark mode") {
+            break light_dark_mode_management;
+        }
+        assert;
+        if (kcContext.darkMode === false) {
+            break light_dark_mode_management;
+        }
+        const setIsDarkModeEnabled = (params) => {
+            const { isDarkModeEnabled } = params;
             const { classList } = document.documentElement;
-            if (isEnabled) {
+            const DARK_MODE_CLASS = "pf-v5-theme-dark";
+            if (isDarkModeEnabled) {
                 classList.add(DARK_MODE_CLASS);
             }
             else {
                 classList.remove(DARK_MODE_CLASS);
             }
+        };
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        if (mediaQuery.matches) {
+            setIsDarkModeEnabled({ isDarkModeEnabled: true });
         }
+        mediaQuery.addEventListener("change", event => setIsDarkModeEnabled({ isDarkModeEnabled: event.matches }));
     }
     //logValidationResult(kcContext);
     const resourceUrl = kcContext.resourceUrl;
