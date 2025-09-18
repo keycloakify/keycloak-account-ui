@@ -7,5 +7,5 @@ const KcAccountUi = lazy(() => import("./KcAccountUi"));
 export default function KcPage(props: { kcContext: KcContext }) {
     const { kcContext } = props;
 
-    return <KcAccountUiLoader kcContext={kcContext} KcAccountUi={KcAccountUi} />;
+    return <KcAccountUiLoader kcContext={kcContext} KcAccountUi={KcAccountUi} darkModePolicy="auto" />;
 }
