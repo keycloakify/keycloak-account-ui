@@ -2,7 +2,11 @@
 
 // @ts-nocheck
 
-import { ErrorPage, useEnvironment } from "../../shared/keycloak-ui-shared";
+import {
+  ErrorPage,
+  useEnvironment,
+  KeycloakContext,
+} from "../../shared/keycloak-ui-shared";
 import { Page, Spinner } from "../../shared/@patternfly/react-core";
 import { Suspense, useState } from "react";
 import {
@@ -18,12 +22,21 @@ import { Header } from "./Header";
 import { MenuItem, PageNav } from "./PageNav";
 import { routes } from "../routes";
 
-function mapRoutes(content: MenuItem[]): RouteObject[] {
+function mapRoutes(
+  context: KeycloakContext<Environment>,
+  content: MenuItem[],
+): RouteObject[] {
   return content
     .map((item) => {
       if ("children" in item) {
-        return mapRoutes(item.children);
+        return mapRoutes(context, item.children);
       }
+
+      // Do not add route disabled via feature flags
+      if (item.isVisible && !context.environment.features[item.isVisible]) {
+        return null;
+      }
+
       return {
         ...item,
         element:
@@ -32,6 +45,7 @@ function mapRoutes(content: MenuItem[]): RouteObject[] {
             : undefined,
       };
     })
+    .filter((item) => !!item)
     .flat();
 }
 
@@ -53,7 +67,7 @@ export const Root = () => {
             </Page>
           ),
           errorElement: <ErrorPage />,
-          children: mapRoutes(content),
+          children: mapRoutes(context, content),
         },
       ]);
     },

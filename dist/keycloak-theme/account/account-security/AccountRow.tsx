@@ -18,7 +18,7 @@ import {
 import { LinkIcon, UnlinkIcon } from "../../shared/@patternfly/react-icons";
 import { useTranslation } from "react-i18next";
 
-import { linkAccount, unLinkAccount } from "../api/methods";
+import { unLinkAccount } from "../api/methods";
 import { LinkedAccountRepresentation } from "../api/representations";
 import { useAccountAlerts } from "../utils/useAccountAlerts";
 
@@ -35,6 +35,7 @@ export const AccountRow = ({
 }: AccountRowProps) => {
   const { t } = useTranslation();
   const context = useEnvironment();
+  const { login } = context.keycloak;
   const { addAlert, addError } = useAccountAlerts();
 
   const unLink = async (account: LinkedAccountRepresentation) => {
@@ -44,15 +45,6 @@ export const AccountRow = ({
       refresh();
     } catch (error) {
       addError("unLinkError", error);
-    }
-  };
-
-  const link = async (account: LinkedAccountRepresentation) => {
-    try {
-      const { accountLinkUri } = await linkAccount(context, account);
-      location.href = accountLinkUri;
-    } catch (error) {
-      addError("linkError", error);
     }
   };
 
@@ -123,7 +115,11 @@ export const AccountRow = ({
             <Button
               id={`${account.providerAlias}-idp-link`}
               variant="link"
-              onClick={() => link(account)}
+              onClick={() => {
+                login({
+                  action: "idp_link:" + account.providerAlias,
+                });
+              }}
             >
               <Icon size="sm">
                 <LinkIcon />

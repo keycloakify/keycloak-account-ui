@@ -75,13 +75,14 @@ export const PersonalInfo = () => {
       );
       await savePersonalInfo(context, { ...user, attributes });
       const locale = attributes["locale"]?.toString();
-      if (locale)
-        i18n.changeLanguage(locale, (error) => {
+      if (locale) {
+        await i18n.changeLanguage(locale, (error) => {
           if (error) {
             console.warn("Error(s) loading locale", locale, error);
           }
         });
-      context.keycloak.updateToken();
+      }
+      await context.keycloak.updateToken();
       addAlert(t("accountUpdatedMessage"));
     } catch (error) {
       addAlert(t("accountUpdatedError"), AlertVariant.danger);
@@ -122,11 +123,15 @@ export const PersonalInfo = () => {
             ((key: unknown, params) =>
               t(key as TFuncKey, params as any)) as TFunction
           }
-          renderer={(attribute) =>
-            attribute.name === "email" &&
-            updateEmailFeatureEnabled &&
-            updateEmailActionEnabled &&
-            (!isRegistrationEmailAsUsername || isEditUserNameAllowed) ? (
+          renderer={(attribute) => {
+            const annotations = attribute.annotations
+              ? attribute.annotations
+              : {};
+            return attribute.name === "email" &&
+              updateEmailFeatureEnabled &&
+              updateEmailActionEnabled &&
+              annotations["kc.required.action.supported"] &&
+              (!isRegistrationEmailAsUsername || isEditUserNameAllowed) ? (
               <Button
                 id="update-email-btn"
                 variant="link"
@@ -138,8 +143,8 @@ export const PersonalInfo = () => {
               >
                 {t("updateEmail")}
               </Button>
-            ) : undefined
-          }
+            ) : undefined;
+          }}
         />
         {!allFieldsReadOnly() && (
           <ActionGroup>

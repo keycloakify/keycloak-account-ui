@@ -8,7 +8,6 @@ import {
 } from "../../shared/keycloak-ui-shared";
 
 import OrganizationRepresentation from "@keycloak/keycloak-admin-client/lib/defs/organizationRepresentation";
-import { joinPath } from "../utils/joinPath";
 import { parseResponse } from "./parse-response";
 import {
   ClientRepresentation,
@@ -145,30 +144,6 @@ export async function unLinkAccount(
   );
   if (response.ok) return;
   return parseResponse(response);
-}
-
-export async function linkAccount(
-  context: KeycloakContext<BaseEnvironment>,
-  account: LinkedAccountRepresentation,
-) {
-  const redirectUri = encodeURIComponent(
-    joinPath(
-      context.environment.serverBaseUrl,
-      "realms",
-      context.environment.realm,
-      "account",
-      "account-security",
-      "linked-accounts",
-    ),
-  );
-  const response = await request(
-    "/linked-accounts/" + account.providerName,
-    context,
-    {
-      searchParams: { providerId: account.providerName, redirectUri },
-    },
-  );
-  return parseResponse<{ accountLinkUri: string }>(response);
 }
 
 export async function getGroups({ signal, context }: CallOptions) {
