@@ -33,6 +33,7 @@ export declare namespace KcContextLike {
          *   — meaning dark mode is allowed, since the restriction option didn’t exist yet.
          */
         darkMode?: boolean;
+        referrerName?: string;
     };
     type I18nApi = {
         msgJSON: string;

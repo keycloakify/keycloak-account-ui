@@ -34,7 +34,7 @@ export function KcAccountUiLoader(props) {
 }
 let previousRunParamsFingerprint = undefined;
 function init(params) {
-    var _a, _b;
+    var _a;
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
         if (previousRunParamsFingerprint === undefined) {
@@ -107,6 +107,8 @@ function init(params) {
     const referrerUrl = readQueryParamOrRestoreFromSessionStorage({
         name: "referrer_uri"
     });
+    // NOTE: Only to remove from the URL.
+    readQueryParamOrRestoreFromSessionStorage({ name: "referrer" });
     const environment = {
         serverBaseUrl,
         authUrl,
@@ -118,7 +120,10 @@ function init(params) {
         logoUrl: referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
         baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
         locale: kcContext.locale,
-        referrerName: (_a = readQueryParamOrRestoreFromSessionStorage({ name: "referrer" })) !== null && _a !== void 0 ? _a : "",
+        referrerName: valueOrSessionStoragePersistedValue({
+            key: "referrerName",
+            value: kcContext.referrerName
+        }),
         referrerUrl: referrerUrl !== null && referrerUrl !== void 0 ? referrerUrl : "",
         features: {
             isRegistrationEmailAsUsername: kcContext.realm.registrationEmailAsUsername,
@@ -131,7 +136,7 @@ function init(params) {
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
             isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
             isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
-            isViewOrganizationsEnabled: (_b = kcContext.isViewOrganizationsEnabled) !== null && _b !== void 0 ? _b : false
+            isViewOrganizationsEnabled: (_a = kcContext.isViewOrganizationsEnabled) !== null && _a !== void 0 ? _a : false
         }
     };
     assert();
@@ -364,5 +369,16 @@ function readQueryParamOrRestoreFromSessionStorage(params) {
         return value;
     }
     return (_a = sessionStorage.getItem(`${PREFIX}${name}`)) !== null && _a !== void 0 ? _a : undefined;
+}
+function valueOrSessionStoragePersistedValue(params) {
+    var _a;
+    const { key, value } = params;
+    if (value !== undefined) {
+        sessionStorage.setItem(key, value);
+        return value;
+    }
+    else {
+        return (_a = sessionStorage.getItem(key)) !== null && _a !== void 0 ? _a : undefined;
+    }
 }
 //# sourceMappingURL=KcAccountUiLoader.js.map
