@@ -93,6 +93,8 @@ export namespace KcContextLike {
          *   — meaning dark mode is allowed, since the restriction option didn’t exist yet.
          */
         darkMode?: boolean;
+
+        referrerName?: string;
     };
 
     export type I18nApi = {
@@ -315,6 +317,8 @@ function init(params: {
     const referrerUrl = readQueryParamOrRestoreFromSessionStorage({
         name: "referrer_uri"
     });
+    // NOTE: Only to remove from the URL.
+    readQueryParamOrRestoreFromSessionStorage({ name: "referrer" });
 
     const environment = {
         serverBaseUrl,
@@ -327,7 +331,10 @@ function init(params: {
         logoUrl: referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
         baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
         locale: kcContext.locale,
-        referrerName: readQueryParamOrRestoreFromSessionStorage({ name: "referrer" }) ?? "",
+        referrerName: valueOrSessionStoragePersistedValue({
+            key: "referrerName",
+            value: kcContext.referrerName
+        }),
         referrerUrl: referrerUrl ?? "",
         features: {
             isRegistrationEmailAsUsername: kcContext.realm.registrationEmailAsUsername,
@@ -653,4 +660,18 @@ function readQueryParamOrRestoreFromSessionStorage(params: { name: string }): st
     }
 
     return sessionStorage.getItem(`${PREFIX}${name}`) ?? undefined;
+}
+
+function valueOrSessionStoragePersistedValue(params: {
+    key: string;
+    value: string | undefined;
+}): string | undefined {
+    const { key, value } = params;
+
+    if (value !== undefined) {
+        sessionStorage.setItem(key, value);
+        return value;
+    } else {
+        return sessionStorage.getItem(key) ?? undefined;
+    }
 }
