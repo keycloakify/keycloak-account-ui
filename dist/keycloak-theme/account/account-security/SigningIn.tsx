@@ -10,6 +10,10 @@ import {
   DataListItem,
   DataListItemCells,
   DataListItemRow,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
   Dropdown,
   DropdownItem,
   MenuToggle,
@@ -128,6 +132,7 @@ export const SigningIn = () => {
     }
     if (
       credMetadata.infoMessage ||
+      credMetadata.infoProperties ||
       (credMetadata.warningMessageTitle &&
         credMetadata.warningMessageDescription)
     ) {
@@ -148,6 +153,30 @@ export const SigningIn = () => {
                   ),
                 )}
               </p>
+            )}
+            {credMetadata.infoProperties && (
+              <Split className="pf-v5-u-mb-lg">
+                <SplitItem>
+                  <InfoAltIcon />
+                </SplitItem>
+                <SplitItem isFilled className="pf-v5-u-ml-xs">
+                  <DescriptionList
+                    isHorizontal
+                    horizontalTermWidthModifier={{
+                      "2xl": "15ch",
+                    }}
+                  >
+                    {credMetadata.infoProperties.map((prop) => (
+                      <DescriptionListGroup key={prop.key}>
+                        <DescriptionListTerm>{t(prop.key)}</DescriptionListTerm>
+                        <DescriptionListDescription>
+                          {prop.parameters ? prop.parameters[0] : ""}
+                        </DescriptionListDescription>
+                      </DescriptionListGroup>
+                    ))}
+                  </DescriptionList>
+                </SplitItem>
+              </Split>
             )}
             {credMetadata.warningMessageTitle &&
               credMetadata.warningMessageDescription && (
@@ -270,8 +299,8 @@ export const SigningIn = () => {
                                 <Button
                                   variant="danger"
                                   data-testrole="remove"
-                                  onClick={() => {
-                                    login({
+                                  onClick={async () => {
+                                    await login({
                                       action:
                                         "delete_credential:" +
                                         meta.credential.id,
@@ -284,8 +313,10 @@ export const SigningIn = () => {
                               {container.updateAction && (
                                 <Button
                                   variant="secondary"
-                                  onClick={() => {
-                                    login({ action: container.updateAction });
+                                  onClick={async () => {
+                                    await login({
+                                      action: container.updateAction,
+                                    });
                                   }}
                                   data-testrole="update"
                                 >
