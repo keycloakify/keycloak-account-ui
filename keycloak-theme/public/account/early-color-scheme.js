@@ -4,8 +4,6 @@
     const BACKGROUND_COLOR_LIGHT_MODE = "#FFFFFF";
     const DARK_THEME_CLASS= "pf-v5-theme-dark";
 
-    console.log("up!");
-
     const isDarkModeEnabled = (() => {
 
         keycloak_policy: {
