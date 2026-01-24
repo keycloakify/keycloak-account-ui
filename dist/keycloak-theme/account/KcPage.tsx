@@ -1,4 +1,4 @@
-import { lazy, useMemo } from "react";
+import { lazy } from "react";
 import { KcAccountUiLoader } from "@keycloakify/keycloak-account-ui";
 import type { KcContext } from "./KcContext";
 import { oidcEarlyInit } from "oidc-spa/entrypoint";
