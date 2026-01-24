@@ -2,12 +2,17 @@ import "@patternfly/patternfly/patternfly-addons.css";
 import "@patternfly/react-core/dist/styles/base.css";
 
 import { useReducer, useEffect } from "react";
+import { startColorSchemeManagement } from "./colorScheme";
 import { KeycloakProvider } from "../shared/keycloak-ui-shared";
 import { environment } from "./environment";
 import { i18n } from "./i18n/i18n";
 import { Root } from "./root/Root";
+import { SessionExpirationWarningOverlay } from "../shared/SessionExpirationWarningOverlay";
+
+document.title = "Account Management";
 
 const prI18nInitialized = i18n.init();
+startColorSchemeManagement();
 
 export default function KcAccountUi() {
     const [isI18nInitialized, setI18nInitialized] = useReducer(() => true, false);
@@ -23,6 +28,7 @@ export default function KcAccountUi() {
     return (
         <KeycloakProvider environment={environment}>
             <Root />
+            <SessionExpirationWarningOverlay warnUserSecondsBeforeAutoLogout={45} />
         </KeycloakProvider>
     );
 }

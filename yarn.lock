@@ -167,12 +167,12 @@
   dependencies:
     minipass "^7.0.4"
 
-"@keycloak/keycloak-account-ui@26.5.0":
-  version "26.5.0"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.5.0.tgz#4261b63136cbac0cd40e40b1684e43a5ae8f661b"
-  integrity sha512-C14GWOlvi1OsFT/9bqU9njntSY7IWG7DbjykoE/nZf4Q8/gWNt4Z0kYz7q6AvOgIDxSBpFyQF6sF5geSmNxlZQ==
+"@keycloak/keycloak-account-ui@26.5.2":
+  version "26.5.2"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.5.2.tgz#babaa95575e24371e4fcc9000a671747a0c96cce"
+  integrity sha512-AghUmtbImEQ9wlT4b2wlqAiMtQpLu9EBaXZUJ0NdF6FZfZRzNQ7j1uOJ0wGqgDbZx4IOKssHFvIWqDmlHKg2cw==
   dependencies:
-    "@keycloak/keycloak-ui-shared" "26.5.0"
+    "@keycloak/keycloak-ui-shared" "26.5.2"
     "@patternfly/patternfly" "^5.4.2"
     "@patternfly/react-core" "^5.4.14"
     "@patternfly/react-icons" "^5.4.2"
@@ -187,20 +187,20 @@
     react-i18next "^16.5.1"
     react-router-dom "^6.30.2"
 
-"@keycloak/keycloak-admin-client@26.5.0":
-  version "26.5.0"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.5.0.tgz#1a55284f76182b84f15fb483f0bae1f7b65ccd55"
-  integrity sha512-sT7ASGHhgogkpjRYNoN2hECJ60JQ9En6kbe0Tz3im3HUcr/CO+mJYxlcG8DdgfBApg82ECEnnRxrWe5YM0oKXQ==
+"@keycloak/keycloak-admin-client@26.5.2":
+  version "26.5.2"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.5.2.tgz#8580e7ae8a67ecea4752b1b737fe69ab0dd44291"
+  integrity sha512-KAwSj/qzncpExWagW5vny3sD1jtynESjhHVZBtAbQRURm00EBbHS8YxdtcEsnY641bxAc0+MWU1SclOkCl8ftg==
   dependencies:
     camelize-ts "^3.0.0"
     url-template "^3.1.1"
 
-"@keycloak/keycloak-ui-shared@26.5.0":
-  version "26.5.0"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.5.0.tgz#2b8dd1096d553acde22bffa14774c83b36236a65"
-  integrity sha512-eBVKF3Rd1cMziEy9CH5UESbqEjv2I5ZsZT9AzUHu3uzfUn6b4I5b9FfAoUYDw7snzzPubNBu4M1O+2us79epFA==
+"@keycloak/keycloak-ui-shared@26.5.2":
+  version "26.5.2"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.5.2.tgz#50a68191a61a135b054a44ab23d6d2e89902f91c"
+  integrity sha512-Fx5hyNaQpwUfVG+NGA1WP0M3xWXlwZIgjReJVsXNc8tXihOeYALAsfqjFhCj4GvJR8F1Gkv0IVxREzobXLCccw==
   dependencies:
-    "@keycloak/keycloak-admin-client" "26.5.0"
+    "@keycloak/keycloak-admin-client" "26.5.2"
     "@patternfly/react-core" "^5.4.14"
     "@patternfly/react-icons" "^5.4.2"
     "@patternfly/react-styles" "^5.4.1"
@@ -1161,6 +1161,11 @@ object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
+
+oidc-spa@~10.0.4:
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-10.0.5.tgz#0afad3c9cf8e86e8e0c4c8a7f0d253141bcff503"
+  integrity sha512-O4BGQV3YE8GbJa1e+IPEuWOM618jW2Q5pBXF8mS1+bQx5xePmVErSZve+oQ//bm62b4kejW8RpjRJCKYlocpOw==
 
 onetime@^5.1.0, onetime@^5.1.2:
   version "5.1.2"

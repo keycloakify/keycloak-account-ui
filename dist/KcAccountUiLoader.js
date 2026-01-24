@@ -8,22 +8,34 @@ assert;
 function getIsKeycloak25AndUp(kcContext) {
     return "serverBaseUrl" in kcContext;
 }
+let kcContext_global = undefined;
+export function createGetKcContext() {
+    function getKcContext() {
+        if (kcContext_global === undefined) {
+            throw new Error("getKcContext can only be called once KcAccountUi has been loaded");
+        }
+        assert;
+        assert(is(kcContext_global));
+        return { kcContext: kcContext_global };
+    }
+    return { getKcContext };
+}
 export function KcAccountUiLoader(props) {
-    const { kcContext, KcAccountUi, loadingFallback, enableDarkModeIfPreferred, darkModePolicy } = props;
+    const { kcContext, KcAccountUi, loadingFallback } = props;
     assert(is(KcAccountUi));
-    useMemo(() => init({
-        kcContext,
-        darkModePolicy: (() => {
-            if (darkModePolicy !== undefined) {
-                assert(enableDarkModeIfPreferred === undefined, `Can't use both enableDarkModeIfPreferred and darkModePolicy, enableDarkModeIfPreferred is deprecated.`);
-                return darkModePolicy;
-            }
-            if (enableDarkModeIfPreferred !== undefined) {
-                return enableDarkModeIfPreferred ? "auto" : "never dark mode";
-            }
-            return "auto";
-        })()
-    }), []);
+    useMemo(() => {
+        try {
+            init({
+                kcContext
+            });
+        }
+        catch (error) {
+            // NOTE: The error can be "swallowed" by React
+            setTimeout(() => {
+                throw error;
+            }, 0);
+        }
+    }, []);
     return (_jsx(Suspense, { fallback: loadingFallback, children: (() => {
             const node = _jsx(KcAccountUi, {});
             if (node === null) {
@@ -47,32 +59,8 @@ function init(params) {
         }
         return;
     }
-    const { kcContext, darkModePolicy } = params;
-    light_dark_mode_management: {
-        if (darkModePolicy === "never dark mode") {
-            break light_dark_mode_management;
-        }
-        assert;
-        if (kcContext.darkMode === false) {
-            break light_dark_mode_management;
-        }
-        const setIsDarkModeEnabled = (params) => {
-            const { isDarkModeEnabled } = params;
-            const { classList } = document.documentElement;
-            const DARK_MODE_CLASS = "pf-v5-theme-dark";
-            if (isDarkModeEnabled) {
-                classList.add(DARK_MODE_CLASS);
-            }
-            else {
-                classList.remove(DARK_MODE_CLASS);
-            }
-        };
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-        if (mediaQuery.matches) {
-            setIsDarkModeEnabled({ isDarkModeEnabled: true });
-        }
-        mediaQuery.addEventListener("change", event => setIsDarkModeEnabled({ isDarkModeEnabled: event.matches }));
-    }
+    const { kcContext } = params;
+    kcContext_global = kcContext;
     //logValidationResult(kcContext);
     const resourceUrl = kcContext.resourceUrl;
     const serverBaseUrl = (() => {
@@ -298,62 +286,6 @@ function init(params) {
             }
             return realFetch(...args);
         };
-    }
-    custom_styles: {
-        const { styles } = kcContext.properties;
-        if (!styles) {
-            break custom_styles;
-        }
-        const relativeUrls = styles.split(" ").map(s => s.trim());
-        if (relativeUrls.length === 0) {
-            break custom_styles;
-        }
-        const { appendLinksToHead, removeLinksFromHead } = (() => {
-            const CUSTOM_ATTRIBUTE_NAME = "data-properties-styles";
-            const links = relativeUrls.map(relativeUrl => {
-                const url = `${kcContext.baseUrl.scheme}://${kcContext.baseUrl.authority}${kcContext.resourceUrl}/${relativeUrl}`;
-                const link = document.createElement("link");
-                link.rel = "stylesheet";
-                link.href = url;
-                link.setAttribute(CUSTOM_ATTRIBUTE_NAME, "true");
-                return link;
-            });
-            function appendLinksToHead() {
-                links.forEach(link => {
-                    document.head.appendChild(link);
-                });
-            }
-            function removeLinksFromHead() {
-                document.querySelectorAll(`link[${CUSTOM_ATTRIBUTE_NAME}="true"]`).forEach(link => {
-                    link.remove();
-                });
-            }
-            return { appendLinksToHead, removeLinksFromHead };
-        })();
-        appendLinksToHead();
-        (function callee() {
-            const observer = new MutationObserver(mutations => {
-                const hasAddedNodes = (() => {
-                    for (const mutation of mutations) {
-                        if (mutation.addedNodes.length !== 0) {
-                            return true;
-                        }
-                    }
-                    return false;
-                })();
-                if (!hasAddedNodes) {
-                    return;
-                }
-                observer.disconnect();
-                removeLinksFromHead();
-                appendLinksToHead();
-                callee();
-            });
-            observer.observe(document.head, {
-                childList: true,
-                subtree: false
-            });
-        })();
     }
 }
 function readQueryParamOrRestoreFromSessionStorage(params) {

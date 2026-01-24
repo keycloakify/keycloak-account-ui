@@ -105,13 +105,16 @@ import { getHash } from "./tools/getHash";
             }
 
             if (fileRelativePath === "package.json") {
-                const version = JSON.parse((await readFile()).toString("utf8")).version as unknown;
+                const version = JSON.parse((await readFile()).toString("utf8"))["version"];
 
-                assert(typeof version === "string");
+                const pkgStr = await fetch(
+                    `https://unpkg.com/@keycloak/keycloak-account-ui@${version}/package.json`,
+                    fetchOptions
+                ).then(response => response.text());
 
                 await writeFile({
                     fileRelativePath: "package.json",
-                    modifiedData: Buffer.from(JSON.stringify({ version }), "utf8")
+                    modifiedData: Buffer.from(pkgStr, "utf8")
                 });
 
                 return;
@@ -227,6 +230,17 @@ import { getHash } from "./tools/getHash";
                 modifiedSourceCode = modifiedSourceCode.replaceAll(` from "./`, ` from "../`);
             }
 
+            if (fileRelativePath === pathJoin("api", "request.ts")) {
+                let before = modifiedSourceCode;
+                modifiedSourceCode = modifiedSourceCode.replace(
+                    `import Keycloak from "keycloak-js";`,
+                    `import type { Keycloak } from "oidc-spa/keycloak-js";`
+                );
+                assert(modifiedSourceCode !== before);
+            }
+
+            assert(!modifiedSourceCode.includes(`"keycloak-js"`));
+
             await writeFile({
                 fileRelativePath,
                 modifiedData: Buffer.from(withSpecialComments(modifiedSourceCode), "utf8")
@@ -245,19 +259,14 @@ import { getHash } from "./tools/getHash";
     const keycloakThemeDirPath = pathJoin(distDirPath, "keycloak-theme");
     const accountDirPath = pathJoin(keycloakThemeDirPath, "account");
 
-    let keycloakAccountUiVersion: string | undefined = undefined;
+    let packageJson_keycloakAccountUi: string | undefined = undefined;
 
     transformCodebase({
         srcDirPath: extractedDirPath,
         destDirPath: accountDirPath,
         transformSourceCode: ({ fileRelativePath, sourceCode }) => {
             if (fileRelativePath === "package.json") {
-                const version = JSON.parse(sourceCode.toString("utf8")).version as unknown;
-
-                assert(typeof version === "string");
-
-                keycloakAccountUiVersion = version;
-
+                packageJson_keycloakAccountUi = sourceCode.toString("utf8");
                 return;
             }
 
@@ -265,7 +274,43 @@ import { getHash } from "./tools/getHash";
         }
     });
 
-    assert(keycloakAccountUiVersion !== undefined);
+    assert(packageJson_keycloakAccountUi !== undefined);
+
+    const parsedPackageJson_keycloakAccountUi = await (async () => {
+        type ParsedPackageJson = {
+            version: string;
+            dependencies?: Record<string, string>;
+            peerDependencies?: Record<string, string>;
+            devDependencies?: Record<string, string>;
+        };
+
+        const zParsedPackageJson = (() => {
+            type TargetType = ParsedPackageJson;
+
+            const zTargetType = z.object({
+                version: z.string(),
+                dependencies: z.record(z.string()).optional(),
+                peerDependencies: z.record(z.string()).optional(),
+                devDependencies: z.record(z.string()).optional()
+            });
+
+            type InferredType = z.infer<typeof zTargetType>;
+
+            assert<Equals<ParsedPackageJson, InferredType>>;
+
+            return id<z.ZodType<TargetType>>(zTargetType);
+        })();
+
+        assert<Equals<z.TypeOf<typeof zParsedPackageJson>, ParsedPackageJson>>;
+
+        const parsedPackageJson: unknown = JSON.parse(packageJson_keycloakAccountUi);
+
+        zParsedPackageJson.parse(parsedPackageJson);
+
+        assert(is<ParsedPackageJson>(parsedPackageJson));
+
+        return parsedPackageJson;
+    })();
 
     transformCodebase({
         srcDirPath: pathJoin(getThisCodebaseRootDirPath(), "keycloak-theme"),
@@ -277,7 +322,7 @@ import { getHash } from "./tools/getHash";
         const publicDirBasename = "public";
 
         const { extractedDirPath } = await downloadAndExtractArchive({
-            url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${keycloakAccountUiVersion}.jar`,
+            url: `https://repo1.maven.org/maven2/org/keycloak/keycloak-account-ui/${keycloakVersion}/keycloak-account-ui-${parsedPackageJson_keycloakAccountUi.version}.jar`,
             cacheDirPath,
             fetchOptions,
             uniqueIdOfOnArchiveFile: "i18n_messages_and_public_assets",
@@ -404,43 +449,6 @@ import { getHash } from "./tools/getHash";
         });
     }
 
-    const parsedPackageJson_keycloakAccountUi = await (async () => {
-        type ParsedPackageJson = {
-            dependencies?: Record<string, string>;
-            peerDependencies?: Record<string, string>;
-            devDependencies?: Record<string, string>;
-        };
-
-        const zParsedPackageJson = (() => {
-            type TargetType = ParsedPackageJson;
-
-            const zTargetType = z.object({
-                dependencies: z.record(z.string()).optional(),
-                peerDependencies: z.record(z.string()).optional(),
-                devDependencies: z.record(z.string()).optional()
-            });
-
-            type InferredType = z.infer<typeof zTargetType>;
-
-            assert<Equals<ParsedPackageJson, InferredType>>;
-
-            return id<z.ZodType<TargetType>>(zTargetType);
-        })();
-
-        assert<Equals<z.TypeOf<typeof zParsedPackageJson>, ParsedPackageJson>>;
-
-        const parsedPackageJson = await fetch(
-            `https://unpkg.com/@keycloak/keycloak-account-ui@${keycloakAccountUiVersion}/package.json`,
-            fetchOptions
-        ).then(response => response.json());
-
-        zParsedPackageJson.parse(parsedPackageJson);
-
-        assert(is<ParsedPackageJson>(parsedPackageJson));
-
-        return parsedPackageJson;
-    })();
-
     fs.writeFileSync(
         pathJoin(distDirPath, "package.json"),
         Buffer.from(
@@ -463,6 +471,9 @@ import { getHash } from "./tools/getHash";
                                 ...parsedPackageJson_keycloakAccountUi.peerDependencies
                             }).filter(([name]) => {
                                 if (name === "react-dom") {
+                                    return false;
+                                }
+                                if (name === "keycloak-js") {
                                     return false;
                                 }
 
@@ -540,7 +551,7 @@ import { getHash } from "./tools/getHash";
 
     console.log(
         chalk.green(
-            `\n\nPulled @keycloak/keycloak-account-ui@${keycloakAccountUiVersion} from keycloak version ${keycloakVersion}`
+            `\n\nPulled @keycloak/keycloak-account-ui@${parsedPackageJson_keycloakAccountUi.version} from keycloak version ${keycloakVersion}`
         )
     );
 })();

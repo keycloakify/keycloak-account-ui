@@ -16,7 +16,8 @@ const zKcContextLikeCommon = (() => {
         baseUrl: z.object({
             rawSchemeSpecificPart: z.string(),
             scheme: z.string(),
-            authority: z.string()
+            authority: z.string(),
+            path: z.string()
         }),
         locale: z.string(),
         isAuthorizationEnabled: z.boolean(),

@@ -6,7 +6,7 @@ import {
   KeycloakContext,
   type BaseEnvironment,
 } from "../../shared/keycloak-ui-shared";
-import Keycloak from "keycloak-js";
+import type { Keycloak } from "oidc-spa/keycloak-js";
 
 import { joinPath } from "../utils/joinPath";
 import { CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON } from "./constants";
