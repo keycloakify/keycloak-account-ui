@@ -196,9 +196,7 @@ export function KcAccountUiLoader(props: KcAccountUiLoaderProps) {
 
 let previousRunParamsFingerprint: string | undefined = undefined;
 
-function init(params: {
-    kcContext: KcContextLike;
-}) {
+function init(params: { kcContext: KcContextLike }) {
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
 
@@ -515,7 +513,6 @@ function init(params: {
             return realFetch(...args);
         };
     }
-
 }
 
 function readQueryParamOrRestoreFromSessionStorage(params: { name: string }): string | undefined {
