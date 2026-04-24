@@ -104,7 +104,7 @@ export async function requestVCOffer(
   credentialsIssuer: CredentialsIssuer,
 ) {
   const response = await request(
-    "/protocol/oid4vc/credential-offer-uri",
+    "/protocol/oid4vc/create-credential-offer",
     context,
     {
       searchParams: {
@@ -117,7 +117,7 @@ export async function requestVCOffer(
     new URL(
       joinPath(
         credentialsIssuer.credential_issuer +
-          "/protocol/oid4vc/credential-offer-uri",
+          "/protocol/oid4vc/create-credential-offer",
       ),
     ),
   );

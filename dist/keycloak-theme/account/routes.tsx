@@ -4,7 +4,6 @@
 
 import { lazy } from "react";
 import type { IndexRouteObject, RouteObject } from "react-router-dom";
-import { environment } from "./environment";
 import { Organizations } from "./organizations/Organizations";
 
 const DeviceActivity = lazy(() => import("./account-security/DeviceActivity"));
@@ -80,8 +79,7 @@ export const routes: RouteObject[] = [
   ApplicationsRoute,
   GroupsRoute,
   OrganizationsRoute,
-  PersonalInfoRoute,
   ResourcesRoute,
   ContentRoute,
-  ...(environment.features.isOid4VciEnabled ? [Oid4VciRoute] : []),
+  Oid4VciRoute,
 ];

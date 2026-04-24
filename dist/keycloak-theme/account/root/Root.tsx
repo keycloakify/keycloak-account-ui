@@ -16,14 +16,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import fetchContentJson from "../content/fetchContent";
-import { Environment, environment } from "../environment";
+import { type AccountEnvironment } from "..";
 import { usePromise } from "../utils/usePromise";
 import { Header } from "./Header";
 import { MenuItem, PageNav } from "./PageNav";
 import { routes } from "../routes";
 
 function mapRoutes(
-  context: KeycloakContext<Environment>,
+  context: KeycloakContext<AccountEnvironment>,
   content: MenuItem[],
 ): RouteObject[] {
   return content
@@ -50,7 +50,7 @@ function mapRoutes(
 }
 
 export const Root = () => {
-  const context = useEnvironment<Environment>();
+  const context = useEnvironment<AccountEnvironment>();
   const [content, setContent] = useState<RouteObject[]>();
 
   usePromise(
@@ -58,7 +58,9 @@ export const Root = () => {
     (content) => {
       setContent([
         {
-          path: decodeURIComponent(new URL(environment.baseUrl).pathname),
+          path: decodeURIComponent(
+            new URL(context.environment.baseUrl).pathname,
+          ),
           element: (
             <Page header={<Header />} sidebar={<PageNav />} isManagedSidebar>
               <Suspense fallback={<Spinner />}>

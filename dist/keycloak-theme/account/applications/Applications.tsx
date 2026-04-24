@@ -32,10 +32,11 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { AccountEnvironment } from "..";
 import { deleteConsent, getApplications } from "../api/methods";
 import { ClientRepresentation } from "../api/representations";
 import { Page } from "../components/page/Page";
-import { TFuncKey } from "../i18n";
+import type { TFuncKey } from "../i18n-type";
 import { formatDate } from "../utils/formatDate";
 import { useAccountAlerts } from "../utils/useAccountAlerts";
 import { usePromise } from "../utils/usePromise";
@@ -46,7 +47,7 @@ type Application = ClientRepresentation & {
 
 export const Applications = () => {
   const { t } = useTranslation();
-  const context = useEnvironment();
+  const context = useEnvironment<AccountEnvironment>();
   const { addAlert, addError } = useAccountAlerts();
 
   const [applications, setApplications] = useState<Application[]>();
@@ -258,7 +259,10 @@ export const Applications = () => {
                         {t("accessGrantedOn")}
                       </DescriptionListTerm>
                       <DescriptionListDescription>
-                        {formatDate(new Date(application.consent.createdDate))}
+                        {formatDate(
+                          new Date(application.consent.createdDate),
+                          context.environment.locale,
+                        )}
                       </DescriptionListDescription>
                     </DescriptionListGroup>
                   </>

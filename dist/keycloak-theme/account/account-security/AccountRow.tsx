@@ -2,7 +2,11 @@
 
 // @ts-nocheck
 
-import { IconMapper, useEnvironment } from "../../shared/keycloak-ui-shared";
+import {
+  IconMapper,
+  label,
+  useEnvironment,
+} from "../../shared/keycloak-ui-shared";
 import {
   Button,
   DataListAction,
@@ -67,7 +71,7 @@ export const AccountRow = ({
                 </SplitItem>
                 <SplitItem className="pf-v5-u-my-xs" isFilled>
                   <span id={`${account.providerAlias}-idp-name`}>
-                    {account.displayName}
+                    {label(t, account.displayName)}
                   </span>
                 </SplitItem>
               </Split>
