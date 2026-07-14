@@ -8,6 +8,7 @@ on:
       - "26.2.0"
       - "26.5.0"
       - "26.5.2"
+      - "26.6.1"
   pull_request:
     branches:
       - main
@@ -16,6 +17,7 @@ on:
       - "26.2.0"
       - "26.5.0"
       - "26.5.2"
+      - "26.6.1"
 
 permissions:
   id-token: write
@@ -101,7 +103,7 @@ jobs:
         ref: ${{ github.ref }}
     - uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24'
         registry-url: https://registry.npmjs.org/
     - run: npm install -g npm@latest
     - run: yarn install --frozen-lockfile
