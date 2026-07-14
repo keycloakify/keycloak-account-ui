@@ -99,8 +99,8 @@ export const PersonalInfo = () => {
   }
 
   const allFieldsReadOnly = () =>
-    userProfileMetadata?.attributes
-      ?.map((a) => a.readOnly)
+    userProfileMetadata.attributes
+      .map((a) => a.readOnly)
       .reduce((p, c) => p && c, true);
 
   const {

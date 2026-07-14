@@ -167,12 +167,12 @@
   dependencies:
     minipass "^7.0.4"
 
-"@keycloak/keycloak-account-ui@26.6.1":
-  version "26.6.1"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.6.1.tgz#53f89715940a5d64197074dfcbb4f2f9db9c7e7b"
-  integrity sha512-XfBNNpO9FUcuhSZ4ndy33Ip7lJ0033pA2n9IMePAIQIjcNlGz33r/HRMxk30sbd4ycbPuXuwMT03w5bFX78+fw==
+"@keycloak/keycloak-account-ui@26.7.0":
+  version "26.7.0"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-account-ui/-/keycloak-account-ui-26.7.0.tgz#b6721d8c6d114f1f4c192da1ac11082f8f51ca73"
+  integrity sha512-rzljc5H+XcQMpDcYAFvzjhUVu/b0qQ3Mvj8Ce1BrOQGdKy4DDwOpV68tzrmeMQKKUzWo9kNfssp00mhZqVeYQg==
   dependencies:
-    "@keycloak/keycloak-ui-shared" "26.6.1"
+    "@keycloak/keycloak-ui-shared" "26.7.0"
     "@patternfly/patternfly" "^5.4.2"
     "@patternfly/react-core" "^5.4.14"
     "@patternfly/react-icons" "^5.4.2"
@@ -185,28 +185,28 @@
     react-dom "^18.3.1"
     react-hook-form "^7.70.0"
     react-i18next "^16.5.1"
-    react-router-dom "^6.30.3"
+    react-router-dom "^6.30.4"
 
-"@keycloak/keycloak-admin-client@26.6.1":
-  version "26.6.1"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.6.1.tgz#3728b30eebfb2c187766de69ed7213683773ddfa"
-  integrity sha512-IWzXCyUFhLkk2LkryCunEAGbRVB7ttC7WNmjXlFT83WlBrmxRCDKo52LzmIRgtWcy0VU1qe3Poj5BGyIkE1AnQ==
+"@keycloak/keycloak-admin-client@26.7.0":
+  version "26.7.0"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-admin-client/-/keycloak-admin-client-26.7.0.tgz#4d94fe87594926d84f2e02184abc87dd46757e60"
+  integrity sha512-QEsX19sFCvknBzV2zelEkZ7waglCqzayY1zDtoRQinHuUiAe2f7q+xXT6R8XNukn+rShB41TOlG4QR2Bt6hxhw==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.86"
-    "@microsoft/kiota-http-fetchlibrary" "^1.0.0-preview.80"
-    "@microsoft/kiota-serialization-form" "^1.0.0-preview.74"
-    "@microsoft/kiota-serialization-json" "^1.0.0-preview.86"
-    "@microsoft/kiota-serialization-multipart" "^1.0.0-preview.67"
-    "@microsoft/kiota-serialization-text" "^1.0.0-preview.79"
+    "@microsoft/kiota-abstractions" "1.0.0-preview.103"
+    "@microsoft/kiota-http-fetchlibrary" "1.0.0-preview.103"
+    "@microsoft/kiota-serialization-form" "1.0.0-preview.103"
+    "@microsoft/kiota-serialization-json" "1.0.0-preview.103"
+    "@microsoft/kiota-serialization-multipart" "1.0.0-preview.103"
+    "@microsoft/kiota-serialization-text" "1.0.0-preview.103"
     camelize-ts "^3.0.0"
     url-template "^3.1.1"
 
-"@keycloak/keycloak-ui-shared@26.6.1":
-  version "26.6.1"
-  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.6.1.tgz#7caa46fbe6fbbc05d347230d0fcf667941294afa"
-  integrity sha512-2+iWl+wTR8qxRVUMht+9YQw9S/FU4750D6A5zESGv6jCqyMydp3jMMIaFYCgto3panWwziUN/qA8u8Jn9ayBTw==
+"@keycloak/keycloak-ui-shared@26.7.0":
+  version "26.7.0"
+  resolved "https://registry.yarnpkg.com/@keycloak/keycloak-ui-shared/-/keycloak-ui-shared-26.7.0.tgz#e79f9763ee9a4462842be1e21d1ec37e46240413"
+  integrity sha512-EA3CDka3F378WT91p/NnXMf7ds0r7qRvNFF00BpWf+URRqJnIKxM4LJ+a1COD/VEWOR4VtLEyNCeiK+6W0+8yg==
   dependencies:
-    "@keycloak/keycloak-admin-client" "26.6.1"
+    "@keycloak/keycloak-admin-client" "26.7.0"
     "@patternfly/react-core" "^5.4.14"
     "@patternfly/react-icons" "^5.4.2"
     "@patternfly/react-styles" "^5.4.1"
@@ -219,55 +219,55 @@
     react-hook-form "7.70.0"
     react-i18next "^16.5.1"
 
-"@microsoft/kiota-abstractions@^1.0.0-preview.100", "@microsoft/kiota-abstractions@^1.0.0-preview.86":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-abstractions/-/kiota-abstractions-1.0.0-preview.100.tgz#435ab779394080e581794d98d78407db9ec806a2"
-  integrity sha512-3s2WYKQ6WLB/0pyDmmv9bigH/3LZ0Mm4ldHskNLBj0U8DYjFzfG729snnEij+hZN0l2XHr37pGBr1MZK8vM7zQ==
+"@microsoft/kiota-abstractions@1.0.0-preview.103", "@microsoft/kiota-abstractions@^1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-abstractions/-/kiota-abstractions-1.0.0-preview.103.tgz#66f48c5c63589b7d98646f1fd0cce3f24f9df642"
+  integrity sha512-om7nKH8nWyEAQ0lgbIdKdrkmznhkdDJdliCnAIo31X/hlUah1aBzvfUx+pbyp67Q040yLK+2J6P7AnvGSoN/qQ==
   dependencies:
     "@opentelemetry/api" "^1.7.0"
     "@std-uritemplate/std-uritemplate" "^2.0.0"
     tinyduration "^3.3.0"
     tslib "^2.6.2"
 
-"@microsoft/kiota-http-fetchlibrary@^1.0.0-preview.80":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-http-fetchlibrary/-/kiota-http-fetchlibrary-1.0.0-preview.100.tgz#73dcea0c43d0bf9644805df3a870378692f69ca1"
-  integrity sha512-uS2rhKKjbYiT8JWG8GGVOALB+s4HdDc9hg5tTZMVf3qY5b/us1OKLQ6WgW6USq/kZAuKKWkIq/BQgPCWbHtFTQ==
+"@microsoft/kiota-http-fetchlibrary@1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-http-fetchlibrary/-/kiota-http-fetchlibrary-1.0.0-preview.103.tgz#2233aae58653e207e2a01da864bc3a406f41872e"
+  integrity sha512-DbhGL+pdVjtv2AVvxB4fxvNC/GMzKbYyeQsknaXJXwqnPR/oIClWjaXlIxWL5SBK72DOmrZ18leaWMB2vfWvpw==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.100"
+    "@microsoft/kiota-abstractions" "^1.0.0-preview.103"
     "@opentelemetry/api" "^1.7.0"
     tslib "^2.6.2"
 
-"@microsoft/kiota-serialization-form@^1.0.0-preview.74":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-form/-/kiota-serialization-form-1.0.0-preview.100.tgz#0b32fd1d6c12b8f59a8d3a3eaf3523a7c6cc932c"
-  integrity sha512-SR/yWBtvKYhN2ARR4wVMFb91XgN32DBmLLQmtemdKgL1YWBxVCNAUP/qHbZhrTX7q4kh7jl/S9yrr1S8ySS7AA==
+"@microsoft/kiota-serialization-form@1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-form/-/kiota-serialization-form-1.0.0-preview.103.tgz#0efa3786b2edc3532d0030e70c5d3ae2f9761468"
+  integrity sha512-AD5Q59Qu61DfhaLLN7Mvgx4Zw0Zmftqx04XAbrRreC+r9hwT1BqTf0EReCraMzEoC4sdrp/8haI2Arm8dWUWuQ==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.100"
+    "@microsoft/kiota-abstractions" "^1.0.0-preview.103"
     tslib "^2.6.2"
 
-"@microsoft/kiota-serialization-json@^1.0.0-preview.86":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-json/-/kiota-serialization-json-1.0.0-preview.100.tgz#41f953ed14d0ff261a3e082ea0d080676a43f1ab"
-  integrity sha512-4qatf5j0Aeaakdw24jMuIX7W6mf/W2rU9UyAjkIrSjaB7W5n8gsUvhoTcRpPTAFN7pvzQkCbO7Z0paRfdYzhIw==
+"@microsoft/kiota-serialization-json@1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-json/-/kiota-serialization-json-1.0.0-preview.103.tgz#130322184838b1d6da907a1a212b4c4c6a4a2bcc"
+  integrity sha512-dTr8q6H42TSe+HaCPBXU4Pv6ypo7MjMGRo/r9GRbnCuy8VCWfe+Vh38rnAZJx4r8cmvOUD7Yw74IJ6q4Hjv3mg==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.100"
+    "@microsoft/kiota-abstractions" "^1.0.0-preview.103"
     tslib "^2.6.2"
 
-"@microsoft/kiota-serialization-multipart@^1.0.0-preview.67":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-multipart/-/kiota-serialization-multipart-1.0.0-preview.100.tgz#9b1118ead703d479f778a671700a153e31fa005c"
-  integrity sha512-zwWoLZH6+KsAl05Ijd8HpbU+mct5wb0//ZCGdCkQ/UqsAaoe2xYSoKicxQbVGv9VvSTq0as7iVLwqDeqEI9rDw==
+"@microsoft/kiota-serialization-multipart@1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-multipart/-/kiota-serialization-multipart-1.0.0-preview.103.tgz#c7d2d9cb169c663bebf42057be1f9f3b7e43ec04"
+  integrity sha512-b3ePXYgFv/2TQtbzFQ8ZY+hzMtCRkz4Cx5y/Pf8vtoQu56KU0/9rYq5kA9wySDdCx/oZxfubQQRV/8QSTxmejw==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.100"
+    "@microsoft/kiota-abstractions" "^1.0.0-preview.103"
     tslib "^2.6.2"
 
-"@microsoft/kiota-serialization-text@^1.0.0-preview.79":
-  version "1.0.0-preview.100"
-  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-text/-/kiota-serialization-text-1.0.0-preview.100.tgz#aab658740e51c2c87da570319aa4fac10400b6a6"
-  integrity sha512-x2Epz0StHLBkVJKeEmwrXSh6SJuxZ72VVBNO53uHUNZ/Y7X8tZuSQR7X74EO69mEi4zAF21X2jbkF9/dhlARog==
+"@microsoft/kiota-serialization-text@1.0.0-preview.103":
+  version "1.0.0-preview.103"
+  resolved "https://registry.yarnpkg.com/@microsoft/kiota-serialization-text/-/kiota-serialization-text-1.0.0-preview.103.tgz#dbd15b0e3536e02b1763919cbac45eb9622c58ae"
+  integrity sha512-FkiboqpNtT2F40xUC9LETHK9ckHd+WuocLJE70ljI4EYvD59MQDsrTERYAwbmkfPIJ6JRE4OfLXFVh510LG1/Q==
   dependencies:
-    "@microsoft/kiota-abstractions" "^1.0.0-preview.100"
+    "@microsoft/kiota-abstractions" "^1.0.0-preview.103"
     tslib "^2.6.2"
 
 "@npmcli/agent@^3.0.0":
@@ -342,10 +342,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@remix-run/router@1.23.2":
-  version "1.23.2"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.2.tgz#156c4b481c0bee22a19f7924728a67120de06971"
-  integrity sha512-Ic6m2U/rMjTkhERIa/0ZtXJP17QUi2CbWE7cqx4J58M8aA3QTfW+2UlQ4psvTX9IO1RfNVhK3pcpdjej7L+t2w==
+"@remix-run/router@1.23.3":
+  version "1.23.3"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.3.tgz#957c098d4393d301a8aa7dccf3ef28ea5430e36a"
+  integrity sha512-4An71tdz9X8+3sI4Qqqd2LWd9vS39J7sqd9EU4Scw7TJE/qB10Flv/UuqbPVgfQV9XoK8Np6jNquZitnZq5i+Q==
 
 "@std-uritemplate/std-uritemplate@^2.0.0":
   version "2.0.8"
@@ -1422,20 +1422,20 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-router-dom@^6.30.3:
-  version "6.30.3"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.3.tgz#42ae6dc4c7158bfb0b935f162b9621b29dddf740"
-  integrity sha512-pxPcv1AczD4vso7G4Z3TKcvlxK7g7TNt3/FNGMhfqyntocvYKj+GCatfigGDjbLozC4baguJ0ReCigoDJXb0ag==
+react-router-dom@^6.30.4:
+  version "6.30.4"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.4.tgz#f7167bf3da6c7d9132130ea985dd06def25e84d5"
+  integrity sha512-q4HvNl+mmDdkS0g+MqiBZNteQJCuimWoOyHMy4T/RQLAn9Z29+E91QXRaxOujeMl2HTzRSS0KFPd7lxX3PjV0Q==
   dependencies:
-    "@remix-run/router" "1.23.2"
-    react-router "6.30.3"
+    "@remix-run/router" "1.23.3"
+    react-router "6.30.4"
 
-react-router@6.30.3:
-  version "6.30.3"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.3.tgz#994b3ccdbe0e81fe84d4f998100f62584dfbf1cf"
-  integrity sha512-XRnlbKMTmktBkjCLE8/XcZFlnHvr2Ltdr1eJX4idL55/9BbORzyZEaIkBFDhFGCEWBBItsVrDxwx3gnisMitdw==
+react-router@6.30.4:
+  version "6.30.4"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.4.tgz#638f35176527bd243d96d81d35d33b757bad46c2"
+  integrity sha512-SVUsDe+DybHM/WmYKIVYhZh1o5Dcuf16yM6WjG02Q9XVFMZIJyHYhwrr6bFBXZkVP6z69kNkMyBCujt8FaFLJA==
   dependencies:
-    "@remix-run/router" "1.23.2"
+    "@remix-run/router" "1.23.3"
 
 react@^18.3.1:
   version "18.3.1"

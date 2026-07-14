@@ -23,6 +23,7 @@ export declare namespace KcContextLike {
         updateEmailFeatureEnabled: boolean;
         updateEmailActionEnabled: boolean;
         isViewOrganizationsEnabled?: boolean;
+        isViewApplicationsEnabled?: boolean;
         properties: Record<string, string | undefined>;
         /**
          * Misleading name: this value does not indicate whether the app should render in dark or light mode.

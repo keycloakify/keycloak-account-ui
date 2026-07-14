@@ -18,7 +18,16 @@ export const content: MenuItem[] = [
       }
     ]
   },
-  { "label": "applications", "path": "applications" },
+  {
+    "label": "applications",
+    "path": "applications",
+    "isVisible": "isViewApplicationsEnabled"
+  },
+  {
+    "label": "verifiableCredentials",
+    "path": "verifiable-credentials",
+    "isVisible": "isOid4VciEnabled"
+  },
   {
     "label": "groups",
     "path": "groups",
@@ -33,11 +42,6 @@ export const content: MenuItem[] = [
     "label": "resources",
     "path": "resources",
     "isVisible": "isMyResourcesEnabled"
-  },
-  {
-    "label": "oid4vci",
-    "path": "oid4vci",
-    "isVisible":"isOid4VciEnabled"
   }
 ]
 ;

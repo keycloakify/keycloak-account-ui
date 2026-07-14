@@ -46,7 +46,7 @@ export function KcAccountUiLoader(props) {
 }
 let previousRunParamsFingerprint = undefined;
 function init(params) {
-    var _a;
+    var _a, _b;
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
         if (previousRunParamsFingerprint === undefined) {
@@ -122,9 +122,10 @@ function init(params) {
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
+            isViewApplicationsEnabled: (_a = kcContext.isViewApplicationsEnabled) !== null && _a !== void 0 ? _a : false,
             isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
             isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
-            isViewOrganizationsEnabled: (_a = kcContext.isViewOrganizationsEnabled) !== null && _a !== void 0 ? _a : false
+            isViewOrganizationsEnabled: (_b = kcContext.isViewOrganizationsEnabled) !== null && _b !== void 0 ? _b : false
         }
     };
     assert();

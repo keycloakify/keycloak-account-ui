@@ -23,7 +23,7 @@ type Environment = {
     clientId: string;
     /** The base URL of the resources. */
     resourceUrl: string;
-    /** The source URL for the the logo image. */
+    /** The source URL for the logo image. */
     logo: string;
     /** The URL to be followed when the logo is clicked. */
     logoUrl: string;
@@ -47,6 +47,7 @@ type Environment = {
         deleteAccountAllowed: boolean;
         updateEmailFeatureEnabled: boolean;
         updateEmailActionEnabled: boolean;
+        isViewApplicationsEnabled: boolean;
         isViewGroupsEnabled: boolean;
         isViewOrganizationsEnabled: boolean;
         isOid4VciEnabled: boolean;
@@ -83,6 +84,7 @@ export namespace KcContextLike {
         updateEmailFeatureEnabled: boolean;
         updateEmailActionEnabled: boolean;
         isViewOrganizationsEnabled?: boolean;
+        isViewApplicationsEnabled?: boolean;
         properties: Record<string, string | undefined>;
         /**
          * Misleading name: this value does not indicate whether the app should render in dark or light mode.
@@ -293,6 +295,7 @@ function init(params: { kcContext: KcContextLike }) {
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
+            isViewApplicationsEnabled: kcContext.isViewApplicationsEnabled ?? false,
             isViewGroupsEnabled:
                 "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
             isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
