@@ -135,10 +135,6 @@ import { getHash } from "./tools/getHash";
                 fileRelativePath = pathRelative(dirPath, fileRelativePath);
             }
 
-            if (fileRelativePath === "index.ts") {
-                return;
-            }
-
             if (fileRelativePath === "vite-env.d.ts") {
                 return;
             }
