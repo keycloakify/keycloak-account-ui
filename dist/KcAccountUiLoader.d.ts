@@ -36,6 +36,7 @@ export declare namespace KcContextLike {
          */
         darkMode?: boolean;
         referrerName?: string;
+        scope?: string;
     };
     type I18nApi = {
         msgJSON: string;

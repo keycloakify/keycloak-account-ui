@@ -98,6 +98,7 @@ export namespace KcContextLike {
         darkMode?: boolean;
 
         referrerName?: string;
+        scope?: string;
     };
 
     export type I18nApi = {
@@ -278,12 +279,14 @@ function init(params: { kcContext: KcContextLike }) {
         resourceUrl,
         logo: "",
         logoUrl: referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
+        scope: kcContext.scope ?? "",
         baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
         locale: kcContext.locale,
-        referrerName: valueOrSessionStoragePersistedValue({
-            key: "referrerName",
-            value: kcContext.referrerName
-        }),
+        referrerName:
+            valueOrSessionStoragePersistedValue({
+                key: "referrerName",
+                value: kcContext.referrerName
+            }) ?? "",
         referrerUrl: referrerUrl ?? "",
         features: {
             isRegistrationEmailAsUsername: kcContext.realm.registrationEmailAsUsername,

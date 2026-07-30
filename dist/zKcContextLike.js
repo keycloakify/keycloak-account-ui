@@ -28,7 +28,8 @@ const zKcContextLikeCommon = (() => {
         isViewApplicationsEnabled: z.boolean().optional(),
         properties: z.record(z.string(), z.union([z.string(), z.undefined()])),
         darkMode: z.boolean().optional(),
-        referrerName: z.string().optional()
+        referrerName: z.string().optional(),
+        scope: z.string().optional()
     });
     assert();
     return id(zTargetType);

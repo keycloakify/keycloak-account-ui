@@ -1229,10 +1229,10 @@ object-assign@^4.1.1:
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
 
-oidc-spa@10.3.0-rc.2:
-  version "10.3.0-rc.2"
-  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-10.3.0-rc.2.tgz#0190fae0d7f1728f01bb9959dfbb4d86ad8e8a59"
-  integrity sha512-Txmi05uVrLITzC8iuXd2hkvsKjMxAH9JRW6W8xzCZvRzVFeFUsAH8qOm2gVAmL7Ax9z4IfGWws68FQGoFqgIeA==
+oidc-spa@~10.2.10:
+  version "10.2.10"
+  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-10.2.10.tgz#5d82693b1e4fc3c80eb99c3290d6cb6e734536d5"
+  integrity sha512-FtJf2AY/F2w/vpIovVs9skU/IpvuTfeP+tl/ECLqBsoA8tq3/Wd/pR3Brp4Bq2IVoeEcvHdXizUaLzMmFEqNwA==
 
 onetime@^5.1.0, onetime@^5.1.2:
   version "5.1.2"

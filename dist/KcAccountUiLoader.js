@@ -46,7 +46,7 @@ export function KcAccountUiLoader(props) {
 }
 let previousRunParamsFingerprint = undefined;
 function init(params) {
-    var _a, _b;
+    var _a, _b, _c, _d;
     exit_condition: {
         const paramsFingerprint = JSON.stringify(params);
         if (previousRunParamsFingerprint === undefined) {
@@ -106,12 +106,13 @@ function init(params) {
         resourceUrl,
         logo: "",
         logoUrl: referrerUrl === undefined ? "/" : referrerUrl.replace("_hash_", "#"),
+        scope: (_a = kcContext.scope) !== null && _a !== void 0 ? _a : "",
         baseUrl: `${kcContext.baseUrl.scheme}:${kcContext.baseUrl.rawSchemeSpecificPart}`,
         locale: kcContext.locale,
-        referrerName: valueOrSessionStoragePersistedValue({
+        referrerName: (_b = valueOrSessionStoragePersistedValue({
             key: "referrerName",
             value: kcContext.referrerName
-        }),
+        })) !== null && _b !== void 0 ? _b : "",
         referrerUrl: referrerUrl !== null && referrerUrl !== void 0 ? referrerUrl : "",
         features: {
             isRegistrationEmailAsUsername: kcContext.realm.registrationEmailAsUsername,
@@ -122,10 +123,10 @@ function init(params) {
             deleteAccountAllowed: kcContext.deleteAccountAllowed,
             updateEmailFeatureEnabled: kcContext.updateEmailFeatureEnabled,
             updateEmailActionEnabled: kcContext.updateEmailActionEnabled,
-            isViewApplicationsEnabled: (_a = kcContext.isViewApplicationsEnabled) !== null && _a !== void 0 ? _a : false,
+            isViewApplicationsEnabled: (_c = kcContext.isViewApplicationsEnabled) !== null && _c !== void 0 ? _c : false,
             isViewGroupsEnabled: "isViewGroupsEnabled" in kcContext ? kcContext.isViewGroupsEnabled : false,
             isOid4VciEnabled: getIsKeycloak25AndUp(kcContext) ? kcContext.isOid4VciEnabled : false,
-            isViewOrganizationsEnabled: (_b = kcContext.isViewOrganizationsEnabled) !== null && _b !== void 0 ? _b : false
+            isViewOrganizationsEnabled: (_d = kcContext.isViewOrganizationsEnabled) !== null && _d !== void 0 ? _d : false
         }
     };
     assert();
