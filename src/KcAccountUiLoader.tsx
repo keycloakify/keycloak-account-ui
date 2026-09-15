@@ -519,6 +519,8 @@ function init(params: { kcContext: KcContextLike }) {
             return realFetch(...args);
         };
     }
+
+    setupCustomStyles(kcContext);
 }
 
 function readQueryParamOrRestoreFromSessionStorage(params: { name: string }): string | undefined {
@@ -552,4 +554,67 @@ function valueOrSessionStoragePersistedValue(params: {
     } else {
         return sessionStorage.getItem(key) ?? undefined;
     }
+}
+
+function setupCustomStyles(kcContext: KcContextLike) {
+    const { styles } = kcContext.properties;
+
+    if (!styles) {
+        return;
+    }
+
+    const relativeUrls = styles
+        .split(" ")
+        .map(style => style.trim())
+        .filter(Boolean);
+
+    if (relativeUrls.length === 0) {
+        return;
+    }
+
+    const CUSTOM_ATTRIBUTE_NAME = "data-properties-styles";
+
+    const links = relativeUrls.map(relativeUrl => {
+        const link = document.createElement("link");
+
+        link.rel = "stylesheet";
+        link.href = `${kcContext.resourceUrl}/${relativeUrl}`;
+        link.setAttribute(CUSTOM_ATTRIBUTE_NAME, "true");
+
+        return link;
+    });
+
+    const appendLinksToHead = () => {
+        links.forEach(link => document.head.appendChild(link));
+    };
+
+    const removeLinksFromHead = () => {
+        document
+            .querySelectorAll(`link[${CUSTOM_ATTRIBUTE_NAME}="true"]`)
+            .forEach(link => link.remove());
+    };
+
+    appendLinksToHead();
+
+    const observe = () => {
+        const observer = new MutationObserver(mutations => {
+            if (!mutations.some(mutation => mutation.addedNodes.length !== 0)) {
+                return;
+            }
+
+            observer.disconnect();
+
+            removeLinksFromHead();
+            appendLinksToHead();
+
+            observe();
+        });
+
+        observer.observe(document.head, {
+            childList: true,
+            subtree: false
+        });
+    };
+
+    observe();
 }
