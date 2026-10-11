@@ -2,7 +2,7 @@
   "name": "@keycloakify/keycloak-account-ui",
   "main": "index.js",
   "types": "index.d.ts",
-  "version": "260700.0.3",
+  "version": "260700.0.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/keycloakify/keycloak-account-ui.git"
@@ -30,7 +30,7 @@
     "react-hook-form": "^7.70.0",
     "react-i18next": "^16.5.1",
     "react-router-dom": "^6.30.4",
-    "@keycloakify/keycloak-ui-shared": "~260700.0.2",
+    "@keycloakify/keycloak-ui-shared": "~260700.0.3",
     "@types/lodash-es": "^4.17.12",
     "@types/react": "^18.3.18"
   }
